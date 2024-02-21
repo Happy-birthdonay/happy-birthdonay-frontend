@@ -1,9 +1,9 @@
 {
-  "name": "typescript-nextjs-starter",
-  "description": "A TypeScript starter for Next.js that includes all you need to build amazing projects",
+  "name": "happy-birthdonay-frontend",
+  "description": "happy-birthdonay-frontend",
   "version": "1.0.0",
-  "private": true,
-  "author": "João Pedro Schmitz <hey@joaopedro.dev> (@jpedroschmitz)",
+  "private": false,
+  "author": "6mn12j",
   "license": "MIT",
   "keywords": [
     "nextjs",
