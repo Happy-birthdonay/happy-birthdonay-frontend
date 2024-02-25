@@ -1,9 +1,13 @@
+'use client';
 
+import styled from 'styled-components';
+
+const Wrapper = styled.main``;
 
 export default function Home() {
   return (
-    <main >
-    <h1>Happy birthDonay</h1>
-    </main>
+    <Wrapper>
+      <h1>Happy birthDonay</h1>
+    </Wrapper>
   );
 }

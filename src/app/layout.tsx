@@ -2,11 +2,8 @@ import { Metadata } from 'next';
 
 import './globals.css';
 
-import { Inter } from 'next/font/google';
-
+import Layout from '@/ui/Layout';
 import StyledJsxRegistry from './registry';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: `TypeScript starter for Next.js by João Pedro Schmitz`,
@@ -17,7 +14,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="kr">
       <body>
-        <StyledJsxRegistry>{children}</StyledJsxRegistry>
+        <StyledJsxRegistry>
+          <Layout>{children}</Layout>
+        </StyledJsxRegistry>
       </body>
     </html>
   );
