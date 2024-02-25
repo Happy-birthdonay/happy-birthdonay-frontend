@@ -1,0 +1,29 @@
+@font-face {
+  font-family:
+    'Wanted Sans Variable',
+    'Wanted Sans',
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    'Segoe UI',
+    'Apple SD Gothic Neo',
+    'Noto Sans KR',
+    'Malgun Gothic',
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    sans-serif;
+  src: url('https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.2/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css');
+}
+
+@font-face {
+  font-family: 'MonoplexKR-Regular';
+  font-weight: 400;
+  font-style: normal;
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_Monoplex-kr@1.0/MonoplexKR-Regular.woff2')
+    format('woff2');
+}
+
+body {
+  font-family: 'Wanted Sans Variable', sans-serif;
+}
