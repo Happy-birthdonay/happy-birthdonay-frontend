@@ -1,22 +1,24 @@
 'use client';
 
 import { PropsWithChildren } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
+
+import myTheme from '@/styles/theme';
 
 const Wrapper = styled.div`
   width: 100%;
   min-height: 100vh;
   display: block;
-  background-color: rgb(255, 255, 255);
   display: flex;
   justify-content: center;
 `;
 
 const Container = styled.div`
-  border: 1px solid #e7e7e7;
+  flex: 1;
   max-width: 480px;
   min-height: 100vh;
-  flex: 1;
+  background-color: ${({ theme }) => theme.colors.background};
+  border: 1px solid ${({ theme }) => theme.colors.main.grey};
 `;
 
 type LayoutProps = NonNullable<unknown>;
@@ -24,9 +26,11 @@ type LayoutProps = NonNullable<unknown>;
 function Layout(props: PropsWithChildren<LayoutProps>) {
   const { children } = props;
   return (
-    <Wrapper>
-      <Container>{children}</Container>
-    </Wrapper>
+    <ThemeProvider theme={myTheme}>
+      <Wrapper>
+        <Container>{children}</Container>
+      </Wrapper>
+    </ThemeProvider>
   );
 }
 
