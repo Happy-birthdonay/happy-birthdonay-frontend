@@ -17,6 +17,7 @@ const Container = styled.div`
   flex: 1;
   max-width: 480px;
   min-height: 100vh;
+  padding: 20px;
   background-color: ${({ theme }) => theme.colors.background};
   border: 1px solid ${({ theme }) => theme.colors.main.grey};
 `;
