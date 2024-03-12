@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import LoginButton from '@/components/LoginButton';
 import kakaoSrc from '@/public/kakao_logo.png';
 import logoSrc from '@/public/logo.png';
+import { getTypographyStyles } from '@/styles/fonts';
 
 const Wrapper = styled.main`
   display: flex;
@@ -19,8 +20,7 @@ const Wrapper = styled.main`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: 24px;
-  font-weight: 500;
+  ${getTypographyStyles('Headline2_B')}
 `;
 
 const LogoContainer = styled.div`

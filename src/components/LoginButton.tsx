@@ -1,6 +1,8 @@
 import { MouseEventHandler, PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
+import { getTypographyStyles } from '@/styles/fonts';
+
 const Wrapper = styled.button<{
   $color: LoginButtonProps['$color'];
   $backgroundColor: LoginButtonProps['$backgroundColor'];
@@ -13,7 +15,8 @@ const Wrapper = styled.button<{
   color: ${({ $color }) => $color};
   background-color: ${({ $backgroundColor }) => $backgroundColor};
   border: ${({ $border }) => `1px solid ${$border}`};
-  font-weight: bold;
+
+  ${getTypographyStyles('Body2_B')}
 `;
 
 type LoginButtonProps = {
