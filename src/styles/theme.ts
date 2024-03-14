@@ -15,6 +15,14 @@ const myTheme: DefaultTheme = {
       navy: '#334075',
       beige: '#F2F0E4',
     },
+    button: {
+      blue: '#1F47CD',
+      orange: '#FD663B',
+      green: '#3B8145',
+      yellow: '#F7F33A',
+      pink: '#D48BD4',
+      violet: '#7C57E4',
+    },
   },
 };
 

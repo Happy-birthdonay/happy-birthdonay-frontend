@@ -1,9 +1,9 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
-import Button from '@/components/Button';
 import newBoxButton from '@/public/newBoxButton.png';
 import { getTypographyStyles } from '@/styles/fonts';
 
@@ -23,6 +23,13 @@ const Wrapper = styled.div`
 `;
 
 export default function MakeNewBox() {
+  const router = useRouter();
+  //box 리스트를 가져온 후 박스 리스트가 있을때와 없을때를 분기처리 해야할 함
+  const makeNewBox = () => {
+    console.log('생성');
+    router.push('/box/new/content');
+  };
+
   return (
     <Wrapper>
       <h3>
@@ -30,7 +37,9 @@ export default function MakeNewBox() {
         <br />
         Donation Box!
       </h3>
-      <Image alt="add box button" src={newBoxButton} />
+      <button onClick={makeNewBox}>
+        <Image alt="add box button" src={newBoxButton} />
+      </button>
       <p>
         선물 상자를 만들어 <br />
         기부를 시작해 보세요
