@@ -76,7 +76,7 @@ export default function Home() {
         <ButtonContainer>
           <ButtonLogoContainer>
             <Image src={kakaoSrc} alt="kakao" />
-          </ButtonLogoContainer>{' '}
+          </ButtonLogoContainer>
           카카오로 1초 로그인
         </ButtonContainer>
       </LoginButton>

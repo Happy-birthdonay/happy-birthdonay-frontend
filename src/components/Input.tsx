@@ -1,3 +1,4 @@
+import { ForwardedRef, forwardRef } from 'react';
 import styled from 'styled-components';
 
 import { getTypographyStyles } from '@/styles/fonts';
@@ -22,6 +23,7 @@ const InputContainer = styled.input`
 
   &::placeholder {
     color: '#DCDCDC';
+    opacity: 0.3;
   }
 `;
 
@@ -30,14 +32,14 @@ type InputProps = {
   label: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
-function Input(props: InputProps) {
+function Input(props: InputProps, ref: ForwardedRef<HTMLInputElement>) {
   const { placeholder, ...rest } = props;
 
   return (
     <Wrapper>
       <label>{props.label}</label>
-      <InputContainer placeholder={placeholder} {...rest} />
+      <InputContainer ref={ref} placeholder={placeholder} {...rest} />
     </Wrapper>
   );
 }
-export default Input;
+export default forwardRef(Input);
