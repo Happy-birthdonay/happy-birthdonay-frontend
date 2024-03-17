@@ -140,7 +140,7 @@ function NameContent() {
           </GiftContainer>
         </Container>
 
-        <Button buttonType="primary">다음</Button>
+        <Button $buttonType="primary">다음</Button>
       </form>
     </Wrapper>
   );

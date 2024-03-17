@@ -48,7 +48,7 @@ function ContentPage() {
           <Input label="기부할 금액을 알려주세요" placeholder="기부할 금액" {...register('birthday')} />
         </Container>
 
-        <Button onClick={onClick} buttonType="primary">
+        <Button onClick={onClick} $buttonType="primary">
           다음
         </Button>
       </form>
