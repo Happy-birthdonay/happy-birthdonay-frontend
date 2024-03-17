@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
+import instance from '@/api';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import { getTypographyStyles } from '@/styles/fonts';
@@ -34,14 +35,23 @@ const Container = styled.div`
 `;
 
 export default function Home() {
-  const code = window.location.search;
-
+  // const code = window.location.search;
+  const code = typeof window !== 'undefined' ? new URL(window.location.toString()).searchParams.get('code') : null;
   const router = useRouter();
   console.log('code', code);
   const { register, handleSubmit } = useForm<User>();
 
   useEffect(() => {
     //인가 코드를 받아서 토큰을 받아야함
+    const handleLogin = async () => {
+      if (code) {
+        const response = await instance.post('/api/oauth/token', {
+          code,
+        });
+        console.log('response', response);
+      }
+    };
+    handleLogin();
   }, []);
 
   const onSubmit = (data: User) => {
@@ -58,7 +68,7 @@ export default function Home() {
           <Input label="생년월일을 입력하세요" placeholder="YYYY.MM.DD" {...register('birthday')} />
         </Container>
 
-        <Button buttonType="primary">다음</Button>
+        <Button $buttonType="primary">다음</Button>
       </form>
     </Wrapper>
   );
