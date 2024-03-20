@@ -1,12 +1,9 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
-import Gift from '@/components/Gift';
-import Input from '@/components/Input';
 import TextField from '@/components/TextField';
 import { getTypographyStyles } from '@/styles/fonts';
 
@@ -31,32 +28,29 @@ const Container = styled.div`
     ${getTypographyStyles('Body2_M')}
   }
 `;
-function ContentPage() {
-  const router = useRouter();
-  const { register, handleSubmit } = useForm();
 
-  const onSubmit = (data) => {
-    console.log('data', data);
-  };
+type BoxDescriptionProps = {
+  register: UseFormRegister<FieldValues>;
+  onNext: (data: FieldValues) => void;
+};
 
-  const onClick = () => {
-    console.log('다음');
-    router.push('/box/new/share');
-  };
+function BoxDescription(props: BoxDescriptionProps) {
+  const { register, onNext } = props;
+
   return (
     <Wrapper>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <div>
         <Container>
           <p>친구에게 보여줄 대표 메시지를 적어보세요</p>
-          <TextField {...register('message')} />
+          <TextField {...register('boxDescription')} />
         </Container>
 
-        <Button onClick={onClick} $buttonType="primary">
+        <Button onClick={onNext} $buttonType="primary">
           저장하기
         </Button>
-      </form>
+      </div>
     </Wrapper>
   );
 }
 
-export default ContentPage;
+export default BoxDescription;

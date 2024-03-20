@@ -1,9 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldValue, FieldValues, useForm, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
@@ -11,6 +10,7 @@ import ColorButton from '@/components/ColorButton';
 import Gift from '@/components/Gift';
 import Input from '@/components/Input';
 import { getTypographyStyles } from '@/styles/fonts';
+import { type BoxColor } from '@/types/donationBox';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -64,29 +64,28 @@ const ColorChip = [
   { color: 'yellow', label: 'Yellow' },
   { color: 'pink', label: 'Pink' },
   { color: 'violet', label: 'Violet' },
-];
+] as const;
 
-function NameContent() {
-  const router = useRouter();
+type BoxDetailProps = {
+  register: UseFormRegister<FieldValues>;
+  onNext: (data: FieldValues) => void;
+};
+
+function BoxDetail(props: BoxDetailProps) {
+  const { register, onNext } = props;
   const [color, setColor] = useState('none');
-  const { register, handleSubmit } = useForm();
 
-  const onSubmit = () => {};
-
-  const onClick = (color: string) => {
+  const selectColor = (color: BoxColor) => {
     console.log('color', color);
     setColor(color);
-    //router pathName get
+    register('color', { value: color });
   };
 
-  const onClickNext = () => {
-    router.push('/box/new/step3');
-  };
   return (
     <Wrapper>
-      <form onClick={handleSubmit(onSubmit)}>
+      <div>
         <Container>
-          <Input label="기부 상자 이름을 적어주세요." placeholder="상자 이름" {...register('boxName')} />
+          <Input label="기부 상자 이름을 적어주세요." placeholder="상자 이름" {...register('boxTitle')} />
           <ColorContainer>
             <Text>원하는 색을 골라주세요.</Text>
             <ChipContainer>
@@ -95,7 +94,7 @@ function NameContent() {
                   key={chip.color}
                   color={chip.color}
                   unSelected={color !== 'none' && color !== chip.color}
-                  onClick={() => onClick(chip.color)}
+                  onClick={() => selectColor(chip.color)}
                 >
                   {chip.label}
                 </ColorButton>
@@ -105,12 +104,12 @@ function NameContent() {
           <Gift color={color} />
         </Container>
 
-        <Button onClick={onClickNext} $buttonType="primary">
+        <Button onClick={onNext} $buttonType="primary">
           다음
         </Button>
-      </form>
+      </div>
     </Wrapper>
   );
 }
 
-export default NameContent;
+export default BoxDetail;
