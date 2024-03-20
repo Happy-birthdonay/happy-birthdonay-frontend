@@ -28,7 +28,6 @@ const InputContainer = styled.input`
 `;
 
 type InputProps = {
-  placeholder?: string;
   label: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 

@@ -1,4 +1,5 @@
-import { create } from 'zustand';
+import { create, StateCreator } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 import { type User } from '@/types/user';
 
@@ -18,14 +19,16 @@ interface UserStore {
     resetUser: () => void;
   };
 }
-const useUserStore = create<UserStore>((set) => ({
-  user: initialUser,
 
+const userStore: StateCreator<UserStore> = (set) => ({
+  user: initialUser,
   actions: {
     setUser: (user: User) => set({ user }),
     resetUser: () => set({ user: initialUser }),
   },
-}));
+});
+
+const useUserStore = create(devtools(userStore));
 
 export const useUser = () => useUserStore((state) => state.user);
 export const useUserActions = () => useUserStore((state) => state.actions);

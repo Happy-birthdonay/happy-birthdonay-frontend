@@ -5,7 +5,9 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
+import Gift from '@/components/Gift';
 import Input from '@/components/Input';
+import TextField from '@/components/TextField';
 import { getTypographyStyles } from '@/styles/fonts';
 
 const Wrapper = styled.div`
@@ -25,31 +27,32 @@ const Container = styled.div`
   flex-direction: column;
   gap: 15px;
   margin-bottom: 30px;
-  h3 {
-    ${getTypographyStyles('Headline3_B')}
+  p {
+    ${getTypographyStyles('Body2_M')}
   }
 `;
 function ContentPage() {
   const router = useRouter();
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = () => {};
+  const onSubmit = (data) => {
+    console.log('data', data);
+  };
 
   const onClick = () => {
     console.log('다음');
-    router.push('name');
+    router.push('/box/new/share');
   };
   return (
     <Wrapper>
-      <form onClick={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Container>
-          <Input label="어디에 기부할까요?" placeholder="기부처 이름" {...register('donation')} />
-          <Input label="링크를 넣어주세요" placeholder="기부처 링크" {...register('birthday')} />
-          <Input label="기부할 금액을 알려주세요" placeholder="기부할 금액" {...register('birthday')} />
+          <p>친구에게 보여줄 대표 메시지를 적어보세요</p>
+          <TextField {...register('message')} />
         </Container>
 
         <Button onClick={onClick} $buttonType="primary">
-          다음
+          저장하기
         </Button>
       </form>
     </Wrapper>
