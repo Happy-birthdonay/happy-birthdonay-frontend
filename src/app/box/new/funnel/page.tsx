@@ -42,7 +42,7 @@ export default function FunnerPage() {
   const [step, setStep] = useState<'donation' | 'boxDetail' | 'boxDescription'>('donation');
 
   const onSubmit = async (data: FieldValues) => {
-    console.log('data', data);
+    console.log('onSubmit data', data);
     const response = await postNewBox(data as DonationBox);
     //TODO:response의 boxId로 변경
     router.push(`${pathname}/complete/1`);

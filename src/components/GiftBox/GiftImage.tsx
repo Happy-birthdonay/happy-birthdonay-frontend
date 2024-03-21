@@ -7,7 +7,6 @@ import PinkBox from '@/public/box/gift box=pink.png';
 import VioletBox from '@/public/box/gift box=violet.png';
 import WhiteBox from '@/public/box/gift box=white.png';
 import YellowBox from '@/public/box/gift box=yellow.png';
-import { type BoxColor } from '@/types/donationBox';
 
 const renderGift = (color: string) => {
   switch (color) {

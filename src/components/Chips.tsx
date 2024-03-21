@@ -13,18 +13,24 @@ const ChipContainer = styled.div`
     justify-self: center;
   }
 `;
+type Chip = {
+  key: string;
+  color: string;
+  children: React.ReactNode;
+};
+
 type ChipsProps = {
-  onSelect?: (key: string) => void;
-  chips: { key: string; color: string; children: React.ReactNode }[];
+  onSelect?: (chip: Chip) => void;
+  chips: Chip[];
 };
 function Chips(props: ChipsProps) {
   const { chips, onSelect } = props;
-  const [selectedKey, setSelectedKey] = useState<string>('none');
+  const [selectedChip, setSelectedChip] = useState<Chip | null>(null);
 
-  const selectKey = (key: string) => {
-    setSelectedKey(key);
+  const onSelectChip = (chip: Chip) => {
+    setSelectedChip(chip);
     if (onSelect) {
-      onSelect(key);
+      onSelect(chip);
     }
   };
 
@@ -32,10 +38,11 @@ function Chips(props: ChipsProps) {
     <ChipContainer>
       {chips.map((chip) => (
         <ColorButton
+          type="button"
           key={chip.key}
           $chipColor={chip.color}
-          $unSelected={selectedKey !== 'none' && selectedKey !== chip.key}
-          onClick={() => selectKey(chip.key)}
+          $unSelected={selectedChip !== null && selectedChip?.key !== chip.key}
+          onClick={() => onSelectChip(chip)}
         >
           {chip.children}
         </ColorButton>

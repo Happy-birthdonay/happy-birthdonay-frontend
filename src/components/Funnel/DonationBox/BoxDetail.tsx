@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { FieldValue, FieldValues, useForm, UseFormRegister } from 'react-hook-form';
+import { FieldValue, FieldValues, useForm, useFormContext, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
@@ -75,13 +75,9 @@ type BoxDetailProps = {
 
 function BoxDetail(props: BoxDetailProps) {
   const { register, onNext } = props;
-  const [color, setColor] = useState('none');
 
-  const selectColor = (color: string) => {
-    console.log('color', color);
-    setColor(color);
-    register('color', { value: color });
-  };
+  const { setValue, watch } = useFormContext();
+  const color = watch('color');
 
   return (
     <Wrapper>
@@ -92,8 +88,9 @@ function BoxDetail(props: BoxDetailProps) {
             <Text>원하는 색을 골라주세요.</Text>
             <Chips
               chips={ColorChips}
-              onSelect={(key) => {
-                register('color', { value: key });
+              onSelect={(chip) => {
+                console.log('chip', chip);
+                setValue('color', chip.key);
               }}
             />
           </ColorContainer>
