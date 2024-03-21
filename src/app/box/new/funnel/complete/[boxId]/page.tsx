@@ -41,7 +41,12 @@ const TextContainer = styled.div`
   }
 `;
 
-function CompletePate() {
+type CompletePageProps = {
+  params: { boxId: string };
+};
+function CompletePate(props: CompletePageProps) {
+  const { params } = props;
+  console.log('boxId', params.boxId);
   const router = useRouter();
   const pathname = usePathname();
 
