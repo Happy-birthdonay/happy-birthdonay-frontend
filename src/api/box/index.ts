@@ -18,3 +18,18 @@ export const postNewBox = async (box: DonationBox) => {
   console.log('response', response);
   return response.json();
 };
+
+export const getBoxDetail = async (id: string) => {
+  const accessToken = cookies().get('access_token');
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/donation-boxes/${id}`, {
+    method: 'GET',
+
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken?.value}`,
+    },
+  });
+
+  console.log('response', response);
+  return response.json();
+};

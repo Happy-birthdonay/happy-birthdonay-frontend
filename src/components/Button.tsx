@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import { getTypographyStyles } from '@/styles/fonts';
 
 const Wrapper = styled.button<{ $buttonType: ButtonProps['$buttonType'] }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   width: 100%;
   padding: 20px 20px;
   border-radius: 15px;

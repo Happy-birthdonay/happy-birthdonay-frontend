@@ -1,12 +1,13 @@
 'use client';
 
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 
 import { postNewBox } from '@/api/box';
-import BoxDescription from '@/components/DonationBoxDetail/BoxDescription';
-import BoxDetail from '@/components/DonationBoxDetail/BoxDetail';
-import DonationDetail from '@/components/DonationBoxDetail/DonationDetail';
+import BoxDescription from '@/components/Funnel/DonationBox/BoxDescription';
+import BoxDetail from '@/components/Funnel/DonationBox/BoxDetail';
+import DonationDetail from '@/components/Funnel/DonationBox/DonationDetail';
 import { DonationBox } from '@/types/donationBox';
 
 // function getCookie(name: string) {
@@ -33,7 +34,11 @@ import { DonationBox } from '@/types/donationBox';
 // };
 
 export default function FunnerPage() {
+  const pathname = usePathname();
+  const router = useRouter();
+
   const methods = useForm();
+
   const [step, setStep] = useState<'donation' | 'boxDetail' | 'boxDescription'>('donation');
 
   const onSubmit = async (data: FieldValues) => {
@@ -66,7 +71,7 @@ export default function FunnerPage() {
             <BoxDescription
               register={methods.register}
               onNext={(data: FieldValues) => {
-                onSubmit(data);
+                router.push(`${pathname}/complete`);
               }}
             />
           )}

@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 import Button from '@/components/Button';
 import ColorButton from '@/components/ColorButton';
-import Gift from '@/components/Gift';
+import Gift from '@/components/GiftBox';
 import Input from '@/components/Input';
 import { getTypographyStyles } from '@/styles/fonts';
 import { type BoxColor } from '@/types/donationBox';
@@ -75,7 +75,7 @@ function BoxDetail(props: BoxDetailProps) {
   const { register, onNext } = props;
   const [color, setColor] = useState('none');
 
-  const selectColor = (color: BoxColor) => {
+  const selectColor = (color: string) => {
     console.log('color', color);
     setColor(color);
     register('color', { value: color });
@@ -93,7 +93,7 @@ function BoxDetail(props: BoxDetailProps) {
                 <ColorButton
                   key={chip.color}
                   color={chip.color}
-                  unSelected={color !== 'none' && color !== chip.color}
+                  $unSelected={color !== 'none' && color !== chip.color}
                   onClick={() => selectColor(chip.color)}
                 >
                   {chip.label}
@@ -101,7 +101,9 @@ function BoxDetail(props: BoxDetailProps) {
               ))}
             </ChipContainer>
           </ColorContainer>
-          <Gift color={color} />
+          <Gift>
+            <Gift.Box color={color} />
+          </Gift>
         </Container>
 
         <Button onClick={onNext} $buttonType="primary">
