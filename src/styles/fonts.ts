@@ -49,6 +49,11 @@ export const TYPOGRAPHY_STYLES = {
     lineHeight: 25.6,
     fontWeight: 400,
   },
+  Caption2_M: {
+    fontSize: 13,
+    lineHeight: 25.6,
+    fontWeight: 400,
+  },
 };
 
 export const getTypographyStyles = (typography: keyof typeof TYPOGRAPHY_STYLES) => {

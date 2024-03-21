@@ -9,6 +9,29 @@ import BoxDetail from '@/components/DonationBoxDetail/BoxDetail';
 import DonationDetail from '@/components/DonationBoxDetail/DonationDetail';
 import { DonationBox } from '@/types/donationBox';
 
+// function getCookie(name: string) {
+//   const matches = document.cookie.match(
+//     new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
+//   );
+//   return matches ? decodeURIComponent(matches[1]) : undefined;
+// }
+
+// const clientPostNewBox = async (box: DonationBox) => {
+//   const accessToken = getCookie('access_token');
+
+//   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/donation-boxes`, {
+//     method: 'POST',
+//     body: JSON.stringify(box),
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${accessToken}`,
+//     },
+//   });
+
+//   console.log('response', response);
+//   return response.json();
+// };
+
 export default function FunnerPage() {
   const methods = useForm();
   const [step, setStep] = useState<'donation' | 'boxDetail' | 'boxDescription'>('donation');
@@ -18,11 +41,11 @@ export default function FunnerPage() {
     const response = await postNewBox(data as DonationBox);
     console.log('reponse', response);
   };
+
   return (
     <FormProvider {...methods}>
       <main>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <h1>Funnel Page</h1>
           {step === 'donation' && (
             <DonationDetail
               register={methods.register}

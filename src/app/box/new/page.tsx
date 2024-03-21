@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import newBoxButton from '@/public/newBoxButton.png';
@@ -24,10 +24,10 @@ const Wrapper = styled.div`
 
 export default function MakeNewBox() {
   const router = useRouter();
+  const pathname = usePathname();
   //box 리스트를 가져온 후 박스 리스트가 있을때와 없을때를 분기처리 해야할 함
   const makeNewBox = () => {
-    console.log('생성');
-    router.push('/gift/new/funnel');
+    router.push(`${pathname}/funnel`);
   };
 
   return (
