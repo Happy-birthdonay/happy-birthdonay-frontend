@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FieldValue, FieldValues, useForm, UseFormRegister } from 'react-hook-form';
@@ -10,8 +11,11 @@ import Chips from '@/components/Chips';
 import ColorButton from '@/components/ColorButton';
 import Gift from '@/components/GiftBox';
 import Input from '@/components/Input';
+import HappinessSrc from '@/public/icon/clover.svg';
+import HealthSrc from '@/public/icon/health.svg';
+import PeaceSrc from '@/public/icon/mdi_peace.svg';
+import LoveSrc from '@/public/icon/user-love.svg';
 import { getTypographyStyles } from '@/styles/fonts';
-import myTheme from '@/styles/theme';
 import { type BoxColor } from '@/types/donationBox';
 
 const Wrapper = styled.div`
@@ -48,10 +52,10 @@ const ChipContainer = styled.div`
   width: 100%;
   display: grid;
   gap: 9px 6px;
-  grid-template-columns: fit-content(100px) fit-content(100px) fit-content(100px);
-  justify-content: center;
+  grid-template-columns: fit-content(60px) fit-content(40px);
+  justify-content: flex-start;
   button {
-    justify-self: center;
+    justify-self: flex-start;
   }
 `;
 
@@ -60,46 +64,77 @@ const Text = styled.p`
 `;
 
 const ColorChips = [
-  { key: 'blue', color: myTheme.colors.button['blue'], children: 'Blue' },
-  { key: 'orange', color: myTheme.colors.button['orange'], children: 'Orange' },
-  { key: 'green', color: myTheme.colors.button['green'], children: 'Green' },
-  { key: 'yellow', color: myTheme.colors.button['yellow'], children: 'Yellow' },
-  { key: 'pink', color: myTheme.colors.button['pink'], children: 'Pink' },
-  { key: 'violet', color: myTheme.colors.button['violet'], children: 'Violet' },
+  {
+    key: 'health',
+    color: '#844AFF',
+    children: (
+      <>
+        Health
+        <Image alt="health" src={HealthSrc} />
+      </>
+    ),
+  },
+  {
+    key: 'peace',
+    color: '#6ACD4F',
+    children: (
+      <>
+        Peace
+        <Image alt="peace" src={PeaceSrc} />
+      </>
+    ),
+  },
+  {
+    key: 'happiness',
+    color: '#EFBEED',
+    children: (
+      <>
+        Happiness
+        <Image alt="happiness" src={HappinessSrc} />
+      </>
+    ),
+  },
+  {
+    key: 'love',
+    color: '#E8555F',
+    children: (
+      <>
+        Love
+        <Image alt="love" src={LoveSrc} />
+      </>
+    ),
+  },
 ];
 
-type BoxDetailProps = {
+type GuestDetailProps = {
   register: UseFormRegister<FieldValues>;
   onNext: (data: FieldValues) => void;
 };
 
-function BoxDetail(props: BoxDetailProps) {
+function GuestDetail(props: GuestDetailProps) {
   const { register, onNext } = props;
   const [color, setColor] = useState('none');
 
   const selectColor = (color: string) => {
     console.log('color', color);
     setColor(color);
-    register('color', { value: color });
+    register('tag', { value: color });
   };
 
   return (
     <Wrapper>
       <div>
         <Container>
-          <Input label="기부 상자 이름을 적어주세요." placeholder="상자 이름" {...register('boxTitle')} />
+          <Input label="닉네임을 적어주세요." placeholder="독고다이 악어" {...register('createdBy')} />
           <ColorContainer>
-            <Text>원하는 색을 골라주세요.</Text>
+            <Text>메시지에 담고 싶은 선물을 골라주세요</Text>
             <Chips
               chips={ColorChips}
               onSelect={(key) => {
-                register('color', { value: key });
+                register('tag', { value: key });
               }}
             />
           </ColorContainer>
-          <Gift>
-            <Gift.Box color={color} />
-          </Gift>
         </Container>
 
         <Button onClick={onNext} $buttonType="primary">
@@ -110,4 +145,4 @@ function BoxDetail(props: BoxDetailProps) {
   );
 }
 
-export default BoxDetail;
+export default GuestDetail;

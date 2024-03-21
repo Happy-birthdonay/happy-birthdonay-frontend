@@ -3,11 +3,14 @@ import styled from 'styled-components';
 
 import { getTypographyStyles } from '@/styles/fonts';
 
-const Wrapper = styled.button<{ color: string; $unSelected: boolean }>`
+const Wrapper = styled.button<{ $chipColor: string; $unSelected: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
   width: fit-content;
   padding: 15px 30px;
-  background-color: ${({ theme, color, $unSelected }) =>
-    $unSelected ? theme.colors.main.grey : theme.colors.button[color]};
+  background-color: ${({ theme, $chipColor, $unSelected }) => ($unSelected ? theme.colors.main.grey : $chipColor)};
   height: 50px;
   border-radius: 30px;
   color: ${({ theme }) => theme.colors.main.white};
@@ -17,17 +20,17 @@ const Wrapper = styled.button<{ color: string; $unSelected: boolean }>`
 
 type ButtonProps = {
   onClick?: MouseEventHandler<HTMLButtonElement>;
-  color: string;
   children: React.ReactNode;
+  $chipColor: string;
   $unSelected: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 function ColorButton(props: ButtonProps) {
-  const { children, $unSelected = false, ...rest } = props;
+  const { children, $unSelected = false, $chipColor, ...rest } = props;
   //선택되지 않은 props
 
   return (
-    <Wrapper $unSelected={$unSelected} {...rest}>
+    <Wrapper $unSelected={$unSelected} $chipColor={$chipColor} {...rest}>
       {children}
     </Wrapper>
   );
