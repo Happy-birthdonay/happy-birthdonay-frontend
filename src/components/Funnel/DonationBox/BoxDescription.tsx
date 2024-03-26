@@ -1,5 +1,6 @@
 'use client';
 
+import { MouseEventHandler } from 'react';
 import { FieldValues, useForm, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -31,7 +32,7 @@ const Container = styled.div`
 
 type BoxDescriptionProps = {
   register: UseFormRegister<FieldValues>;
-  onNext: (data: FieldValues) => void;
+  onNext: MouseEventHandler<HTMLButtonElement>;
 };
 
 function BoxDescription(props: BoxDescriptionProps) {

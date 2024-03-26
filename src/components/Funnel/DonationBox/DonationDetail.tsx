@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { MouseEvent, MouseEventHandler } from 'react';
 import { FieldValues, useForm, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -32,7 +33,7 @@ const Container = styled.div`
 
 type DonationDetailProps = {
   register: UseFormRegister<FieldValues>;
-  onNext: (data: FieldValues) => void;
+  onNext: MouseEventHandler<HTMLButtonElement>;
 };
 
 function DonationDetail(props: DonationDetailProps) {

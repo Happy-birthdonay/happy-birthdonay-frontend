@@ -22,7 +22,7 @@ type ButtonProps = {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   children: React.ReactNode;
   $chipColor: string;
-  $unSelected: boolean;
+  $unSelected?: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 function ColorButton(props: ButtonProps) {

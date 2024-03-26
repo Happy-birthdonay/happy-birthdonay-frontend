@@ -13,7 +13,7 @@ type TitleProps = {
 
 function Title(props: TitleProps) {
   const { text } = props;
-  return <Wrapper>{text}</Wrapper>;
+  return <Wrapper>[ {text} ]</Wrapper>;
 }
 
 export default Title;
