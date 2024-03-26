@@ -18,6 +18,11 @@ const Wrapper = styled.button<{ $buttonType: ButtonProps['$buttonType'] }>`
   border: ${({ $buttonType, theme }) => ($buttonType === 'primary' ? 'none' : `1px solid ${theme.colors.main.red}`)};
 
   ${getTypographyStyles('Body2_B')}
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.main.grey};
+    color: ${({ theme }) => theme.colors.main.white};
+  }
 `;
 
 type ButtonProps = {
@@ -27,9 +32,9 @@ type ButtonProps = {
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 function Button(props: ButtonProps) {
-  const { $buttonType = 'primary', onClick, children } = props;
+  const { $buttonType = 'primary', onClick, children, ...rest } = props;
   return (
-    <Wrapper as="button" onClick={onClick} $buttonType={$buttonType}>
+    <Wrapper as="button" onClick={onClick} $buttonType={$buttonType} {...rest}>
       {children}
     </Wrapper>
   );
