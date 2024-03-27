@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import { FieldValue, FieldValues, useForm, useFormContext, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -16,14 +16,6 @@ import { type BoxColor } from '@/types/donationBox';
 
 const Wrapper = styled.div`
   height: 100%;
-
-  form {
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
 `;
 
 const Container = styled.div`
@@ -70,7 +62,7 @@ const ColorChips = [
 
 type BoxDetailProps = {
   register: UseFormRegister<FieldValues>;
-  onNext: (data: FieldValues) => void;
+  onNext: MouseEventHandler<HTMLButtonElement>;
 };
 
 function BoxDetail(props: BoxDetailProps) {
