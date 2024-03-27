@@ -1,19 +1,70 @@
 'use client';
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { FieldValues, FormProvider, useForm } from 'react-hook-form';
+import styled from 'styled-components';
 
-import GuestDetail from '@/components/Funnel/Message/GuestDetail';
+import BeforeOpened from '@/components/Funnel/DonationBox/BeforeOpened';
+import Opened from '@/components/Funnel/DonationBox/Opened';
+import Complete from '@/components/Funnel/GuestMessage/Complete';
+import GuestDetail from '@/components/Funnel/GuestMessage/GuestDetail';
+import Message from '@/components/Funnel/GuestMessage/Message';
+import { useUser } from '@/store/userStore';
 
-function MessagePage() {
+type MessagePageProps = {
+  params: { boxId: string };
+};
+
+const Wrapper = styled.main`
+  height: 100%;
+
+  form {
+    height: 100%;
+  }
+`;
+
+function MessagePage(props: MessagePageProps) {
+  const { params } = props;
+  const router = useRouter();
   const methods = useForm();
+  const user = useUser();
 
-  const [step, setStep] = useState<'donation' | 'boxDetail' | 'boxDescription'>('donation');
+  const [step, setStep] = useState<'guestDetail' | 'message' | 'complete'>('guestDetail');
+
+  const onSubmit = async (data: FieldValues) => {
+    console.log('onSubmit data', data);
+    const boxId = params.boxId;
+    const requestData = { ...data, tag: data.tag.key, boxId };
+    const response = fetch('/api/messages', {
+      method: 'POST',
+      body: JSON.stringify(requestData),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.access_token}`,
+      },
+    });
+    console.log('response', response);
+  };
 
   return (
-    <h1>
-      <GuestDetail register={methods.register} onNext={() => {}} />
-    </h1>
+    <FormProvider {...methods}>
+      <Wrapper>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          {step === 'guestDetail' && (
+            <GuestDetail
+              register={methods.register}
+              onNext={() => {
+                setStep('message');
+                console.log('click');
+              }}
+            />
+          )}
+          {step === 'message' && <Message register={methods.register} onNext={() => {}} />}
+          {step === 'complete' && <Complete onNext={() => router.push('/')} />}
+        </form>
+      </Wrapper>
+    </FormProvider>
   );
 }
 export default MessagePage;

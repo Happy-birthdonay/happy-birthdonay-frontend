@@ -25,7 +25,7 @@ function TextField(props: TextFieldProps, ref: React.Ref<HTMLTextAreaElement>) {
 
   return (
     <Wrapper>
-      <textarea ref={ref} type="text" placeholder="기부처 이름" {...rest} />
+      <textarea ref={ref} type="text" {...rest} />
     </Wrapper>
   );
 }
