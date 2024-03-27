@@ -12,6 +12,7 @@ import { useUser, useUserActions } from '@/store/userStore';
 import { getTypographyStyles } from '@/styles/fonts';
 import ApiResponse from '@/types/api-response';
 import { User } from '@/types/user';
+import getCookie from '@/utils/getCookie';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -35,12 +36,7 @@ const Container = styled.div`
     ${getTypographyStyles('Headline3_B')}
   }
 `;
-function getCookie(name: string) {
-  const matches = document.cookie.match(
-    new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
-  );
-  return matches ? decodeURIComponent(matches[1]) : undefined;
-}
+
 export default function LoginForm() {
   const code = typeof window !== 'undefined' ? new URL(window.location.toString()).searchParams.get('code') : null;
   const router = useRouter();

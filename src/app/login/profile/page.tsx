@@ -3,7 +3,7 @@
 import { type RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 import { cookies } from 'next/headers';
 
-import LoginForm from '@/components/\blogin/LoginForm';
+import LoginForm from '@/components/login/LoginForm';
 
 async function getUserInfo(accessToken: RequestCookie) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users`, {
