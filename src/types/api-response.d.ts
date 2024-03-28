@@ -9,7 +9,7 @@ declare namespace ApiResponse {
     result: string;
   }
 
-  interface ResponseAuthTokenData {
+  interface ResponseAuthTokenData extends ResponseResult {
     data: User;
   }
 }

@@ -1,5 +1,8 @@
-export const postOauthToken = async <T>(code: string): Promise<T> => {
-  const response = await fetch('/api/oauth/token', {
+import ApiResponse from '@/types/api-response';
+
+export const postOauthToken = async (code: string | null): Promise<ApiResponse.ResponseAuthTokenData> => {
+  const baseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_BASE_URL : 'api';
+  const response = await fetch(`${baseUrl}/oauth/token`, {
     method: 'POST',
     body: JSON.stringify({ code }),
     headers: {
