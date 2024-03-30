@@ -8,32 +8,8 @@ import { postNewBox } from '@/api/box';
 import BoxDescription from '@/components/Funnel/DonationBox/BoxDescription';
 import BoxDetail from '@/components/Funnel/DonationBox/BoxDetail';
 import DonationDetail from '@/components/Funnel/DonationBox/DonationDetail';
-import { useUser } from '@/store/userStore';
+import { useUser } from '@/store/user/userStore';
 import { DonationBox } from '@/types/donationBox';
-import getCookie from '@/utils/getCookie';
-
-// function getCookie(name: string) {
-//   const matches = document.cookie.match(
-//     new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
-//   );
-//   return matches ? decodeURIComponent(matches[1]) : undefined;
-// }
-
-// const clientPostNewBox = async (box: DonationBox) => {
-//   const accessToken = getCookie('access_token');
-
-//   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/donation-boxes`, {
-//     method: 'POST',
-//     body: JSON.stringify(box),
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${accessToken}`,
-//     },
-//   });
-
-//   console.log('response', response);
-//   return response.json();
-// };
 
 export default function FunnerPage() {
   const pathname = usePathname();
@@ -49,16 +25,7 @@ export default function FunnerPage() {
     console.log('onSubmit data', user, data);
     // const response = await postNewBox(data as DonationBox);
     try {
-      const cookie = getCookie('access_token');
-
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/donation-boxes`, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookie}`,
-        },
-      });
+      const response = await postNewBox(data as DonationBox);
       console.log('response', response);
       //TODO:response의 boxId로 변경
       if (response.ok) {
@@ -84,7 +51,7 @@ export default function FunnerPage() {
           {step === 'boxDetail' && (
             <BoxDetail
               register={methods.register}
-              onNext={(data) => {
+              onNext={() => {
                 setStep('boxDescription');
               }}
             />
@@ -92,7 +59,7 @@ export default function FunnerPage() {
           {step === 'boxDescription' && (
             <BoxDescription
               register={methods.register}
-              onNext={(data: FieldValues) => {
+              onNext={() => {
                 methods.handleSubmit(onSubmit);
               }}
             />

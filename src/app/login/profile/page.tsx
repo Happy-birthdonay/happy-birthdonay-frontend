@@ -1,24 +1,26 @@
 'use server';
 
-import { type RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
-import { cookies } from 'next/headers';
+import { headers } from 'next/headers';
 
+import { postOauthToken } from '@/api/oauth';
 import LoginForm from '@/components/login/LoginForm';
+import UserClientSideStateManager from '@/store/user/UserClientSideStateManager';
 
-async function getUserInfo(accessToken: RequestCookie) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken.value}`,
-    },
-  });
-  return response;
-}
 export default async function Home() {
-  const cookie = cookies();
-  const accessToken = cookie.get('access_token');
-  const refreshToken = cookie.get('refresh_token');
+  const headersList = headers();
+  const headerUrl = headersList.get('x-url') || '';
 
-  return <LoginForm />;
+  const url = new URL(headerUrl);
+  const code = url.searchParams.get('code');
+
+  console.log('code', code);
+  const response = await postOauthToken(code);
+  console.log('response', response.data);
+
+  return (
+    <>
+      <UserClientSideStateManager state={response.data} />
+      <LoginForm />
+    </>
+  );
 }

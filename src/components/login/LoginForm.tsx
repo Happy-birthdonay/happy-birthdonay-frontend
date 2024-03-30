@@ -5,14 +5,12 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import { postOauthToken } from '@/api/oauth';
+import { signUp } from '@/api/user';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
-import { useUser, useUserActions } from '@/store/userStore';
+import { useUser } from '@/store/user/userStore';
 import { getTypographyStyles } from '@/styles/fonts';
-import ApiResponse from '@/types/api-response';
 import { User } from '@/types/user';
-import getCookie from '@/utils/getCookie';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -38,41 +36,24 @@ const Container = styled.div`
 `;
 
 export default function LoginForm() {
-  const code = typeof window !== 'undefined' ? new URL(window.location.toString()).searchParams.get('code') : null;
   const router = useRouter();
 
   const user = useUser();
-  const { setUser } = useUserActions();
   const { register, handleSubmit, reset } = useForm<User>();
 
   useEffect(() => {
-    //인가 코드를 받아서 토큰을 받아야함
-    console.log('user', user);
-    const handOverCode = async () => {
-      if (code && user.name === undefined && user.birthday === undefined) {
-        const { data } = await postOauthToken<ApiResponse.ResponseAuthTokenData>(code);
-        //DateTime 을 YYMMDD로 변환
-
-        setUser(data);
-        reset({ name: data.name, birthday: data.birthday });
-      }
-    };
-    handOverCode();
+    reset({ name: user.name, birthday: user.birthday });
   }, []);
 
   const onSignUp = async (data: User) => {
-    console.log('onSignUp data', data);
-    const accessToken = getCookie('access_token');
-    const response = await fetch('/api/sign-up', {
-      method: 'PATCH',
-      body: JSON.stringify({ name: data.name, birthday: data.birthday }),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    console.log('response', response);
-    router.push('/box/new');
+    try {
+      const response = await signUp(data);
+      if (response.ok) {
+        router.push('/box/new');
+      } else {
+        alert(response.statusText);
+      }
+    } catch (e) {}
   };
   return (
     <Wrapper>
