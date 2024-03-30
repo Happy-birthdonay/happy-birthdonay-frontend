@@ -1,16 +1,14 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import BeforeOpened from '@/components/Funnel/DonationBox/BeforeOpened';
-import Opened from '@/components/Funnel/DonationBox/Opened';
 import Complete from '@/components/Funnel/GuestMessage/Complete';
 import GuestDetail from '@/components/Funnel/GuestMessage/GuestDetail';
 import Message from '@/components/Funnel/GuestMessage/Message';
-import { useUser } from '@/store/userStore';
+import { useUser } from '@/store/user/userStore';
 
 type MessagePageProps = {
   params: { boxId: string };
