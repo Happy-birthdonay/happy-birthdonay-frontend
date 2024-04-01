@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
   if (accessToken) requestHeaders.set('Authorization', `Bearer ${accessToken.value}`);
 
   requestHeaders.set('x-url', request.url);
-  // requestHeaders.set('Content-Type', 'application/json');
+
   return NextResponse.next({
     request: {
       // Apply new request headers

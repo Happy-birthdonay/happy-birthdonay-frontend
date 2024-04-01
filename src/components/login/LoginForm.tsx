@@ -5,10 +5,11 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
+import { postOauthToken } from '@/api/oauth';
 import { signUp } from '@/api/user';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
-import { useUser } from '@/store/user/userStore';
+import { useUser, useUserActions } from '@/store/user/userStore';
 import { getTypographyStyles } from '@/styles/fonts';
 import { User } from '@/types/user';
 
@@ -38,11 +39,24 @@ const Container = styled.div`
 export default function LoginForm() {
   const router = useRouter();
 
+  const { setUser } = useUserActions();
   const user = useUser();
   const { register, handleSubmit, reset } = useForm<User>();
 
   useEffect(() => {
-    reset({ name: user.name, birthday: user.birthday });
+    const getToken = async () => {
+      try {
+        const url = new URL(window.location.href);
+        const code = url.searchParams.get('code');
+
+        const { result, data } = await postOauthToken(code);
+        if (result === 'success') {
+          setUser(data);
+          reset({ name: data.name, birthday: data.birthday });
+        }
+      } catch (e) {}
+    };
+    getToken();
   }, []);
 
   const onSignUp = async (data: User) => {
