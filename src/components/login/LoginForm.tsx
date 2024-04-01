@@ -50,7 +50,7 @@ export default function LoginForm() {
         const code = url.searchParams.get('code');
 
         const { result, data } = await postOauthToken(code);
-        if (result === 'success') {
+        if (result === 'succeed') {
           setUser(data);
           reset({ name: data.name, birthday: data.birthday });
         }
