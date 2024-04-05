@@ -38,14 +38,18 @@ type DonationDetailProps = {
 
 function DonationDetail(props: DonationDetailProps) {
   const { register, onNext } = props;
-  const router = useRouter();
 
   return (
     <Wrapper>
       <Container>
         <Input label="어디에 기부할까요?" placeholder="기부처 이름" {...register('name')} />
         <Input label="링크를 넣어주세요" placeholder="기부처 링크" {...register('url')} />
-        <Input label="기부할 금액을 알려주세요" placeholder="기부할 금액" {...register('amount')} />
+        <Input
+          label="기부할 금액을 알려주세요"
+          placeholder="기부할 금액"
+          type="number"
+          {...register('amount', { valueAsNumber: true, validate: (value) => value > 0 })}
+        />
       </Container>
 
       <Button onClick={onNext} $buttonType="primary">

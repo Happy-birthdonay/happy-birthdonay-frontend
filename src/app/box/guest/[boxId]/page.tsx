@@ -1,14 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
 import Gift from '@/components/GiftBox';
-import ShardIconUrl from '@/public/icon/share-16.svg';
 import { getTypographyStyles } from '@/styles/fonts';
-import { copyClipBoard } from '@/utils/copyClipBoard';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -47,7 +44,6 @@ type GuestPageProps = {
 
 function GuestPage(props: GuestPageProps) {
   const { params } = props;
-  console.log('boxId', params.boxId);
   const router = useRouter();
   const pathname = usePathname();
 

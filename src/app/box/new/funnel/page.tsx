@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 
-import { postNewBox } from '@/api/box';
+import { postNewBox } from '@/api/box/client';
 import BoxDescription from '@/components/Funnel/DonationBox/BoxDescription';
 import BoxDetail from '@/components/Funnel/DonationBox/BoxDetail';
 import DonationDetail from '@/components/Funnel/DonationBox/DonationDetail';
