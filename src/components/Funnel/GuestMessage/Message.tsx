@@ -1,23 +1,12 @@
 'use client';
 
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { FieldValue, FieldValues, useForm, useFormContext, UseFormRegister } from 'react-hook-form';
+import { FieldValues, useFormContext, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
-import Chips from '@/components/Chips';
 import ColorButton from '@/components/ColorButton';
-import Gift from '@/components/GiftBox';
-import Input from '@/components/Input';
 import TextField from '@/components/TextField';
-import HappinessSrc from '@/public/icon/clover.svg';
-import HealthSrc from '@/public/icon/health.svg';
-import PeaceSrc from '@/public/icon/mdi_peace.svg';
-import LoveSrc from '@/public/icon/user-love.svg';
 import { getTypographyStyles } from '@/styles/fonts';
-import { type BoxColor } from '@/types/donationBox';
 
 const Wrapper = styled.div`
   height: 100%;

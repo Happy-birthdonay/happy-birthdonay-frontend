@@ -28,8 +28,8 @@ export default function FunnerPage() {
       const response = await postNewBox(data as DonationBox);
       console.log('response', response);
       //TODO:response의 boxId로 변경
-      if (response.ok) {
-        router.push(`${pathname}/complete/1`);
+      if (response.result === 'succeed') {
+        router.push(`${pathname}/complete/${response.data.boxId}`);
       } else {
         window.alert(response);
       }

@@ -62,8 +62,11 @@ export default function LoginForm() {
   const onSignUp = async (data: User) => {
     try {
       const response = await signUp(data);
-      if (response.ok) {
-        router.push('/box/new');
+      console.log('response', response);
+      if (response.result === 'succeed') {
+        const { data } = response;
+        console.log('data', data);
+        router.push(`/box/new/funnel`);
       } else {
         alert(response.statusText);
       }

@@ -12,6 +12,10 @@ declare namespace ApiResponse {
   interface ResponseAuthTokenData extends ResponseResult {
     data: User;
   }
+
+  interface ResponsePostNewBox extends ResponseResult {
+    data: { boxId: number };
+  }
 }
 
 export default ApiResponse;
