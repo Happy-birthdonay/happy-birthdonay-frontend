@@ -1,3 +1,4 @@
+import { Message } from './message';
 import { User } from './user';
 
 declare namespace ApiResponse {
@@ -15,6 +16,10 @@ declare namespace ApiResponse {
 
   interface ResponsePostNewBox extends ResponseResult {
     data: { boxId: number };
+  }
+
+  interface ResponseMessageList extends ResponseResult {
+    data: Message[];
   }
 }
 

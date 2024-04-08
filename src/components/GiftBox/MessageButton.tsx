@@ -1,3 +1,5 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
@@ -55,6 +57,7 @@ const Contents = styled.p`
 `;
 
 type MessageButtonProps = {
+  boxId: number;
   createdBy: string;
   tag: MessageTag;
   contents: string;
@@ -62,11 +65,11 @@ type MessageButtonProps = {
 };
 
 function MessageButton(props: MessageButtonProps) {
-  const { createdBy, tag, contents, messageId } = props;
+  const { boxId, createdBy, tag, contents, messageId } = props;
   const router = useRouter();
 
   return (
-    <Wrapper tag={tag} onClick={() => router.push(`/message/${messageId}`)}>
+    <Wrapper tag={tag} onClick={() => router.push(`/box/${boxId}/message/${messageId}`)}>
       <CreatedBy>{createdBy}</CreatedBy>
       <Contents>{contents}</Contents>
     </Wrapper>
