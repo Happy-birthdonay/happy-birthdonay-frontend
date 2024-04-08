@@ -9,7 +9,6 @@ import { postNewMessage } from '@/api/box/client';
 import Complete from '@/components/Funnel/GuestMessage/Complete';
 import GuestDetail from '@/components/Funnel/GuestMessage/GuestDetail';
 import Message from '@/components/Funnel/GuestMessage/Message';
-import { useUser } from '@/store/user/userStore';
 
 type MessagePageProps = {
   params: { boxId: string };
@@ -31,10 +30,16 @@ function MessagePage(props: MessagePageProps) {
   const [step, setStep] = useState<'guestDetail' | 'message' | 'complete'>('guestDetail');
 
   const createNewMessage = async (data: FieldValues) => {
-    const boxId = Number(params.boxId);
-    const requestData = { ...data, tag: data.tag.key, boxId };
-    const response = postNewMessage(requestData);
-    console.log('createNewMessage response', response);
+    try {
+      const boxId = Number(params.boxId);
+      const requestData = { ...data, tag: data.tag.key, boxId };
+      const response = await postNewMessage(requestData);
+      if (response.result === 'success') {
+        setStep('complete');
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -46,11 +51,17 @@ function MessagePage(props: MessagePageProps) {
               register={methods.register}
               onNext={() => {
                 setStep('message');
-                console.log('click');
               }}
             />
           )}
-          {step === 'message' && <Message register={methods.register} onNext={() => {}} />}
+          {step === 'message' && (
+            <Message
+              register={methods.register}
+              onNext={() => {
+                methods.handleSubmit(createNewMessage);
+              }}
+            />
+          )}
           {step === 'complete' && <Complete onNext={() => router.push('/')} />}
         </form>
       </Wrapper>

@@ -49,7 +49,9 @@ function CompleteBox(props: CompleteBoxProps) {
   const { donationBox } = props;
 
   const handleCopyClipBoard = () => {
-    const url = window.location.href;
+    //host url get
+    const host = window.location.host;
+    const url = `${host}/box/${donationBox.boxId}/guest`;
     copyClipBoard(url);
   };
 

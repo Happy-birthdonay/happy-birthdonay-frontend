@@ -49,7 +49,7 @@ type MessageProps = {
 
 function Message(props: MessageProps) {
   const { register, onNext } = props;
-  const { setValue, watch } = useFormContext();
+  const { watch } = useFormContext();
   const createdBy = watch('createdBy');
   const tag = watch('tag');
 

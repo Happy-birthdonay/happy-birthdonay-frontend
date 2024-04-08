@@ -1,22 +1,18 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { MouseEventHandler, useState } from 'react';
-import { FieldValue, FieldValues, useForm, useFormContext, UseFormRegister } from 'react-hook-form';
+import { MouseEventHandler } from 'react';
+import { FieldValues, useFormContext, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
 import Chips from '@/components/Chips';
-import ColorButton from '@/components/ColorButton';
-import Gift from '@/components/GiftBox';
 import Input from '@/components/Input';
 import HappinessSrc from '@/public/icon/clover.svg';
 import HealthSrc from '@/public/icon/health.svg';
 import PeaceSrc from '@/public/icon/mdi_peace.svg';
 import LoveSrc from '@/public/icon/user-love.svg';
 import { getTypographyStyles } from '@/styles/fonts';
-import { type BoxColor } from '@/types/donationBox';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -38,17 +34,6 @@ const ColorContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 18px;
-`;
-
-const ChipContainer = styled.div`
-  width: 100%;
-  display: grid;
-  gap: 9px 6px;
-  grid-template-columns: fit-content(60px) fit-content(40px);
-  justify-content: flex-start;
-  button {
-    justify-self: flex-start;
-  }
 `;
 
 const Text = styled.p`
