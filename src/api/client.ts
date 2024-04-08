@@ -1,11 +1,12 @@
-// import getCookie from '@/utils/getCookie';
+'use server';
+
+import { cookies } from 'next/headers';
 
 const client = (url: string, options: RequestInit) => {
-  // const access_token = getCookie('access_token');
   options.headers = {
     ...options.headers,
     'Content-Type': 'application/json',
-    // Authorization: `Bearer ${access_token}`,
+    Authorization: `Bearer ${cookies().get('access_token')?.value}`,
   };
   return fetch(url, options);
 };
