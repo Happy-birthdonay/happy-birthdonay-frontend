@@ -1,12 +1,13 @@
+'use client';
+
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import birthdayCakeOutline from 'public/birthdayCakeOutline.png';
-import { MouseEventHandler } from 'react';
-import { FieldValues, UseFormRegister } from 'react-hook-form/dist/types';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
 import { getTypographyStyles } from '@/styles/fonts';
+import { DonationBox } from '@/types/donationBox';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -27,12 +28,11 @@ const Wrapper = styled.div`
 const Container = styled.div``;
 
 type OpenedProps = {
-  register?: UseFormRegister<FieldValues>;
-  onNext: MouseEventHandler<HTMLButtonElement>;
+  box: DonationBox;
 };
 
 function Opened(props: OpenedProps) {
-  const { onNext } = props;
+  const { box } = props;
   const router = useRouter();
 
   const people = 10;

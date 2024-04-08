@@ -1,11 +1,14 @@
-import { useRouter } from 'next/navigation';
-import { MouseEventHandler, useMemo } from 'react';
-import { FieldValues, UseFormRegister } from 'react-hook-form/dist/types';
+'use client';
+
+import dayjs from 'dayjs';
+import { usePathname, useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
 import Gift from '@/components/GiftBox';
 import { getTypographyStyles } from '@/styles/fonts';
+import { DonationBox } from '@/types/donationBox';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -23,33 +26,30 @@ const Wrapper = styled.div`
     ${getTypographyStyles('Body2_M')}
   }
 `;
-const Container = styled.div``;
-
-const box = {
-  color: 'pink',
-  title: '그린피스 멋있어요',
-  openAt: '2024-05-05',
-};
 
 type BeforeOpenedProps = {
-  onNext: MouseEventHandler<HTMLButtonElement>;
+  box: DonationBox;
 };
 
 function BeforeOpened(props: BeforeOpenedProps) {
-  const { onNext } = props;
+  const { box } = props;
+  const pathName = usePathname();
   const router = useRouter();
 
-  //TODO: 상자 API 연동
-  const restTime = useMemo(() => {
-    const now = new Date();
-    const openAt = new Date(box.openAt);
-    //일 시간 분 초 단위로 계산
-    const diff = openAt.getTime() - now.getTime();
-    const restDay = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const restHour = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const canOpen = useMemo(() => {
+    const today = dayjs();
+    const openDate = dayjs(box.openDate);
+    return today.isBefore(openDate);
+  }, [box.openDate]);
 
+  const restTime = useMemo(() => {
+    const today = dayjs();
+    const openDate = dayjs(box.openDate);
+    //일 시간 분 초 단위로 계산
+    const restDay = openDate.diff(today, 'd');
+    const restHour = openDate.subtract(restDay, 'd').diff(today, 'h');
     return `${restDay}일 ${restHour}시간`;
-  }, []);
+  }, [box.openDate]);
 
   return (
     <Wrapper>
@@ -59,14 +59,21 @@ function BeforeOpened(props: BeforeOpenedProps) {
       </h3>
       <Gift>
         <Gift.Box color={box.color} />
-        <Gift.Title text={box.title} />
+        <Gift.Title text={box.boxTitle} />
       </Gift>
       <p>
         상자가 열리기 까지
         <br />
         {restTime} 남았어요!
       </p>
-      <Button disabled={true}>상자 열어보기</Button>
+      <Button
+        disabled={canOpen}
+        onClick={() => {
+          router.push(`${pathName}/open`);
+        }}
+      >
+        상자 열어보기
+      </Button>
     </Wrapper>
   );
 }

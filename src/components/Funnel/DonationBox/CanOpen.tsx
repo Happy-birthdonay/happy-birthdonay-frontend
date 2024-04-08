@@ -1,11 +1,12 @@
-import { useRouter } from 'next/navigation';
-import { MouseEventHandler, useMemo } from 'react';
-import { FieldValues, UseFormRegister } from 'react-hook-form/dist/types';
+'use client';
+
+import { usePathname, useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
 import Gift from '@/components/GiftBox';
 import { getTypographyStyles } from '@/styles/fonts';
+import { DonationBox } from '@/types/donationBox';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -23,33 +24,15 @@ const Wrapper = styled.div`
     ${getTypographyStyles('Body2_M')}
   }
 `;
-const Container = styled.div``;
-
-const box = {
-  color: 'pink',
-  title: '그린피스 멋있어요',
-  openAt: '2024-05-05',
-};
 
 type CanOpenProps = {
-  onNext: MouseEventHandler<HTMLButtonElement>;
+  box: DonationBox;
 };
 
 function CanOpen(props: CanOpenProps) {
-  const { onNext } = props;
+  const { box } = props;
+  const pathName = usePathname();
   const router = useRouter();
-
-  //TODO: 상자 API 연동
-  const restTime = useMemo(() => {
-    const now = new Date();
-    const openAt = new Date(box.openAt);
-    //일 시간 분 초 단위로 계산
-    const diff = openAt.getTime() - now.getTime();
-    const restDay = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const restHour = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
-    return `${restDay}일 ${restHour}시간`;
-  }, []);
 
   return (
     <Wrapper>
@@ -59,14 +42,20 @@ function CanOpen(props: CanOpenProps) {
       </h3>
       <Gift>
         <Gift.Box color={box.color} />
-        <Gift.Title text={box.title} />
+        <Gift.Title text={box.boxTitle} />
       </Gift>
       <p>
         상자를 개봉해
         <br />
         메시지를 확인하고 기부해보세요!
       </p>
-      <Button>상자 열어보기</Button>
+      <Button
+        onClick={() => {
+          router.push(`${pathName}/open`);
+        }}
+      >
+        상자 열어보기
+      </Button>
     </Wrapper>
   );
 }
