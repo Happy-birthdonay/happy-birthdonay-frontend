@@ -5,6 +5,9 @@ export const signUp = async (data: User) => {
 
   const response = await fetch(`${baseUrl}/sign-up`, {
     method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({ name: data.name, birthday: data.birthday }),
   });
   return response.json();

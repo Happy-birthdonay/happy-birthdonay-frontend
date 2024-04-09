@@ -1,12 +1,12 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import { postOauthToken } from '@/api/oauth';
-import { signUp } from '@/api/user';
+import { signUp } from '@/api/user/client';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import { useUser, useUserActions } from '@/store/user/userStore';
@@ -39,6 +39,8 @@ const Container = styled.div`
 export default function LoginForm() {
   const router = useRouter();
 
+  const [loading, setLoading] = useState(true);
+
   const { setUser } = useUserActions();
   const user = useUser();
   const { register, handleSubmit, reset } = useForm<User>();
@@ -49,11 +51,15 @@ export default function LoginForm() {
         const url = new URL(window.location.href);
         const code = url.searchParams.get('code');
 
-        const { result, data } = await postOauthToken(code);
+        const { result, message, data } = await postOauthToken(code);
+        if (message === 'Succeeded Kakao Login: User already exists') {
+          router.replace('/box');
+        }
         if (result === 'succeed') {
           setUser(data);
           reset({ name: data.name, birthday: data.birthday });
         }
+        setLoading(false);
       } catch (e) {}
     };
     getToken();
@@ -65,10 +71,14 @@ export default function LoginForm() {
       if (response.result === 'succeed') {
         router.push(`/box/new/funnel`);
       } else {
-        alert(response.statusText);
+        alert(response.msg);
       }
     } catch (e) {}
   };
+
+  if (loading) {
+    return <div>loading....</div>;
+  }
   return (
     <Wrapper>
       <form onSubmit={handleSubmit(onSignUp)}>
