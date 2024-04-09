@@ -1,4 +1,8 @@
+import styled from 'styled-components';
+
 import { getMessageList } from '@/api/message/server';
+import { MessageTag } from '@/types/message';
+import { TAG_COLOR } from '@/utils/const';
 
 type MessageDetailPageProps = {
   params: { boxId: string; id: string };
@@ -7,12 +11,12 @@ type MessageDetailPageProps = {
 async function MessageDetailPage(props: MessageDetailPageProps) {
   const { params } = props;
 
-  console.log('Mess here', params);
   const { data: messageList } = await getMessageList(Number(params.boxId));
-  console.log('messageList Herere', messageList);
   const message = messageList.find((message) => message.messageId === Number(params.id));
+
+  if (!message) return null;
   return (
-    <div>
+    <div style={{ backgroundColor: TAG_COLOR[message.tag]?.backgroundColor }}>
       {message?.contents} {message?.createdBy}
     </div>
   );

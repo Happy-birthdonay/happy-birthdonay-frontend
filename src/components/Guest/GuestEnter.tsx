@@ -49,7 +49,6 @@ function GuestEnter(props: GuestEnterProps) {
   const pathname = usePathname();
 
   const routerToMessage = () => {
-    console.log('click');
     router.push(`${pathname}/message`);
   };
 
@@ -57,14 +56,15 @@ function GuestEnter(props: GuestEnterProps) {
     <Wrapper>
       <Container>
         <h3>함께 기부해요 !</h3>
-        <Gift>
+        <Gift $width="100%">
           <Gift.Box color={box.color} />
           <Gift.Title text={box.boxTitle} />
           <Gift.Description text={box.boxDescription} />
         </Gift>
         <TextContainer>
           <p>
-            메시지를 작성하면 <br /> 당신의 마음을 {`[ ${box.name} ]`} 전달할 수 있어요!
+            메시지를 작성하면 당신의 마음을 <br /> {`<${box.name}>`}에 {box.createdBy}님이 {box.amount}원 전달할
+            예정이에요
           </p>
         </TextContainer>
       </Container>

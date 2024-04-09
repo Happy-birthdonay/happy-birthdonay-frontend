@@ -5,33 +5,15 @@ import styled from 'styled-components';
 
 import { getTypographyStyles } from '@/styles/fonts';
 import { MessageTag } from '@/types/message';
-
-const TAG_COLOR = {
-  health: {
-    border: '#844AFF',
-    backgroundColor: '#DEE21B',
-  },
-  peace: {
-    border: '#6ACD4F',
-    backgroundColor: '#FC5E33',
-  },
-  happiness: {
-    border: '#EFBEED',
-    backgroundColor: '#4FADF5',
-  },
-  love: {
-    border: '#E8555F',
-    backgroundColor: '#EFBEED',
-  },
-} as const;
+import { TAG_COLOR } from '@/utils/const';
 
 const Wrapper = styled.div<{ tag: MessageTag }>`
-  //grid
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
   border-radius: 23px;
-
+  text-align: left;
   background-color: ${(props) => TAG_COLOR[props.tag].backgroundColor};
   border: 3px solid ${(props) => TAG_COLOR[props.tag].border};
   padding: 15px 18px;
@@ -42,16 +24,15 @@ const Wrapper = styled.div<{ tag: MessageTag }>`
 
 const CreatedBy = styled.p`
   word-break: keep-all;
-  ${getTypographyStyles('Body2_M')}
+  ${getTypographyStyles('Body2_B')}
 `;
 
 const Contents = styled.p`
-  //한줄 로 표시
+  width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   word-break: break-all;
-  //한줄이 넘어가면 말 줄임표
 
   ${getTypographyStyles('Body2_M')}
 `;
@@ -71,7 +52,7 @@ function MessageButton(props: MessageButtonProps) {
   return (
     <Wrapper tag={tag} onClick={() => router.push(`/box/${boxId}/message/${messageId}`)}>
       <CreatedBy>{createdBy}</CreatedBy>
-      <Contents>{contents}</Contents>
+      <Contents>{contents.trim()}</Contents>
     </Wrapper>
   );
 }

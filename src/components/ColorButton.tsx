@@ -14,7 +14,9 @@ const Wrapper = styled.button<{ $chipColor: string; $unSelected: boolean }>`
   height: 50px;
   border-radius: 30px;
   color: ${({ theme }) => theme.colors.main.white};
-
+  float: left;
+  margin-right: 8px;
+  margin-bottom: 8px;
   ${getTypographyStyles('Body2_B')}
 `;
 

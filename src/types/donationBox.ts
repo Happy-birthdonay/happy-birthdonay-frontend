@@ -11,6 +11,7 @@ type DonationBox = {
   certCreatedAt: null;
   userId: number;
   createdAt: string;
+  createdBy: string;
   openDate: string;
   messageCount: number;
 };

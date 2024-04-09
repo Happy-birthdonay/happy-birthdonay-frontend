@@ -5,13 +5,11 @@ import ColorButton from './ColorButton';
 
 const ChipContainer = styled.div`
   width: 100%;
-  display: grid;
+  /* display: grid;
   gap: 9px 6px;
-  grid-template-columns: fit-content(100px) fit-content(100px) fit-content(100px);
-  justify-content: center;
-  button {
-    justify-self: center;
-  }
+  grid-template-columns: repeat(2, auto);
+  grid-auto-flow: row dense;
+  justify-content: flex-start; */
 `;
 type Chip = {
   key: string;
