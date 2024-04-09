@@ -21,6 +21,10 @@ declare namespace ApiResponse {
   interface ResponseMessageList extends ResponseResult {
     data: Message[];
   }
+
+  interface ResponseBoxList extends ResponseResult {
+    data: Pick<DonationBox, 'boxId' | 'color'>[];
+  }
 }
 
 export default ApiResponse;

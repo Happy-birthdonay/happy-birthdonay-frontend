@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 
 import BlueBox from '@/public/box/gift box=blue.png';

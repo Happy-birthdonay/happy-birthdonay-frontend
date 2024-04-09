@@ -1,3 +1,5 @@
+'use client';
+
 import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
@@ -5,10 +7,10 @@ import Description from './Description';
 import GiftImage from './GiftImage';
 import Title from './Title';
 
-const Wrapper = styled.div`
-  padding: 0 33px 33px;
-  width: 85%;
-  max-width: 400px;
+const Wrapper = styled.div<{ $width: string; $maxWidth: string }>`
+  padding: 0;
+  width: ${({ $width }) => $width};
+  max-width: ${({ $maxWidth }) => $maxWidth};
   aspect-ratio: 1/1;
   display: flex;
   flex-direction: column;
@@ -24,11 +26,15 @@ const Wrapper = styled.div`
   }
 `;
 
-type GiftProps = PropsWithChildren;
+type GiftProps = { onClick?: (e: React.MouseEvent) => void; $width?: string; $maxWidth?: string } & PropsWithChildren;
 
 function Gift(props: GiftProps) {
-  const { children } = props;
-  return <Wrapper>{children}</Wrapper>;
+  const { onClick, $width = '400px', $maxWidth = '100%', children } = props;
+  return (
+    <Wrapper onClick={onClick} $width={$width} $maxWidth={$maxWidth}>
+      {children}
+    </Wrapper>
+  );
 }
 
 Gift.Title = Title;

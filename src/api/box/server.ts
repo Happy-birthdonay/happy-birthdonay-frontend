@@ -1,6 +1,8 @@
+import ApiResponse from '@/types/api-response';
+import { DonationBox } from '@/types/donationBox';
 import client from '../client';
 
-export const getBoxList = async () => {
+export const getBoxList = async (): Promise<ApiResponse.ResponseBoxList> => {
   const baseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_BASE_URL : '/api';
 
   const response = await client(`${baseUrl}/donation-boxes`, {
