@@ -1,8 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { MouseEvent, MouseEventHandler } from 'react';
-import { FieldValues, useForm, UseFormRegister } from 'react-hook-form';
+import { MouseEventHandler } from 'react';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';

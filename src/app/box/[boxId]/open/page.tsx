@@ -1,7 +1,5 @@
 'use sever';
 
-import { revalidatePath } from 'next/cache';
-
 import { getBoxDetail } from '@/api/box/server';
 import { getMessageList } from '@/api/message/server';
 import Opened from '@/components/Funnel/DonationBox/Opened';
@@ -18,7 +16,6 @@ async function Page(props: PageProps) {
   const { data: box } = await getBoxDetail(boxId);
   const { data: messageList } = await getMessageList(boxId);
 
-  console.log('box', box);
   return (
     <div>
       {box.isDonated ? (
@@ -26,11 +23,11 @@ async function Page(props: PageProps) {
           {messageList.map((message) => (
             <MessageButton
               key={message.messageId}
-              boxId={message.boxId}
-              messageId={message.messageId}
-              tag={message.tag}
-              contents={message.contents.trim()}
-              createdBy={message.createdBy.trim()}
+              boxId={message.boxId!}
+              messageId={message.messageId!}
+              tag={message.tag!}
+              contents={message.contents!.trim()}
+              createdBy={message.createdBy!.trim()}
             />
           ))}
         </MessageList>

@@ -33,17 +33,6 @@ const ColorContainer = styled.div`
   gap: 18px;
 `;
 
-const ChipContainer = styled.div`
-  width: 100%;
-  display: grid;
-  gap: 9px 6px;
-  grid-template-columns: fit-content(100px) fit-content(100px) fit-content(100px);
-  justify-content: center;
-  button {
-    justify-self: center;
-  }
-`;
-
 const Text = styled.p`
   ${getTypographyStyles('Body2_M')}
 `;

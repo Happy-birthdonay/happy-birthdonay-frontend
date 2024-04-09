@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import birthdayCakeOutline from 'public/birthdayCakeOutline.png';
 import styled from 'styled-components';
 
@@ -38,7 +37,6 @@ type OpenedProps = {
 
 function Opened(props: OpenedProps) {
   const { box, messageList } = props;
-  const router = useRouter();
 
   const people = messageList.length;
   const total = box.amount * people;
@@ -48,6 +46,7 @@ function Opened(props: OpenedProps) {
   const onDonateWithRouter = async () => {
     try {
       const response = await patchDonatedByBox(box.boxId, true);
+      console.log(response);
       location.href = url;
     } catch (e) {
       console.error(e);

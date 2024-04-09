@@ -1,7 +1,4 @@
-import styled from 'styled-components';
-
 import { getMessageList } from '@/api/message/server';
-import { MessageTag } from '@/types/message';
 import { TAG_COLOR } from '@/utils/const';
 
 type MessageDetailPageProps = {
@@ -16,7 +13,7 @@ async function MessageDetailPage(props: MessageDetailPageProps) {
 
   if (!message) return null;
   return (
-    <div style={{ backgroundColor: TAG_COLOR[message.tag]?.backgroundColor }}>
+    <div style={{ backgroundColor: TAG_COLOR[message?.tag ?? 'none']?.backgroundColor }}>
       {message?.contents} {message?.createdBy}
     </div>
   );

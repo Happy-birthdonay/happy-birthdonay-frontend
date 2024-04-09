@@ -1,4 +1,4 @@
-import { forwardRef, useRef } from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   }
 `;
 
-type TextFieldProps = {} & React.InputHTMLAttributes<HTMLTextAreaElement>;
+type TextFieldProps = NonNullable<unknown> & React.InputHTMLAttributes<HTMLTextAreaElement>;
 function TextField(props: TextFieldProps, ref: React.Ref<HTMLTextAreaElement>) {
   const { ...rest } = props;
 

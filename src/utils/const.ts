@@ -15,4 +15,8 @@ export const TAG_COLOR = {
     border: '#E8555F',
     backgroundColor: '#EFBEED',
   },
+  none: {
+    border: '#000000',
+    backgroundColor: '#000000',
+  },
 } as const;

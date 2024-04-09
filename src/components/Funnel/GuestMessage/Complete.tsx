@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import mailOutlineSrc from 'public/MailOutline.png';
 import { MouseEventHandler } from 'react';
 import { FieldValues, UseFormRegister } from 'react-hook-form/dist/types';
@@ -33,7 +32,6 @@ type CompleteProps = {
 
 function Complete(props: CompleteProps) {
   const { onNext } = props;
-  const router = useRouter();
 
   return (
     <Wrapper>

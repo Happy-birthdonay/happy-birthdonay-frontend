@@ -8,12 +8,12 @@ type Message =
       createdAt: string;
     }
   | {
-      messageId?: undefined;
-      boxId?: undefined;
-      createdBy?: undefined;
-      tag?: undefined;
-      contents?: undefined;
-      createdAt?: undefined;
+      messageId: undefined;
+      boxId: undefined;
+      createdBy: undefined;
+      tag: undefined;
+      contents: undefined;
+      createdAt: undefined;
     };
 
 type MessageTag = 'health' | 'peace' | 'happiness' | 'love';
