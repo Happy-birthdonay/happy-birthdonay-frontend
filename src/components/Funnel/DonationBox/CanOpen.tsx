@@ -12,15 +12,29 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  gap: 50px;
+`;
+
+const Container = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
   text-align: center;
 
+  & > div {
+    margin-bottom: 33px;
+  }
+
   h3 {
+    margin-bottom: 60px;
     ${getTypographyStyles('Headline3_B')}
   }
 
   p {
+    margin-bottom: 100px;
     ${getTypographyStyles('Body2_M')}
   }
 `;
@@ -36,19 +50,21 @@ function CanOpen(props: CanOpenProps) {
 
   return (
     <Wrapper>
-      <h3>
-        선물 상자가 <br />
-        도착했어요!
-      </h3>
-      <Gift>
-        <Gift.Box color={box.color} />
-        <Gift.Title text={box.boxTitle} />
-      </Gift>
-      <p>
-        상자를 개봉해
-        <br />
-        메시지를 확인하고 기부해보세요!
-      </p>
+      <Container>
+        <h3>
+          선물 상자가 <br />
+          도착했어요!
+        </h3>
+        <Gift $width="80%">
+          <Gift.Box color={box.color} />
+          <Gift.Title text={box.boxTitle} />
+        </Gift>
+        <p>
+          상자를 개봉해
+          <br />
+          메시지를 확인하고 기부해보세요!
+        </p>
+      </Container>
       <Button
         onClick={() => {
           router.push(`${pathName}/open`);

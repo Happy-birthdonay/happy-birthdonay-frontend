@@ -59,7 +59,7 @@ function CompleteBox(props: CompleteBoxProps) {
     <Wrapper>
       <Container>
         <h3>기부 상자가 완성 됐어요!</h3>
-        <Gift>
+        <Gift $width="100%">
           <Gift.Box color={donationBox.color} />
           <Gift.Title text={donationBox.boxTitle} />
           <Gift.Description text={donationBox.boxDescription} />

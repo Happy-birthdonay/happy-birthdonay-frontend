@@ -8,15 +8,14 @@ import GiftImage from './GiftImage';
 import Title from './Title';
 
 const Wrapper = styled.div<{ $width: string; $maxWidth: string }>`
-  padding: 0;
+  padding: 1em;
   width: ${({ $width }) => $width};
   max-width: ${({ $maxWidth }) => $maxWidth};
-  aspect-ratio: 1/1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 36px;
+  border-radius: 20px;
   background-color: ${({ theme }) => theme.colors.main.white};
   align-self: center;
 

@@ -1,18 +1,15 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { MouseEventHandler, useState } from 'react';
-import { FieldValue, FieldValues, useForm, useFormContext, UseFormRegister } from 'react-hook-form';
+import { MouseEventHandler } from 'react';
+import { FieldValues, useFormContext, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
 import Chips from '@/components/Chips';
-import ColorButton from '@/components/ColorButton';
 import Gift from '@/components/GiftBox';
 import Input from '@/components/Input';
 import { getTypographyStyles } from '@/styles/fonts';
 import myTheme from '@/styles/theme';
-import { type BoxColor } from '@/types/donationBox';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -86,7 +83,7 @@ function BoxDetail(props: BoxDetailProps) {
               }}
             />
           </ColorContainer>
-          <Gift>
+          <Gift $width="243px">
             <Gift.Box color={color} />
           </Gift>
         </Container>

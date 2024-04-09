@@ -8,7 +8,6 @@ import { postNewBox } from '@/api/box/client';
 import BoxDescription from '@/components/Funnel/DonationBox/BoxDescription';
 import BoxDetail from '@/components/Funnel/DonationBox/BoxDetail';
 import DonationDetail from '@/components/Funnel/DonationBox/DonationDetail';
-import { useUser } from '@/store/user/userStore';
 import { DonationBox } from '@/types/donationBox';
 
 export default function FunnerPage() {
@@ -17,17 +16,12 @@ export default function FunnerPage() {
 
   const methods = useForm();
 
-  const user = useUser();
-
   const [step, setStep] = useState<'donation' | 'boxDetail' | 'boxDescription'>('donation');
 
   const onSubmit = async (data: FieldValues) => {
-    console.log('onSubmit data', user, data);
-    // const response = await postNewBox(data as DonationBox);
     try {
       const response = await postNewBox(data as DonationBox);
-      console.log('response', response);
-      //TODO:response의 boxId로 변경
+
       if (response.result === 'succeed') {
         router.push(`${pathname}/complete/${response.data.boxId}`);
       } else {

@@ -16,7 +16,7 @@ const Container = styled.div`
   align-content: space-between;
   gap: 20px;
 
-  height: calc(100vh - 110px);
+  height: 600px;
   overflow: auto;
   margin-bottom: 20px;
   p {
@@ -38,25 +38,28 @@ function BoxList(props: BoxListProps) {
     <Wrapper>
       <Container>
         {boxList.length <= 0 ? (
-          <Gift
-            $width={'150px'}
+          <button
             onClick={() => {
               router.push(`${pathName}/new`);
             }}
           >
-            <Gift.Box color={'white'} />
-          </Gift>
+            <Gift $width={'150px'}>
+              <Gift.Box color={'white'} />
+              <Gift.Description text={'새 상자 생성하기'} />
+            </Gift>
+          </button>
         ) : (
           boxList.map((box) => (
-            <Gift
+            <button
               key={box.boxId}
-              $width={'150px'}
               onClick={() => {
                 router.push(`${pathName}/${box.boxId}`);
               }}
             >
-              <Gift.Box color={box.color} />
-            </Gift>
+              <Gift $width={'150px'}>
+                <Gift.Box color={box.color} />
+              </Gift>
+            </button>
           ))
         )}
       </Container>

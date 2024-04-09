@@ -5,20 +5,24 @@ import { useRouter } from 'next/navigation';
 import birthdayCakeOutline from 'public/birthdayCakeOutline.png';
 import styled from 'styled-components';
 
+import { patchDonatedByBox } from '@/api/box/client';
 import Button from '@/components/Button';
 import { getTypographyStyles } from '@/styles/fonts';
 import { DonationBox } from '@/types/donationBox';
+import { Message } from '@/types/message';
 
 const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  gap: 36px;
   align-items: center;
   text-align: center;
 
   h3 {
     ${getTypographyStyles('Headline3_B')}
+    margin-bottom:24px;
   }
 
   p {
@@ -29,16 +33,26 @@ const Container = styled.div``;
 
 type OpenedProps = {
   box: DonationBox;
+  messageList: Message[];
 };
 
 function Opened(props: OpenedProps) {
-  const { box } = props;
+  const { box, messageList } = props;
   const router = useRouter();
 
-  const people = 10;
-  const total = 100000;
-  const donationName = '그린피스';
-  const url = `https://www.greenpeace.org/korea/`;
+  const people = messageList.length;
+  const total = box.amount * people;
+  const donationName = box.name;
+  const url = box.url;
+
+  const onDonateWithRouter = async () => {
+    try {
+      const response = await patchDonatedByBox(box.boxId, true);
+      location.href = url;
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <Wrapper>
@@ -55,10 +69,10 @@ function Opened(props: OpenedProps) {
         </p>
       </Container>
       <p>
-        {donationName}에 기부하고,
+        <strong>{donationName}</strong>에 기부하고,
         <br /> 생일 축하 메시지를 확인해 보세요!
       </p>
-      <Button onClick={() => router.push(url)}>기부하러 가기</Button>
+      <Button onClick={onDonateWithRouter}>기부하러 가기</Button>
     </Wrapper>
   );
 }

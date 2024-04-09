@@ -1,5 +1,4 @@
 import ApiResponse from '@/types/api-response';
-import { DonationBox } from '@/types/donationBox';
 import client from '../client';
 
 export const getBoxList = async (): Promise<ApiResponse.ResponseBoxList> => {
