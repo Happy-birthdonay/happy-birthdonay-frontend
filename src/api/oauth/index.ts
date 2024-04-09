@@ -12,3 +12,16 @@ export const postOauthToken = async (code: string | null): Promise<ApiResponse.R
 
   return response.json();
 };
+
+export const refreshOauthToken = async (): Promise<ApiResponse.ResponseAuthTokenData> => {
+  const baseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_BASE_URL : '/api';
+  const response = await fetch(`${baseUrl}/oauth/refresh`, {
+    method: 'GET',
+
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return response.json();
+};
