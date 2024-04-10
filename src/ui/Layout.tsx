@@ -15,6 +15,7 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
   flex: 1;
+  width: 100vw;
   max-width: 480px;
   min-height: 100vh;
   padding: 40px 20px;

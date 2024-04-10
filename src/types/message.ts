@@ -16,5 +16,5 @@ type Message =
       createdAt: undefined;
     };
 
-type MessageTag = 'health' | 'peace' | 'happiness' | 'love';
+type MessageTag = 'health' | 'peace' | 'happiness' | 'love' | 'none';
 export type { Message, MessageTag };

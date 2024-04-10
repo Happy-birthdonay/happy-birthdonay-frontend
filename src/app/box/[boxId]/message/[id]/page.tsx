@@ -1,5 +1,6 @@
 import { getMessageList } from '@/api/message/server';
-import { TAG_COLOR } from '@/utils/const';
+import MessageNote from '@/components/Message/MessageNote';
+import styles from './message.module.css';
 
 type MessageDetailPageProps = {
   params: { boxId: string; id: string };
@@ -13,8 +14,9 @@ async function MessageDetailPage(props: MessageDetailPageProps) {
 
   if (!message) return null;
   return (
-    <div style={{ backgroundColor: TAG_COLOR[message?.tag ?? 'none']?.backgroundColor }}>
-      {message?.contents} {message?.createdBy}
+    <div className={styles.center}>
+      <h3 className={styles.title}>Message Card</h3>
+      <MessageNote message={message} />
     </div>
   );
 }

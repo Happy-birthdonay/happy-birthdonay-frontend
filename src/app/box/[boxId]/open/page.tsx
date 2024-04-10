@@ -18,7 +18,7 @@ async function Page(props: PageProps) {
   const { data: messageList } = await getMessageList(boxId);
 
   return (
-    <div>
+    <>
       {box.isDonated ? (
         <MessageList boxId={boxId}>
           {messageList.map((message) => (
@@ -35,7 +35,7 @@ async function Page(props: PageProps) {
       ) : (
         <Opened box={box} messageList={messageList} />
       )}
-    </div>
+    </>
   );
 }
 
