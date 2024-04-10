@@ -1,9 +1,11 @@
 'use client';
 
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import birthdayCakeOutline from 'public/birthdayCakeOutline.png';
 import styled from 'styled-components';
 
+import { clearCache } from '@/actions/clearCache';
 import { patchDonatedByBox } from '@/api/box/client';
 import Button from '@/components/Button';
 import { getTypographyStyles } from '@/styles/fonts';
@@ -37,6 +39,7 @@ type OpenedProps = {
 
 function Opened(props: OpenedProps) {
   const { box, messageList } = props;
+  const pathName = usePathname();
 
   const people = messageList.length;
   const total = box.amount * people;
@@ -46,8 +49,8 @@ function Opened(props: OpenedProps) {
   const onDonateWithRouter = async () => {
     try {
       const response = await patchDonatedByBox(box.boxId, true);
-      console.log(response);
-      location.href = url;
+      clearCache(pathName);
+      window.open(url, '_blank');
     } catch (e) {
       console.error(e);
     }

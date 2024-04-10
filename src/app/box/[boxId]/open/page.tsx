@@ -9,6 +9,7 @@ import MessageList from '@/components/Message/MessageList';
 type PageProps = {
   params: { boxId: string };
 };
+
 async function Page(props: PageProps) {
   const { params } = props;
 
