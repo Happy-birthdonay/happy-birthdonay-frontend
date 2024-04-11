@@ -44,3 +44,16 @@ export const patchDonatedByBox = async (boxId: number, isDonated: boolean) => {
 
   return response.json();
 };
+
+export const patchCertificationImageUrl = async (boxId: number, imageUrl: string) => {
+  const baseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_BASE_URL : '/api';
+  const response = await fetch(`${baseUrl}/certifications`, {
+    method: 'PATCH',
+    body: JSON.stringify({ boxId, imageUrl }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return response.json();
+};

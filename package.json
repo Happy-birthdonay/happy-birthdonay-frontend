@@ -26,6 +26,7 @@
     ]
   },
   "dependencies": {
+    "aws-sdk": "2.1597.0",
     "axios": "1.6.7",
     "dayjs": "1.11.10",
     "next": "14.1.0",

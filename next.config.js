@@ -4,6 +4,9 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    domains: ['localhost', 'hbdy-s3.s3.amazonaws.com'],
+  },
   async rewrites() {
     return [
       {
