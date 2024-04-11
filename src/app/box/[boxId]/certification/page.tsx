@@ -1,13 +1,14 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { MouseEventHandler, useState } from 'react';
-import { FieldValues, UseFormRegister } from 'react-hook-form/dist/types';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import { uploadImageToS3 } from '@/actions/uploadS3';
+import { patchCertificationImageUrl } from '@/api/box/client';
+import { useDonationBox } from '@/api/box/hooks/useDonationBox';
 import Button from '@/components/Button';
-import Certification from '@/components/Certificatin';
+import Certification from '@/components/Certification/Certification';
 import ImageUpload from '@/components/ImageUpload';
 import { getTypographyStyles } from '@/styles/fonts';
 
@@ -46,19 +47,13 @@ const ButtonContainer = styled.div`
   gap: 14px;
 `;
 
-type PageProps = {
-  register?: UseFormRegister<FieldValues>;
-  onNext: MouseEventHandler<HTMLButtonElement>;
-};
-
-function Page(props: PageProps) {
-  const { onNext } = props;
+function Page() {
   const { boxId } = useParams();
+  const { box } = useDonationBox(boxId as string);
 
-  const [step, setStep] = useState<'upload' | 'complete'>('upload');
+  const [step, setStep] = useState<'upload' | 'complete'>(box.certImgUrl ? 'complete' : 'upload');
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [certificationImage, setCertificationImage] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
 
   const fileName = `cert-images/${boxId}-certifiaction`;
@@ -66,9 +61,8 @@ function Page(props: PageProps) {
   const onUploadS3 = async (file: File) => {
     try {
       const response = await uploadImageToS3({ fileName, file });
-      console.log('response', response.Location);
-      if (response) {
-        response && setCertificationImage(response.Location);
+      if (response.Location) {
+        await patchCertificationImageUrl(Number(boxId), response.Location);
         setStep('complete');
       }
     } catch (e) {
@@ -112,9 +106,9 @@ function Page(props: PageProps) {
           </Button>
         </>
       )}
-      {step === 'complete' && certificationImage && (
+      {step === 'complete' && (
         <>
-          <Certification imageUrl={certificationImage} />
+          <Certification />
           <ButtonContainer>
             <Button $buttonType="secondary">저장하기</Button> <Button>공유하기</Button>
           </ButtonContainer>
