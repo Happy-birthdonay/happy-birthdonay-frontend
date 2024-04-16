@@ -1,6 +1,7 @@
 'use client';
 
-import AWS from 'aws-sdk';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { Upload } from '@aws-sdk/lib-storage';
 
 type uploadImageToS3Props = {
   fileName?: string;
@@ -14,30 +15,26 @@ const secretAccessKey = process.env.NEXT_PUBLIC_S3_SECRET_ACCESS_KEY as string;
 export const uploadImageToS3 = async (props: uploadImageToS3Props) => {
   const { fileName, file } = props;
 
-  AWS.config.update({
-    region: REGION,
-    accessKeyId,
-    secretAccessKey,
-  });
-
-  const upload = new AWS.S3.ManagedUpload({
-    params: {
-      Bucket: 'hbdy-s3',
-      Key: file.name,
-      Body: file,
-      ContentType: file.type,
-      ACL: 'public-read', // Set the access control to public-read
+  const s3 = new S3Client({
+    credentials: {
+      accessKeyId,
+      secretAccessKey,
     },
+    region: REGION,
   });
-  const response = await upload.promise();
-  console.log('uploadImageToS3 response', response);
-  return response;
 
-  // try {
-  //   const data = await s3.upload(params).promise();
-  //  return data;
-  //   // You can store this URL in state or use it as needed in your application
-  // } catch (err) {
-  //   console.error(err);
-  // }
+  const params = {
+    Bucket: 'hbdy-s3',
+    Key: file.name,
+    Body: file,
+    ContentType: file.type,
+  };
+
+  const upload = new Upload({
+    client: s3,
+    params,
+  });
+
+  const response = await upload.done();
+  return response;
 };

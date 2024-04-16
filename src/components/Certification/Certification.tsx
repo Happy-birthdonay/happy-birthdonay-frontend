@@ -2,7 +2,7 @@ import saveAs from 'file-saver';
 import { toPng } from 'html-to-image';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { Suspense, useRef, useState } from 'react';
+import { RefObject, Suspense, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useCertification } from '@/api/box/hooks/useCertifications';
@@ -20,22 +20,6 @@ const Wrapper = styled.div<{ $isFlipped: boolean }>`
   flex-direction: column;
   align-items: center;
 `;
-
-// const ForSavedCard = styled.div`
-//   width: 329px;
-//   height: 616px;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   position: absolute;
-//   left: -100%;
-//   top: -100%;
-//   p {
-//     ${getTypographyStyles('Caption_M')};
-//     font-size: 14px;
-//     padding: 0 20px;
-//   }
-// `;
 
 const Card = styled.div`
   display: flex;
@@ -76,11 +60,15 @@ const Title = styled.div`
   justify-content: center;
   margin-bottom: 25px;
   gap: 2px;
-  strong {
-    font-size: 22px;
-    font-weight: bold;
-  }
+  padding: 0 10px;
 `;
+
+const TitleStrong = styled.strong`
+  font-size: 20px;
+  font-weight: bold;
+  white-space: nowrap;
+`;
+
 const CertificationContainer = styled.div`
   margin-bottom: 20px;
 `;
@@ -97,37 +85,28 @@ const Container = styled.div`
 const LogoContainer = styled.div`
   width: 100px;
   height: 100px;
-  aspect-ratio: 1/1;
 `;
 
-const LogoImage = styled(Image)`
-  width: 100%;
-`;
+const LogoImage = styled(Image)``;
 
 function Certification() {
   const { boxId } = useParams();
 
-  const divRef = useRef<HTMLDivElement>(null);
+  const frontRef = useRef<HTMLDivElement>(null);
+  const backRef = useRef<HTMLDivElement>(null);
 
   const { certification } = useCertification(boxId as string);
 
   //certification의 앞면과 뒷면을 보여주는 state
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
 
-  const handleDownload = async () => {
-    if (!divRef.current) return;
+  const handleDownload = async (ref: RefObject<HTMLDivElement>) => {
+    if (!ref.current) return;
 
     try {
-      const div = divRef.current;
+      const div = ref.current;
 
-      // const canvas = await html2canvas(div);
-      // canvas.toBlob((blob) => {
-      //   if (blob !== null) {
-      //     saveAs(blob, 'result.png');
-      //   }
-      // });
-      const png = await toPng(div, { cacheBust: true });
-      console.log('pnt', png);
+      const png = await toPng(div, { cacheBust: false, includeQueryParams: true });
       saveAs(png);
     } catch (error) {
       console.error('Error converting div to image:', error);
@@ -141,11 +120,10 @@ function Certification() {
         $isFlipped={isFlipped}
         className={`flipCard ${isFlipped ? 'flipped' : ''}`}
         onClick={() => {
-          console.log('click');
           setIsFlipped((prev) => !prev);
         }}
       >
-        <FrontCard $isFlipped={isFlipped} ref={divRef}>
+        <FrontCard $isFlipped={isFlipped} ref={frontRef}>
           <LogoContainer>
             <LogoImage alt="logo" width={100} height={100} src={logoSrc} />
           </LogoContainer>
@@ -153,7 +131,7 @@ function Certification() {
             {/* <div style={{ width: '25px', height: '25px' }}> */}
             <Image alt="ribbon" src={ribbonSrc} width={25} height={25} />
             {/* </div> */}
-            <strong> 기부 증서</strong>
+            <TitleStrong> 기부 증서</TitleStrong>
           </Title>
           <CertificationContainer>
             <Image width={167} height={259} alt="certification img" src={certification.certImgUrl} />
@@ -166,13 +144,13 @@ function Certification() {
           <strong>{certification.certCreatedAt}</strong>
         </FrontCard>
 
-        <BackCard $isFlipped={isFlipped}>
+        <BackCard $isFlipped={isFlipped} ref={backRef}>
           <LogoContainer>
             <LogoImage alt="logo" width={100} height={100} src={logoSrc} />
           </LogoContainer>
           <Title>
             <Image alt="ribbon" src={ribbonSrc} width={25} height={25} />
-            <strong> 기부 증서</strong>
+            <TitleStrong> 기부 증서</TitleStrong>
           </Title>
           <CertificationContainer>
             <Image width={167} height={259} alt="certification img" src={certification.certImgUrl} />
@@ -189,9 +167,7 @@ function Certification() {
         </BackCard>
       </Wrapper>
 
-      <Button disabled={isFlipped} onClick={handleDownload}>
-        저장
-      </Button>
+      <Button onClick={() => handleDownload(isFlipped ? backRef : frontRef)}>저장</Button>
     </Suspense>
   );
 }
