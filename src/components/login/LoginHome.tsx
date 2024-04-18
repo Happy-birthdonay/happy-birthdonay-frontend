@@ -7,11 +7,12 @@ import LoginButton from '@/components/LoginButton';
 import kakaoSrc from '@/public/kakao_logo.png';
 import logoSrc from '@/public/logo.png';
 import { getTypographyStyles } from '@/styles/fonts';
+import FixedBottomCTA from '../FixedBottomCTA';
 
 const Wrapper = styled.main`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100vh;
   justify-content: space-between;
   padding: 0 20px;
   padding-bottom: 75px;
@@ -19,6 +20,7 @@ const Wrapper = styled.main`
 
 const Container = styled.div`
   display: flex;
+
   flex-direction: column;
   ${getTypographyStyles('Headline2_B')}
 `;
@@ -26,11 +28,19 @@ const Container = styled.div`
 const LogoContainer = styled.div`
   width: 100%;
   height: 365px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const ButtonLogoContainer = styled.div`
   width: 35px;
   height: 35px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const LeftContainer = styled.div`
@@ -72,14 +82,16 @@ export default function LoginHome() {
           <p>가치를 선물하기</p>
         </LeftContainer>
       </Container>
-      <LoginButton onClick={loginHandler} $backgroundColor={'#FAE100'}>
-        <ButtonContainer>
-          <ButtonLogoContainer>
-            <Image src={kakaoSrc} alt="kakao" />
-          </ButtonLogoContainer>
-          카카오로 1초 로그인
-        </ButtonContainer>
-      </LoginButton>
+      <FixedBottomCTA>
+        <LoginButton onClick={loginHandler} $backgroundColor={'#FAE100'} $border={'#FAE100'}>
+          <ButtonContainer>
+            <ButtonLogoContainer>
+              <Image src={kakaoSrc} alt="kakao" />
+            </ButtonLogoContainer>
+            카카오로 1초 로그인
+          </ButtonContainer>
+        </LoginButton>
+      </FixedBottomCTA>
     </Wrapper>
   );
 }

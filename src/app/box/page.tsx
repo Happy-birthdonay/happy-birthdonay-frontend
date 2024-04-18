@@ -3,7 +3,6 @@ import BoxList from '@/components/GiftBox/BoxList';
 
 async function Page() {
   const { data: boxList } = await getBoxList();
-  console.log(boxList);
 
   return (
     <div>

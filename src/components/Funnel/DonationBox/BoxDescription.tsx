@@ -5,19 +5,12 @@ import { FieldValues, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
+// import FixedBottomCTA from '@/components/FixedBottomCTA';
 import TextField from '@/components/TextField';
 import { getTypographyStyles } from '@/styles/fonts';
 
 const Wrapper = styled.div`
   height: 100%;
-
-  form {
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
 `;
 
 const Container = styled.div`
@@ -45,10 +38,11 @@ function BoxDescription(props: BoxDescriptionProps) {
           <p>친구에게 보여줄 대표 메시지를 적어보세요</p>
           <TextField {...register('boxDescription')} />
         </Container>
-
+        {/* <FixedBottomCTA> */}
         <Button onClick={onNext} $buttonType="primary">
           저장하기
         </Button>
+        {/* </FixedBottomCTA> */}
       </div>
     </Wrapper>
   );

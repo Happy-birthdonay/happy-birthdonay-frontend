@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import { useDonationBox } from '@/api/box/hooks/useDonationBox';
 import Button from '@/components/Button';
+import FixedBottomCTA from '@/components/FixedBottomCTA';
 import { getTypographyStyles } from '@/styles/fonts';
 
 const Wrapper = styled.div`
@@ -50,23 +51,25 @@ function MessageList(props: MessageListProps) {
       </p>
 
       <Suspense fallback={null}>
-        {box.certImgUrl ? (
-          <Button
-            onClick={() => {
-              router.push(`certification`);
-            }}
-          >
-            기부 증서 확인하기
-          </Button>
-        ) : (
-          <Button
-            onClick={() => {
-              router.push(`certification`);
-            }}
-          >
-            기부 증서 만들기
-          </Button>
-        )}
+        <FixedBottomCTA>
+          {box.certImgUrl ? (
+            <Button
+              onClick={() => {
+                router.push(`certification`);
+              }}
+            >
+              기부 증서 확인하기
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                router.push(`certification`);
+              }}
+            >
+              기부 증서 만들기
+            </Button>
+          )}
+        </FixedBottomCTA>
       </Suspense>
     </Wrapper>
   );

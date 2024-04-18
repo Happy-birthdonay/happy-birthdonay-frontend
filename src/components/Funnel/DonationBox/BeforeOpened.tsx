@@ -6,6 +6,7 @@ import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
+import FixedBottomCTA from '@/components/FixedBottomCTA';
 import Gift from '@/components/GiftBox';
 import { getTypographyStyles } from '@/styles/fonts';
 import { DonationBox } from '@/types/donationBox';
@@ -80,14 +81,16 @@ function BeforeOpened(props: BeforeOpenedProps) {
           {restTime} 남았어요!
         </p>
       </Container>
-      <Button
-        disabled={canOpen}
-        onClick={() => {
-          router.push(`${pathName}/open`);
-        }}
-      >
-        상자 열어보기
-      </Button>
+      <FixedBottomCTA>
+        <Button
+          disabled={canOpen}
+          onClick={() => {
+            router.push(`${pathName}/open`);
+          }}
+        >
+          상자 열어보기
+        </Button>
+      </FixedBottomCTA>
     </Wrapper>
   );
 }

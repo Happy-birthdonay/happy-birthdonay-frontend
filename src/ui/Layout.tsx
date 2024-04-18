@@ -3,12 +3,15 @@
 import { PropsWithChildren } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
+import { GlobalPortal } from '@/GlobalPortal';
 import myTheme from '@/styles/theme';
 
 const Wrapper = styled.div`
+  max-width: 100%;
   width: 100%;
-  min-height: 100vh;
-  display: block;
+  padding: 0;
+  margin: 0 auto;
+  height: auto;
   display: flex;
   justify-content: center;
 `;
@@ -29,9 +32,11 @@ function Layout(props: PropsWithChildren<LayoutProps>) {
   const { children } = props;
   return (
     <ThemeProvider theme={myTheme}>
-      <Wrapper>
-        <Container>{children}</Container>
-      </Wrapper>
+      <GlobalPortal.Provider>
+        <Wrapper>
+          <Container>{children}</Container>
+        </Wrapper>
+      </GlobalPortal.Provider>
     </ThemeProvider>
   );
 }

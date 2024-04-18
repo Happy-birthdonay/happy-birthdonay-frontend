@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import Button from '@/components/Button';
 import Chips from '@/components/Chips';
+import FixedBottomCTA from '@/components/FixedBottomCTA';
 import Gift from '@/components/GiftBox';
 import Input from '@/components/Input';
 import { getTypographyStyles } from '@/styles/fonts';
@@ -67,7 +68,6 @@ function BoxDetail(props: BoxDetailProps) {
             <Chips
               chips={ColorChips}
               onSelect={(chip) => {
-                console.log('chip', chip);
                 setValue('color', chip.key);
               }}
             />
@@ -77,9 +77,11 @@ function BoxDetail(props: BoxDetailProps) {
           </Gift>
         </Container>
 
-        <Button onClick={onNext} $buttonType="primary">
-          다음
-        </Button>
+        <FixedBottomCTA>
+          <Button onClick={onNext} $buttonType="primary">
+            다음
+          </Button>
+        </FixedBottomCTA>
       </div>
     </Wrapper>
   );

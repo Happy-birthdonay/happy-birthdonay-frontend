@@ -12,14 +12,14 @@ import ColorButton from '../ColorButton';
 import { ColorChips } from '../Funnel/GuestMessage/GuestDetail';
 
 const Wrapper = styled.div<{ $tag: MessageTag }>`
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: ${({ $tag }) => TAG_COLOR[$tag].backgroundColor};
   border-radius: 20px;
   padding: 30px 26px;
-  height: 527px;
+  max-height: 527px;
   width: 100%;
   overflow: auto;
   flex: 1;

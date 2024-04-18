@@ -1,16 +1,17 @@
 'use client';
 
-import React, { MouseEventHandler } from 'react';
+import React, { forwardRef, MouseEventHandler, Ref, useId } from 'react';
 import styled from 'styled-components';
 
 import { getTypographyStyles } from '@/styles/fonts';
 
 const Wrapper = styled.button<{ $buttonType: ButtonProps['$buttonType'] }>`
-  display: flex;
+  width: 100%;
+  height: 56px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  width: 100%;
   padding: 20px 20px;
   border-radius: 15px;
   text-align: center;
@@ -24,6 +25,7 @@ const Wrapper = styled.button<{ $buttonType: ButtonProps['$buttonType'] }>`
   &:disabled {
     background-color: ${({ theme }) => theme.colors.main.grey};
     color: ${({ theme }) => theme.colors.main.white};
+    cursor: not-allowed;
   }
 `;
 
@@ -33,13 +35,15 @@ type ButtonProps = {
   children: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-function Button(props: ButtonProps) {
+function Button(props: ButtonProps, forwardedRef: Ref<HTMLButtonElement>) {
   const { $buttonType = 'primary', onClick, children, ...rest } = props;
+  const buttonId = useId();
+
   return (
-    <Wrapper as="button" onClick={onClick} $buttonType={$buttonType} {...rest}>
-      {children}
+    <Wrapper ref={forwardedRef} id={buttonId} as="button" onClick={onClick} $buttonType={$buttonType} {...rest}>
+      <span> {children}</span>
     </Wrapper>
   );
 }
 
-export default Button;
+export default forwardRef(Button);

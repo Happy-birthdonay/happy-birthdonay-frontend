@@ -5,6 +5,7 @@ import { FieldValues, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
+import FixedBottomCTA from '@/components/FixedBottomCTA';
 import Input from '@/components/Input';
 import { getTypographyStyles } from '@/styles/fonts';
 
@@ -51,9 +52,11 @@ function DonationDetail(props: DonationDetailProps) {
         />
       </Container>
 
-      <Button onClick={onNext} $buttonType="primary">
-        다음
-      </Button>
+      <FixedBottomCTA>
+        <Button onClick={onNext} $buttonType="primary">
+          다음
+        </Button>
+      </FixedBottomCTA>
     </Wrapper>
   );
 }

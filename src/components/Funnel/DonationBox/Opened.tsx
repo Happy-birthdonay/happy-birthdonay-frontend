@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { clearCache } from '@/actions/clearCache';
 import { patchDonatedByBox } from '@/api/box/client';
 import Button from '@/components/Button';
+import FixedBottomCTA from '@/components/FixedBottomCTA';
 import { getTypographyStyles } from '@/styles/fonts';
 import { DonationBox } from '@/types/donationBox';
 import { Message } from '@/types/message';
@@ -74,7 +75,9 @@ function Opened(props: OpenedProps) {
         <strong>{donationName}</strong>에 기부하고,
         <br /> 생일 축하 메시지를 확인해 보세요!
       </p>
-      <Button onClick={onDonateWithRouter}>기부하러 가기</Button>
+      <FixedBottomCTA>
+        <Button onClick={onDonateWithRouter}>기부하러 가기</Button>
+      </FixedBottomCTA>
     </Wrapper>
   );
 }

@@ -9,6 +9,7 @@ import { patchCertificationImageUrl } from '@/api/box/client';
 import { useCertification } from '@/api/box/hooks/useCertifications';
 import Button from '@/components/Button';
 import Certification from '@/components/Certification/Certification';
+import FixedBottomCTA from '@/components/FixedBottomCTA';
 import ImageUpload from '@/components/ImageUpload';
 import { getTypographyStyles } from '@/styles/fonts';
 
@@ -41,12 +42,6 @@ const Container = styled.div`
   }
 `;
 
-const ButtonContainer = styled.div`
-  width: 100%;
-  display: flex;
-  gap: 14px;
-`;
-
 function Page() {
   const { boxId } = useParams();
   const { certification } = useCertification(boxId as string);
@@ -60,6 +55,7 @@ function Page() {
   const onUploadS3 = async (file: File) => {
     try {
       const response = await uploadImageToS3({ fileName, file });
+      console.log('response', response);
       if (response.Location) {
         await patchCertificationImageUrl(Number(boxId), response.Location);
         setStep('complete');
@@ -91,26 +87,25 @@ function Page() {
             이미지를 첨부해주세요
           </p>
           <p>(중요한 개인정보를 반드시 가려주세요)</p>
-          <Button
-            disabled={!previewImage}
-            onClick={async () => {
-              try {
-                await onUploadS3(file as File);
-              } catch (e) {
-                console.error('error', e);
-              }
-            }}
-          >
-            기부 증서 만들기
-          </Button>
+          <FixedBottomCTA>
+            <Button
+              disabled={!previewImage}
+              onClick={async () => {
+                try {
+                  await onUploadS3(file as File);
+                } catch (e) {
+                  console.error('error', e);
+                }
+              }}
+            >
+              기부 증서 만들기
+            </Button>
+          </FixedBottomCTA>
         </>
       )}
       {step === 'complete' && (
         <>
           <Certification />
-          <ButtonContainer>
-            <Button $buttonType="secondary">저장하기</Button> <Button>공유하기</Button>
-          </ButtonContainer>
         </>
       )}
     </Wrapper>

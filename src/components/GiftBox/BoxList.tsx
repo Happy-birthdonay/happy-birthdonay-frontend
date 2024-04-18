@@ -7,6 +7,7 @@ import { getTypographyStyles } from '@/styles/fonts';
 import { DonationBox } from '@/types/donationBox';
 import Gift from '.';
 import Button from '../Button';
+import FixedBottomCTA from '../FixedBottomCTA';
 
 const Wrapper = styled.div``;
 const Container = styled.div`
@@ -16,7 +17,7 @@ const Container = styled.div`
   align-content: space-between;
   gap: 20px;
 
-  height: 600px;
+  height: auto;
   overflow: auto;
   margin-bottom: 20px;
   p {
@@ -63,7 +64,9 @@ function BoxList(props: BoxListProps) {
           ))
         )}
       </Container>
-      <Button onClick={() => router.push(`${pathName}/new`)}> 새 상자 만들기 </Button>
+      <FixedBottomCTA>
+        <Button onClick={() => router.push(`${pathName}/new`)}> 새 상자 만들기 </Button>
+      </FixedBottomCTA>
     </Wrapper>
   );
 }

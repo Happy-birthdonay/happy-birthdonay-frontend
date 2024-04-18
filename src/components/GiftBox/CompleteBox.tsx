@@ -4,6 +4,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
+import FixedBottomCTA from '@/components/FixedBottomCTA';
 import Gift from '@/components/GiftBox';
 import ShardIconUrl from '@/public/icon/share-16.svg';
 import { getTypographyStyles } from '@/styles/fonts';
@@ -71,10 +72,12 @@ function CompleteBox(props: CompleteBoxProps) {
           </p>
         </TextContainer>
       </Container>
-      <Button onClick={handleCopyClipBoard} $buttonType="primary">
-        <Image alt="share icon" src={ShardIconUrl} />
-        공유하기
-      </Button>
+      <FixedBottomCTA>
+        <Button onClick={handleCopyClipBoard} $buttonType="primary">
+          <Image alt="share icon" src={ShardIconUrl} />
+          공유하기
+        </Button>
+      </FixedBottomCTA>
     </Wrapper>
   );
 }

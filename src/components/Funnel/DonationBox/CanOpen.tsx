@@ -4,6 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
+import FixedBottomCTA from '@/components/FixedBottomCTA';
 import Gift from '@/components/GiftBox';
 import { getTypographyStyles } from '@/styles/fonts';
 import { DonationBox } from '@/types/donationBox';
@@ -65,13 +66,15 @@ function CanOpen(props: CanOpenProps) {
           메시지를 확인하고 기부해보세요!
         </p>
       </Container>
-      <Button
-        onClick={() => {
-          router.push(`${pathName}/open`);
-        }}
-      >
-        상자 열어보기
-      </Button>
+      <FixedBottomCTA>
+        <Button
+          onClick={() => {
+            router.push(`${pathName}/open`);
+          }}
+        >
+          상자 열어보기
+        </Button>
+      </FixedBottomCTA>
     </Wrapper>
   );
 }

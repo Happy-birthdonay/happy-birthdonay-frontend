@@ -10,6 +10,7 @@ import logoSrc from '@/public/logo.png';
 import ribbonSrc from '@/public/ribbonOutline.png';
 import { getTypographyStyles } from '@/styles/fonts';
 import Button from '../Button';
+import FixedBottomCTA from '../FixedBottomCTA';
 
 const Wrapper = styled.div<{ $isFlipped: boolean }>`
   position: relative;
@@ -87,6 +88,12 @@ const LogoContainer = styled.div`
   height: 100px;
 `;
 
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 14px;
+`;
+
 const LogoImage = styled(Image)``;
 
 function Certification() {
@@ -128,9 +135,7 @@ function Certification() {
             <LogoImage alt="logo" width={100} height={100} src={logoSrc} />
           </LogoContainer>
           <Title>
-            {/* <div style={{ width: '25px', height: '25px' }}> */}
             <Image alt="ribbon" src={ribbonSrc} width={25} height={25} />
-            {/* </div> */}
             <TitleStrong> 기부 증서</TitleStrong>
           </Title>
           <CertificationContainer>
@@ -167,7 +172,14 @@ function Certification() {
         </BackCard>
       </Wrapper>
 
-      <Button onClick={() => handleDownload(isFlipped ? backRef : frontRef)}>저장</Button>
+      <FixedBottomCTA>
+        <ButtonContainer>
+          <Button $buttonType="secondary" onClick={() => handleDownload(isFlipped ? backRef : frontRef)}>
+            저장하기
+          </Button>
+          <Button>공유하기</Button>
+        </ButtonContainer>
+      </FixedBottomCTA>
     </Suspense>
   );
 }
