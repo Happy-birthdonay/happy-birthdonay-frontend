@@ -9,7 +9,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'hbdy-s3.s3.ap-southeast-2.amazonaws.com',
+        port: '',
         pathname: '/cert-images/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'hbdy-s3.s3.ap-southeast-2.amazonaws.com',
+        port: '',
+        pathname: '**',
       },
     ],
   },
