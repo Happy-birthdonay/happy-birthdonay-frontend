@@ -1,16 +1,16 @@
 'use client';
 
-import { MouseEventHandler } from 'react';
-import { FieldValues, useFormContext, UseFormRegister } from 'react-hook-form';
+import { useStateMachine } from 'little-state-machine';
+import { FieldValues, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
 import Chips from '@/components/Chips';
-import FixedBottomCTA from '@/components/FixedBottomCTA';
 import Gift from '@/components/GiftBox';
 import Input from '@/components/Input';
 import { getTypographyStyles } from '@/styles/fonts';
 import myTheme from '@/styles/theme';
+import updateAction from './updateAction';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -48,21 +48,32 @@ const ColorChips = [
 ];
 
 type BoxDetailProps = {
-  register: UseFormRegister<FieldValues>;
-  onNext: MouseEventHandler<HTMLButtonElement>;
+  onNext: () => void;
 };
 
 function BoxDetail(props: BoxDetailProps) {
-  const { register, onNext } = props;
+  const { onNext } = props;
 
-  const { setValue, watch } = useFormContext();
-  const color = watch('color');
+  const { register, handleSubmit, setValue, formState, watch } = useForm();
+  const { actions } = useStateMachine({ updateAction });
 
+  const onSubmit = (data: FieldValues) => {
+    actions.updateAction(data);
+    onNext();
+  };
   return (
     <Wrapper>
-      <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Container>
-          <Input label="기부 상자 이름을 적어주세요." placeholder="상자 이름" {...register('boxTitle')} />
+          <Input
+            label="기부 상자 이름을 적어주세요."
+            placeholder="상자 이름"
+            bottomText={formState.errors.boxTitle?.message as string}
+            $isError={!!formState.errors.boxTitle}
+            {...register('boxTitle', {
+              required: { value: true, message: '상자 이름을 입력해주세요.' },
+            })}
+          />
           <ColorContainer>
             <Text>원하는 색을 골라주세요.</Text>
             <Chips
@@ -73,16 +84,14 @@ function BoxDetail(props: BoxDetailProps) {
             />
           </ColorContainer>
           <Gift $width="243px">
-            <Gift.Box color={color} />
+            <Gift.Box color={watch('color', { required: { value: true, message: '원하는 색상을 골라 주세요' } })} />
           </Gift>
         </Container>
 
-        <FixedBottomCTA>
-          <Button onClick={onNext} $buttonType="primary">
-            다음
-          </Button>
-        </FixedBottomCTA>
-      </div>
+        <Button type="submit" $buttonType="primary">
+          다음
+        </Button>
+      </form>
     </Wrapper>
   );
 }

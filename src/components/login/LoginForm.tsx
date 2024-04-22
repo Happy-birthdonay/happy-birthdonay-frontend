@@ -102,7 +102,7 @@ export default function LoginForm() {
                 placeholder="닉네임"
                 defaultValue={user.name}
                 length={value?.length ?? 0}
-                isError={!!formState.errors.name}
+                $isError={!!formState.errors.name}
                 maxLength={10}
                 value={value}
                 onChange={(e) => {
@@ -131,7 +131,7 @@ export default function LoginForm() {
                 placeholder="MMDD"
                 defaultValue={user.birthday}
                 bottomText={formState.errors.birthday?.message}
-                isError={!!formState.errors.birthday}
+                $isError={!!formState.errors.birthday}
               />
             )}
           />

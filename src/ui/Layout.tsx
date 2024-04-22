@@ -26,6 +26,10 @@ const Container = styled.div`
   padding: 40px 20px;
   background-color: ${({ theme }) => theme.colors.background};
   border: 1px solid ${({ theme }) => theme.colors.main.grey};
+
+  & > main {
+    height: 100%;
+  }
 `;
 
 type LayoutProps = NonNullable<unknown>;

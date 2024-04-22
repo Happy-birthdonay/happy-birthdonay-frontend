@@ -1,18 +1,18 @@
 'use client';
 
-import { MouseEventHandler } from 'react';
-import { FieldValues, UseFormRegister } from 'react-hook-form';
+import { useStateMachine } from 'little-state-machine';
+import { FieldValues, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
-import FixedBottomCTA from '@/components/FixedBottomCTA';
 import Input from '@/components/Input';
 import { getTypographyStyles } from '@/styles/fonts';
+import updateAction from './updateAction';
 
 const Wrapper = styled.div`
   height: 100%;
 
-  div {
+  form {
     height: 100%;
 
     display: flex;
@@ -32,32 +32,53 @@ const Container = styled.div`
 `;
 
 type DonationDetailProps = {
-  register: UseFormRegister<FieldValues>;
-  onNext: MouseEventHandler<HTMLButtonElement>;
+  onNext: () => void;
 };
 
 function DonationDetail(props: DonationDetailProps) {
-  const { register, onNext } = props;
+  const { onNext } = props;
+  const { register, handleSubmit, formState } = useForm();
+  const { actions } = useStateMachine({ updateAction });
+  const onSubmit = (data: FieldValues) => {
+    actions.updateAction(data);
+    onNext();
+  };
 
   return (
     <Wrapper>
-      <Container>
-        <Input label="어디에 기부할까요?" placeholder="기부처 이름" {...register('name', { required: true })} />
-        <Input label="링크를 넣어주세요" placeholder="기부처 링크" {...register('url', { required: true })} />
-        <Input
-          label="기부할 금액을 알려주세요"
-          placeholder="기부할 금액"
-          type="number"
-          unit="원"
-          {...register('amount', { valueAsNumber: true, validate: (value) => value > 0, required: true })}
-        />
-      </Container>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Container>
+          <Input
+            label="어디에 기부할까요?"
+            placeholder="기부처 이름"
+            bottomText={formState.errors.name?.message as string}
+            $isError={!!formState.errors.name}
+            {...register('name', { required: { value: true, message: '기부처를 입력해 주세요.' } })}
+          />
+          <Input
+            label="링크를 넣어주세요"
+            placeholder="기부처 링크"
+            bottomText={formState.errors.url?.message as string}
+            $isError={!!formState.errors.url}
+            {...register('url', { required: { value: true, message: '기부처 링크를 입력해 주세요.' } })}
+          />
+          <Input
+            label="기부할 금액을 알려주세요"
+            placeholder="기부할 금액"
+            type="number"
+            unit="원"
+            {...register('amount', {
+              valueAsNumber: true,
+              validate: (value) => value > 0,
+              required: { value: true, message: '필수값 입니다.' },
+            })}
+          />
+        </Container>
 
-      <FixedBottomCTA>
-        <Button onClick={onNext} $buttonType="primary">
+        <Button type="submit" $buttonType="primary">
           다음
         </Button>
-      </FixedBottomCTA>
+      </form>
     </Wrapper>
   );
 }

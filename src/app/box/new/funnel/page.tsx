@@ -1,8 +1,9 @@
 'use client';
 
+import { createStore, StateMachineProvider } from 'little-state-machine';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { FieldValues, FormProvider, useForm } from 'react-hook-form';
+import { FieldValues } from 'react-hook-form';
 
 import { postNewBox } from '@/api/box/client';
 import BoxDescription from '@/components/Funnel/DonationBox/BoxDescription';
@@ -10,16 +11,16 @@ import BoxDetail from '@/components/Funnel/DonationBox/BoxDetail';
 import DonationDetail from '@/components/Funnel/DonationBox/DonationDetail';
 import { DonationBox } from '@/types/donationBox';
 
+createStore({});
+
 export default function FunnerPage() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const methods = useForm();
-
   const [step, setStep] = useState<'donation' | 'boxDetail' | 'boxDescription'>('donation');
-
-  const onSubmit = async (data: FieldValues) => {
+  const createNewBox = async (data: FieldValues) => {
     try {
+      console.log('Data', data);
       const response = await postNewBox(data as DonationBox);
 
       if (response.result === 'succeed') {
@@ -27,39 +28,30 @@ export default function FunnerPage() {
       } else {
         window.alert(response);
       }
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
-    <FormProvider {...methods}>
+    <StateMachineProvider>
       <main>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          {step === 'donation' && (
-            <DonationDetail
-              register={methods.register}
-              onNext={() => {
-                setStep('boxDetail');
-              }}
-            />
-          )}
-          {step === 'boxDetail' && (
-            <BoxDetail
-              register={methods.register}
-              onNext={() => {
-                if (methods.formState.isValid) setStep('boxDescription');
-              }}
-            />
-          )}
-          {step === 'boxDescription' && (
-            <BoxDescription
-              register={methods.register}
-              onNext={() => {
-                methods.handleSubmit(onSubmit);
-              }}
-            />
-          )}
-        </form>
+        {step === 'donation' && (
+          <DonationDetail
+            onNext={() => {
+              setStep('boxDetail');
+            }}
+          />
+        )}
+        {step === 'boxDetail' && (
+          <BoxDetail
+            onNext={() => {
+              setStep('boxDescription');
+            }}
+          />
+        )}
+        {step === 'boxDescription' && <BoxDescription onSubmit={createNewBox} />}
       </main>
-    </FormProvider>
+    </StateMachineProvider>
   );
 }

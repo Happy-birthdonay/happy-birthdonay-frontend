@@ -15,11 +15,12 @@ const Wrapper = styled.div`
     margin-bottom:15px;
   }
 `;
-const InputContainer = styled.input<{ isError: boolean }>`
+const InputContainer = styled.input<{ $isError: boolean }>`
   border: none;
   background-color: transparent;
-  border-bottom: 1px solid ${({ theme, isError }) => (isError ? theme.colors.main.red : theme.colors.main.black)};
+  border-bottom: 1px solid ${({ theme, $isError }) => ($isError ? theme.colors.main.red : theme.colors.main.black)};
   height: 34px;
+  margin-bottom: 2px;
 
   ${getTypographyStyles('Body1_B')}
 
@@ -40,34 +41,36 @@ const TextContainer = styled.div`
   justify-content: space-between;
 `;
 
-const BottomText = styled.p<{ isError?: boolean }>`
-  color: ${({ theme, isError }) => (isError ? theme.colors.main.red : theme.colors.main.grey)};
+const BottomText = styled.p<{ $isError?: boolean }>`
+  color: ${({ theme, $isError }) => ($isError ? theme.colors.main.red : theme.colors.main.grey)};
+  ${getTypographyStyles('Caption2_M')};
 `;
 
-const LengthText = styled.p<{ isError?: boolean }>`
+const LengthText = styled.p<{ $isError?: boolean }>`
   ${getTypographyStyles('Caption2_M')};
-  color: ${({ theme, isError }) => (isError ? theme.colors.main.red : theme.colors.main.grey)};
+  color: ${({ theme, $isError }) => ($isError ? theme.colors.main.red : theme.colors.main.grey)};
 `;
+
 type InputProps = {
   label: string;
   bottomText?: string;
   length?: number;
   maxLength?: number;
-  isError?: boolean;
+  $isError?: boolean;
   unit?: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 function Input(props: InputProps, ref: ForwardedRef<HTMLInputElement>) {
-  const { placeholder, bottomText, length, maxLength, isError = false, unit, ...rest } = props;
+  const { placeholder, bottomText, length, maxLength, $isError = false, unit, ...rest } = props;
 
   return (
     <Wrapper>
       <label>{props.label}</label>
-      <InputContainer ref={ref} placeholder={placeholder} isError={isError} {...rest} />
+      <InputContainer ref={ref} placeholder={placeholder} $isError={$isError} {...rest} />
       {unit ? <Span>{unit}</Span> : null}
       <TextContainer>
-        <BottomText isError={isError}>{bottomText ? bottomText : null}</BottomText>
-        <LengthText isError={isError}>{maxLength ? `${length}/${props.maxLength}` : null}</LengthText>
+        <BottomText $isError={$isError}>{bottomText ? bottomText : null}</BottomText>
+        <LengthText $isError={$isError}>{maxLength ? `${length}/${props.maxLength}` : null}</LengthText>
       </TextContainer>
     </Wrapper>
   );
