@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 
-export const fetcher = (...args) => fetch(...args).then((res) => res.json());
+import { fetcher } from '@/api/fetcher';
 
 export const useCertification = (boxId: string) => {
   const { data, isLoading, error } = useSWR(`/api/certifications?boxId=${boxId}`, fetcher, {

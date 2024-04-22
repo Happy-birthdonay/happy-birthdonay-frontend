@@ -16,13 +16,10 @@ function PortalProvider({ children }: PortalProviderProps) {
       <div
         id="portal-container"
         ref={(elem) => {
-          console.log('@ 1');
-
           if (portalContainerRef !== null || elem === null) {
             return;
           }
 
-          console.log('@ 2');
           setPortalContainerRef(elem);
         }}
       />

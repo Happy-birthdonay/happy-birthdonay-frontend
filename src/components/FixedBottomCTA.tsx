@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { GlobalPortal } from '../GlobalPortal';
 
 const Wrapper = styled.div`
-  position: fixed;
+  position: absolute;
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);

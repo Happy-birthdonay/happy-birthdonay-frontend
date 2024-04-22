@@ -11,16 +11,18 @@ const Wrapper = styled.div`
   width: 100%;
   padding: 0;
   margin: 0 auto;
-  height: auto;
+  height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 const Container = styled.div`
+  position: relative;
   flex: 1;
   width: 100vw;
-  max-width: 480px;
-  min-height: 100vh;
+  max-width: 392px;
+  height: 852px;
   padding: 40px 20px;
   background-color: ${({ theme }) => theme.colors.background};
   border: 1px solid ${({ theme }) => theme.colors.main.grey};
@@ -32,11 +34,11 @@ function Layout(props: PropsWithChildren<LayoutProps>) {
   const { children } = props;
   return (
     <ThemeProvider theme={myTheme}>
-      <GlobalPortal.Provider>
-        <Wrapper>
-          <Container>{children}</Container>
-        </Wrapper>
-      </GlobalPortal.Provider>
+      <Wrapper>
+        <Container>
+          <GlobalPortal.Provider>{children} </GlobalPortal.Provider>
+        </Container>
+      </Wrapper>
     </ThemeProvider>
   );
 }
