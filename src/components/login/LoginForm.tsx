@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import { postOauthToken } from '@/api/oauth';
@@ -36,6 +36,8 @@ const Container = styled.div`
   }
 `;
 
+const birthdayPattern = /^(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/;
+
 export default function LoginForm() {
   const router = useRouter();
 
@@ -43,7 +45,7 @@ export default function LoginForm() {
 
   const { setUser } = useUserActions();
   const user = useUser();
-  const { register, handleSubmit, reset } = useForm<User>();
+  const { control, register, handleSubmit, reset, formState } = useForm<User>();
 
   useEffect(() => {
     const getToken = async () => {
@@ -52,7 +54,6 @@ export default function LoginForm() {
         const code = url.searchParams.get('code');
 
         const { result, message, data } = await postOauthToken(code);
-        console.log(result, message, data);
         if (message === 'Succeeded Kakao Login: User already exists') {
           router.replace('/box');
         }
@@ -67,6 +68,7 @@ export default function LoginForm() {
   }, []);
 
   const onSignUp = async (data: User) => {
+    console.log('formState', formState);
     try {
       const response = await signUp(data);
       if (response.result === 'succeed') {
@@ -80,14 +82,59 @@ export default function LoginForm() {
   if (loading) {
     return <div>loading....</div>;
   }
+  console.log('error', formState.errors);
   return (
     <Wrapper>
       <form onSubmit={handleSubmit(onSignUp)}>
         <Container>
           <h3>Account </h3>
 
-          <Input label="닉네임을 만들어주세요" placeholder="닉네임" defaultValue={user.name} {...register('name')} />
-          <Input label="생일을 입력하세요" placeholder="MM.DD" defaultValue={user.birthday} {...register('birthday')} />
+          <Controller
+            name="name"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                {...register('name', {
+                  required: true,
+                  maxLength: 10,
+                })}
+                label="닉네임을 만들어주세요"
+                placeholder="닉네임"
+                defaultValue={user.name}
+                length={value?.length ?? 0}
+                isError={!!formState.errors.name}
+                maxLength={10}
+                value={value}
+                onChange={(e) => {
+                  onChange(e.target.value);
+                }}
+              />
+            )}
+          />
+          <Controller
+            name="birthday"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                {...register('birthday', {
+                  required: true,
+                  pattern: {
+                    value: birthdayPattern,
+                    message: '생일을 입력해주세요 ex) 0101',
+                  },
+                })}
+                value={value}
+                onChange={(e) => {
+                  onChange(e.target.value);
+                }}
+                label="생일을 입력하세요"
+                placeholder="MMDD"
+                defaultValue={user.birthday}
+                bottomText={formState.errors.birthday?.message}
+                isError={!!formState.errors.birthday}
+              />
+            )}
+          />
         </Container>
 
         <Button $buttonType="primary" onSubmit={handleSubmit(onSignUp)}>

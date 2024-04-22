@@ -42,13 +42,14 @@ function DonationDetail(props: DonationDetailProps) {
   return (
     <Wrapper>
       <Container>
-        <Input label="어디에 기부할까요?" placeholder="기부처 이름" {...register('name')} />
-        <Input label="링크를 넣어주세요" placeholder="기부처 링크" {...register('url')} />
+        <Input label="어디에 기부할까요?" placeholder="기부처 이름" {...register('name', { required: true })} />
+        <Input label="링크를 넣어주세요" placeholder="기부처 링크" {...register('url', { required: true })} />
         <Input
           label="기부할 금액을 알려주세요"
           placeholder="기부할 금액"
           type="number"
-          {...register('amount', { valueAsNumber: true, validate: (value) => value > 0 })}
+          unit="원"
+          {...register('amount', { valueAsNumber: true, validate: (value) => value > 0, required: true })}
         />
       </Container>
 

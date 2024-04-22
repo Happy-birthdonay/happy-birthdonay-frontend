@@ -22,7 +22,7 @@ const Container = styled.div`
   flex: 1;
   width: 100vw;
   max-width: 392px;
-  height: 852px;
+  height: 100%;
   padding: 40px 20px;
   background-color: ${({ theme }) => theme.colors.background};
   border: 1px solid ${({ theme }) => theme.colors.main.grey};

@@ -46,7 +46,7 @@ export default function FunnerPage() {
             <BoxDetail
               register={methods.register}
               onNext={() => {
-                setStep('boxDescription');
+                if (methods.formState.isValid) setStep('boxDescription');
               }}
             />
           )}
