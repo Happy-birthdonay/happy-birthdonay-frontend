@@ -1,8 +1,6 @@
 import Image from 'next/image';
 import styled from 'styled-components';
-import useSWR from 'swr';
 
-import { useBox } from '@/api/hooks/useBox';
 import logoSrc from '@/public/logo.png';
 import ribbonSrc from '@/public/ribbonOutline.png';
 import { getTypographyStyles } from '@/styles/fonts';
@@ -46,14 +44,10 @@ const Container = styled.div`
 
 type CertificationProps = {
   imageUrl: string;
-  boxId: number;
 };
 function Certification(props: CertificationProps) {
-  const { boxId, imageUrl } = props;
+  const { imageUrl } = props;
 
-  const { data: box } = useBox(boxId);
-
-  console.log('box', box);
   return (
     <Wrapper>
       <Image alt="logo" width={100} src={logoSrc} />

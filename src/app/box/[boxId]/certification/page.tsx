@@ -66,7 +66,6 @@ function Page(props: PageProps) {
   const onUploadS3 = async (file: File) => {
     try {
       const response = await uploadImageToS3({ fileName, file });
-      console.log('response', response);
       if (response) {
         setCertificationImage(response?.Location);
         setStep('complete');
@@ -114,7 +113,7 @@ function Page(props: PageProps) {
       )}
       {step === 'complete' && certificationImage && (
         <>
-          <Certification boxId={Number(boxId)} imageUrl={certificationImage} />
+          <Certification imageUrl={certificationImage} />
           <ButtonContainer>
             <Button $buttonType="secondary">저장하기</Button> <Button>공유하기</Button>
           </ButtonContainer>
