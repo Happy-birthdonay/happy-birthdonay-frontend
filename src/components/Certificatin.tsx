@@ -2,7 +2,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import useSWR from 'swr';
 
-import { useBox } from '@/api/box/hooks/useBox';
+import { useBox } from '@/features/api/box/api/hooks/useBox';
 import logoSrc from '@/public/logo.png';
 import ribbonSrc from '@/public/ribbonOutline.png';
 import { getTypographyStyles } from '@/styles/fonts';

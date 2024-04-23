@@ -1,4 +1,4 @@
-import { type User } from '@/types/user';
+import { type User } from '@/shared/types/user';
 
 export const signUp = async (data: User) => {
   const baseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_BASE_URL : '/api';

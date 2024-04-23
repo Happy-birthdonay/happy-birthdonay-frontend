@@ -4,13 +4,13 @@ import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import { uploadImageToS3 } from '@/actions/uploadS3';
-import { patchCertificationImageUrl } from '@/api/box/client';
-import { useCertification } from '@/api/box/hooks/useCertifications';
 import Button from '@/components/Button';
 import Certification from '@/components/Certification/Certification';
 import FixedBottomCTA from '@/components/FixedBottomCTA';
 import ImageUpload from '@/components/ImageUpload';
+import { patchCertificationImageUrl } from '@/features/box/api/client';
+import { useCertification } from '@/features/box/api/hooks/useCertifications';
+import { uploadImageToS3 } from '@/shared/utils/uploadS3';
 import { getTypographyStyles } from '@/styles/fonts';
 
 const Wrapper = styled.div`

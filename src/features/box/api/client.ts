@@ -1,8 +1,8 @@
 'use client';
 
-import ApiResponse from '@/types/api-response';
-import { type DonationBox } from '@/types/donationBox';
-import { Message } from '@/types/message';
+import ApiResponse from '@/shared/types/api-response';
+import { type DonationBox } from '@/shared/types/donationBox';
+import { Message } from '@/shared/types/message';
 
 export const postNewBox = async (box: DonationBox): Promise<ApiResponse.ResponsePostNewBox> => {
   const baseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_BASE_URL : '/api';

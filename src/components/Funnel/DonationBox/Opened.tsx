@@ -5,13 +5,13 @@ import { usePathname } from 'next/navigation';
 import birthdayCakeOutline from 'public/birthdayCakeOutline.png';
 import styled from 'styled-components';
 
-import { clearCache } from '@/actions/clearCache';
-import { patchDonatedByBox } from '@/api/box/client';
 import Button from '@/components/Button';
 import FixedBottomCTA from '@/components/FixedBottomCTA';
+import { patchDonatedByBox } from '@/features/box/api/client';
+import { DonationBox } from '@/shared/types/donationBox';
+import { Message } from '@/shared/types/message';
+import { clearCache } from '@/shared/utils/clearCache';
 import { getTypographyStyles } from '@/styles/fonts';
-import { DonationBox } from '@/types/donationBox';
-import { Message } from '@/types/message';
 
 const Wrapper = styled.div`
   height: 100%;

@@ -3,7 +3,7 @@
 import { create, StateCreator } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { type User } from '@/types/user';
+import { type User } from '@/shared/types/user';
 
 const initialUser = {
   name: undefined,

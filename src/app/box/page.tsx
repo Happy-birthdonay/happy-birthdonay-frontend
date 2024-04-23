@@ -1,5 +1,5 @@
-import { getBoxList } from '@/api/box/server';
 import BoxList from '@/components/GiftBox/BoxList';
+import { getBoxList } from '@/features/box/api/server';
 
 async function Page() {
   const { data: boxList } = await getBoxList();

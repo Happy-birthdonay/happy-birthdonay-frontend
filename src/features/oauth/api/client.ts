@@ -1,4 +1,4 @@
-import ApiResponse from '@/types/api-response';
+import ApiResponse from '@/shared/types/api-response';
 
 export const postOauthToken = async (code: string | null): Promise<ApiResponse.ResponseAuthTokenData> => {
   // const baseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_BASE_URL : '/api';

@@ -1,5 +1,5 @@
-import { getMessageList } from '@/api/message/server';
 import MessageNote from '@/components/Message/MessageNote';
+import { getMessageList } from '@/features/message/api/server';
 import styles from './message.module.css';
 
 type MessageDetailPageProps = {

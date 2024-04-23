@@ -2,9 +2,9 @@
 
 import dayjs from 'dayjs';
 
-import { getBoxDetail } from '@/api/box/server';
 import BeforeOpened from '@/components/Funnel/DonationBox/BeforeOpened';
 import CanOpen from '@/components/Funnel/DonationBox/CanOpen';
+import { getBoxDetail } from '@/features/box/api/server';
 
 type PageProps = {
   params: { boxId: string };

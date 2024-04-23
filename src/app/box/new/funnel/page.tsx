@@ -5,11 +5,11 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FieldValues } from 'react-hook-form';
 
-import { postNewBox } from '@/api/box/client';
 import BoxDescription from '@/components/Funnel/DonationBox/BoxDescription';
 import BoxDetail from '@/components/Funnel/DonationBox/BoxDetail';
 import DonationDetail from '@/components/Funnel/DonationBox/DonationDetail';
-import { DonationBox } from '@/types/donationBox';
+import { postNewBox } from '@/features/box/api/client';
+import { DonationBox } from '@/shared/types/donationBox';
 
 createStore({});
 

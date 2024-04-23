@@ -7,9 +7,9 @@ import Button from '@/components/Button';
 import FixedBottomCTA from '@/components/FixedBottomCTA';
 import Gift from '@/components/GiftBox';
 import ShardIconUrl from '@/public/icon/share-16.svg';
+import { DonationBox } from '@/shared/types/donationBox';
+import { copyClipBoard } from '@/shared/utils/copyClipBoard';
 import { getTypographyStyles } from '@/styles/fonts';
-import { DonationBox } from '@/types/donationBox';
-import { copyClipBoard } from '@/utils/copyClipBoard';
 
 const Wrapper = styled.div`
   height: 100%;

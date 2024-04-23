@@ -1,7 +1,7 @@
 'use server';
 
-import { getBoxDetailGuest } from '@/api/box/server';
 import CompleteBox from '@/components/GiftBox/CompleteBox';
+import { getBoxDetailGuest } from '@/features/box/api/server';
 
 type CompletePageProps = {
   params: { boxId: string };

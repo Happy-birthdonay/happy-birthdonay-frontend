@@ -3,8 +3,8 @@
 import { usePathname, useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
+import { DonationBox } from '@/shared/types/donationBox';
 import { getTypographyStyles } from '@/styles/fonts';
-import { DonationBox } from '@/types/donationBox';
 import Gift from '.';
 import Button from '../Button';
 import FixedBottomCTA from '../FixedBottomCTA';

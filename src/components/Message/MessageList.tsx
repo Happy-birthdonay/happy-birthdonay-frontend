@@ -4,9 +4,9 @@ import { useParams, useRouter } from 'next/navigation';
 import { Suspense } from 'react';
 import styled from 'styled-components';
 
-import { useDonationBox } from '@/api/box/hooks/useDonationBox';
 import Button from '@/components/Button';
 import FixedBottomCTA from '@/components/FixedBottomCTA';
+import { useDonationBox } from '@/features/box/api/hooks/useDonationBox';
 import { getTypographyStyles } from '@/styles/fonts';
 
 const Wrapper = styled.div`

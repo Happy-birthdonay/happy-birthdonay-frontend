@@ -1,10 +1,10 @@
 'use sever';
 
-import { getBoxDetail } from '@/api/box/server';
-import { getMessageList } from '@/api/message/server';
 import Opened from '@/components/Funnel/DonationBox/Opened';
 import MessageButton from '@/components/GiftBox/MessageButton';
 import MessageList from '@/components/Message/MessageList';
+import { getBoxDetail } from '@/features/box/api/server';
+import { getMessageList } from '@/features/message/api/server';
 
 type PageProps = {
   params: { boxId: string };

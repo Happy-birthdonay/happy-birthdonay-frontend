@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import closeSrc from '@/public/icon/close.svg';
+import { TAG_COLOR } from '@/shared/consts/const';
+import { Message, MessageTag } from '@/shared/types/message';
 import { getTypographyStyles } from '@/styles/fonts';
-import { Message, MessageTag } from '@/types/message';
-import { TAG_COLOR } from '@/utils/const';
 import ColorButton from '../ColorButton';
 import { ColorChips } from '../Funnel/GuestMessage/GuestDetail';
 

@@ -5,10 +5,10 @@ import { useState } from 'react';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import { postNewMessage } from '@/api/box/client';
 import Complete from '@/components/Funnel/GuestMessage/Complete';
 import GuestDetail from '@/components/Funnel/GuestMessage/GuestDetail';
 import Message from '@/components/Funnel/GuestMessage/Message';
+import { postNewMessage } from '@/features/api/box/api/client';
 
 type MessagePageProps = {
   params: { boxId: string };

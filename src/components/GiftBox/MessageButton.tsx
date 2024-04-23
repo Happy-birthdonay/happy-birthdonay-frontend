@@ -3,9 +3,9 @@
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
+import { TAG_COLOR } from '@/shared/consts/const';
+import { MessageTag } from '@/shared/types/message';
 import { getTypographyStyles } from '@/styles/fonts';
-import { MessageTag } from '@/types/message';
-import { TAG_COLOR } from '@/utils/const';
 
 const Wrapper = styled.div<{ tag: MessageTag }>`
   display: flex;

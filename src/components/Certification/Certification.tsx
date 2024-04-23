@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import { RefObject, Suspense, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { useCertification } from '@/api/box/hooks/useCertifications';
+import { useCertification } from '@/features/box/api/hooks/useCertifications';
 import logoSrc from '@/public/logo.png';
 import ribbonSrc from '@/public/ribbonOutline.png';
 import { getTypographyStyles } from '@/styles/fonts';

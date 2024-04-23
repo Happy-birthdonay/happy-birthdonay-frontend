@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import Button from '@/components/Button';
 import FixedBottomCTA from '@/components/FixedBottomCTA';
 import Gift from '@/components/GiftBox';
+import { DonationBox } from '@/shared/types/donationBox';
 import { getTypographyStyles } from '@/styles/fonts';
-import { DonationBox } from '@/types/donationBox';
 
 const Wrapper = styled.div`
   height: 100%;

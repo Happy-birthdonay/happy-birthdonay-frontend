@@ -1,7 +1,7 @@
 import { create, StateCreator } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { type Message } from '@/types/message';
+import { type Message } from '@/shared/types/message';
 
 const initialMessage = {
   messageId: undefined,

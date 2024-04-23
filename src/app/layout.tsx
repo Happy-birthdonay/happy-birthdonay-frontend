@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import '@/styles/globals.css';
 import '@/styles/minireset.css';
 
-import Layout from '@/ui/Layout';
+import Layout from '@/components/Layout';
 import StyledJsxRegistry from './registry';
 
 export const metadata: Metadata = {

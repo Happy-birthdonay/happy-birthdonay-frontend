@@ -5,13 +5,13 @@ import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import { postOauthToken } from '@/api/oauth';
-import { signUp } from '@/api/user/client';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
-import { useUser, useUserActions } from '@/store/user/userStore';
+import { postOauthToken } from '@/features/oauth/api/client';
+import { signUp } from '@/features/user/api/client';
+import { useUser, useUserActions } from '@/shared/store/user/userStore';
+import { User } from '@/shared/types/user';
 import { getTypographyStyles } from '@/styles/fonts';
-import { User } from '@/types/user';
 
 const Wrapper = styled.div`
   height: 100%;

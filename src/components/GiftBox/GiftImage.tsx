@@ -28,6 +28,7 @@ const renderGift = (color: string) => {
       return WhiteBox;
   }
 };
+
 type GiftProps = {
   color: string;
 };
