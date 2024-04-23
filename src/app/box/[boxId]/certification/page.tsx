@@ -66,8 +66,9 @@ function Page(props: PageProps) {
   const onUploadS3 = async (file: File) => {
     try {
       const response = await uploadImageToS3({ fileName, file });
+      console.log('response', response.Location);
       if (response) {
-        setCertificationImage(response?.Location);
+        response && setCertificationImage(response.Location);
         setStep('complete');
       }
     } catch (e) {
