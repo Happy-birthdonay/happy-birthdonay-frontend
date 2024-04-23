@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { PropsWithChildren, useCallback } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
@@ -40,11 +40,6 @@ function Layout(props: PropsWithChildren<LayoutProps>) {
   const { children } = props;
 
   const pathname = usePathname();
-  const search = useSearchParams();
-  const router = useRouter();
-  console.log('search', search);
-  console.log('pathname', pathname);
-  console.log('router', router);
 
   const renderHeaderByPath = useCallback(() => {
     const regexPaths = [
@@ -53,8 +48,10 @@ function Layout(props: PropsWithChildren<LayoutProps>) {
       /^\/box\/new$/, // ㅡ Matches '/box/new'
       /^\/login\/profile$/, // ㅡ Matches '/login/profile'
       /^\/box\/new\/funnel$/, // ㅡ Matches '/box/new/funnel'
-      /^\/box\/\d+\/open$/, // Matches '/box/[number]/open'
-      /^\/box\/new\/funnel\/complete\/\d+$/, //Maches '/box/new/funnel/complete/[number]'
+      /^\/box\/\d+\/open$/, // ㅡ Matches '/box/[number]/open'
+      /^\/box\/new\/funnel\/complete\/\d+$/, // ㅡ Matches '/box/new/funnel/complete/[number]'
+      /^\/box\/\d+\/message\/\d+$/, // ㅡ Matches '/box/[number]/message/[number]'
+      /^\/box\/\d+\/certification$/, // ㅡ Matches '/box/[number]/certification'
     ];
 
     if (regexPaths.some((regexPath) => regexPath.test(pathname))) {

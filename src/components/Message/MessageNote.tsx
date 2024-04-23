@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import closeSrc from '@/public/icon/close.svg';
+import { ColorChips } from '@/shared/consts/colorChips';
 import { TAG_COLOR } from '@/shared/consts/const';
 import { Message, MessageTag } from '@/shared/types/message';
 import { getTypographyStyles } from '@/styles/fonts';
 import ColorButton from '../ColorButton';
-import { ColorChips } from '../Funnel/GuestMessage/GuestDetail';
 
 const Wrapper = styled.div<{ $tag: MessageTag }>`
   height: auto;

@@ -1,6 +1,6 @@
 'use client';
 
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { S3Client } from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
 
 type uploadImageToS3Props = {
@@ -8,12 +8,12 @@ type uploadImageToS3Props = {
   file: File;
 };
 
-const REGION = 'ap-northeast-2';
+const REGION = 'ap-southeast-2';
 const accessKeyId = process.env.NEXT_PUBLIC_S3_ACCESS_KEY_ID as string;
 const secretAccessKey = process.env.NEXT_PUBLIC_S3_SECRET_ACCESS_KEY as string;
 
 export const uploadImageToS3 = async (props: uploadImageToS3Props) => {
-  const { fileName, file } = props;
+  const { file } = props;
 
   const s3 = new S3Client({
     credentials: {
