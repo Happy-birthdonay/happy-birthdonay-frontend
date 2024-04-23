@@ -3,15 +3,15 @@ import styled from 'styled-components';
 
 import { getTypographyStyles } from '@/styles/fonts';
 
-const Wrapper = styled.div<{ $backgroundColor?: string; $maxLength: number }>`
+const Wrapper = styled.div<{ $backgroundColor?: string; $maxLength?: number; $color?: string }>`
   textarea {
     width: 100%;
     height: 100%;
-    min-height${({ $maxLength }) => ($maxLength ? `:${$maxLength}px` : '100px')};
+    min-height: ${({ $maxLength }) => ($maxLength ? `${$maxLength}px` : '100px')};
     padding: 15px 20px;
     background-color: ${({ theme, $backgroundColor }) => $backgroundColor ?? theme.colors.main.white};
     border: ${({ $backgroundColor }) => ($backgroundColor ? 'none' : `1px solid red`)};
-    color: ${({ theme, $backgroundColor }) => ($backgroundColor ? theme.colors.main.black : theme.colors.main.white)};
+    color: ${({ theme, $color }) => $color ?? theme.colors.main.black};
     border-radius: 10px;
     resize: none;
     //scroll bar delete

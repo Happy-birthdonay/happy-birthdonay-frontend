@@ -16,8 +16,8 @@ createStore({});
 export default function FunnerPage() {
   const pathname = usePathname();
   const router = useRouter();
-
   const [step, setStep] = useState<'donation' | 'boxDetail' | 'boxDescription'>('donation');
+
   const createNewBox = async (data: FieldValues) => {
     try {
       console.log('Data', data);

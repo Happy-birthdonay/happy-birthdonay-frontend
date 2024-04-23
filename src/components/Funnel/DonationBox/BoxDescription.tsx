@@ -54,7 +54,7 @@ function BoxDescription(props: BoxDescriptionProps) {
                 onChange={(e) => onChange(e.target.value)}
                 bottomText={formState.errors.boxDescription?.message as string}
                 $isError={!!formState.errors.boxDescription}
-                maxLength={150}
+                $maxLength={150}
                 length={value?.length ?? 0}
               />
             )}

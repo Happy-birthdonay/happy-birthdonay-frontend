@@ -20,11 +20,10 @@ function MessagePage(props: MessagePageProps) {
   const { params } = props;
   const router = useRouter();
 
-  const [step, setStep] = useState<'guestDetail' | 'message' | 'complete'>('complete');
+  const [step, setStep] = useState<'guestDetail' | 'message' | 'complete'>('guestDetail');
 
   const createNewMessage = async (data: FieldValues) => {
     try {
-      console.log('data', data);
       const boxId = Number(params.boxId);
       const requestData = { ...data, tag: data.tag.key, boxId };
       const response = await postNewMessage(requestData);

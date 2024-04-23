@@ -17,10 +17,9 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  gap: 36px;
   align-items: center;
   text-align: center;
+  gap: 36px;
 
   h3 {
     ${getTypographyStyles('Headline3_B')}
@@ -31,7 +30,25 @@ const Wrapper = styled.div`
     ${getTypographyStyles('Body2_M')}
   }
 `;
-const Container = styled.div``;
+
+const Container = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & > :first-child {
+    margin-bottom: 56px;
+  }
+
+  & > :nth-child(3) {
+    margin-bottom: 82px;
+  }
+  & > :last-child {
+    margin-bottom: 30px;
+  }
+`;
 
 type OpenedProps = {
   box: DonationBox;
@@ -49,7 +66,7 @@ function Opened(props: OpenedProps) {
 
   const onDonateWithRouter = async () => {
     try {
-      const response = await patchDonatedByBox(box.boxId, true);
+      await patchDonatedByBox(box.boxId, true);
       clearCache(pathName);
       window.open(url, '_blank');
     } catch (e) {
@@ -59,22 +76,23 @@ function Opened(props: OpenedProps) {
 
   return (
     <Wrapper>
-      <h3>
-        Happy <br />
-        Birthday!
-      </h3>
       <Container>
+        <h3>
+          Happy <br />
+          Birthday!
+        </h3>
         <Image width={230} height={230} src={birthdayCakeOutline} alt="mail" />
         <p>
           총 {people}명의 축하를 받았어요
           <br />
           모인 마음은 총 {total.toLocaleString()}원 입니다.
         </p>
+        <p>
+          <strong>{donationName}</strong>에 기부하고,
+          <br /> 생일 축하 메시지를 확인해 보세요!
+        </p>
       </Container>
-      <p>
-        <strong>{donationName}</strong>에 기부하고,
-        <br /> 생일 축하 메시지를 확인해 보세요!
-      </p>
+
       <FixedBottomCTA>
         <Button onClick={onDonateWithRouter}>기부하러 가기</Button>
       </FixedBottomCTA>

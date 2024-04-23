@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  padding: 0 20px 18px;
+  padding: 0 20px 40px;
 `;
 function FixedBottomCTA(props: PropsWithChildren) {
   return (

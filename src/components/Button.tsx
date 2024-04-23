@@ -29,6 +29,14 @@ const Wrapper = styled.button<{ $buttonType: ButtonProps['$buttonType'] }>`
   }
 `;
 
+const Container = styled.span`
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+`;
+
 type ButtonProps = {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   $buttonType?: 'primary' | 'secondary';
@@ -41,7 +49,7 @@ function Button(props: ButtonProps, forwardedRef: Ref<HTMLButtonElement>) {
 
   return (
     <Wrapper ref={forwardedRef} id={buttonId} as="button" onClick={onClick} $buttonType={$buttonType} {...rest}>
-      <span> {children}</span>
+      <Container> {children}</Container>
     </Wrapper>
   );
 }

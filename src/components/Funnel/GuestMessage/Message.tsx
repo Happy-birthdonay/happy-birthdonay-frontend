@@ -39,7 +39,6 @@ const ColorContainer = styled.div`
 
   & > :last-child {
     margin-top: 12px;
-    border: 1px solid red;
   }
 `;
 
