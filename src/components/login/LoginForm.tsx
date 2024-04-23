@@ -52,6 +52,7 @@ export default function LoginForm() {
         const code = url.searchParams.get('code');
 
         const { result, message, data } = await postOauthToken(code);
+        console.log(result, message, data);
         if (message === 'Succeeded Kakao Login: User already exists') {
           router.replace('/box');
         }

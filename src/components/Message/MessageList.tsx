@@ -1,8 +1,10 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import { Suspense } from 'react';
 import styled from 'styled-components';
 
+import { useDonationBox } from '@/api/box/hooks/useDonationBox';
 import Button from '@/components/Button';
 import { getTypographyStyles } from '@/styles/fonts';
 
@@ -35,7 +37,10 @@ type MessageListProps = {
 function MessageList(props: MessageListProps) {
   const { children } = props;
 
+  const { boxId } = useParams();
   const router = useRouter();
+
+  const { box } = useDonationBox(boxId as string);
   return (
     <Wrapper>
       <h3>[그린피스]</h3>
@@ -44,13 +49,25 @@ function MessageList(props: MessageListProps) {
         메시지를 남겨준 사람들이 담긴 <br /> 나만의 기부 증서를 만들어 공유해 보세요!
       </p>
 
-      <Button
-        onClick={() => {
-          router.push(`certification`);
-        }}
-      >
-        기부 증서 만들기
-      </Button>
+      <Suspense fallback={null}>
+        {box.certImgUrl ? (
+          <Button
+            onClick={() => {
+              router.push(`certification`);
+            }}
+          >
+            기부 증서 확인하기
+          </Button>
+        ) : (
+          <Button
+            onClick={() => {
+              router.push(`certification`);
+            }}
+          >
+            기부 증서 만들기
+          </Button>
+        )}
+      </Suspense>
     </Wrapper>
   );
 }

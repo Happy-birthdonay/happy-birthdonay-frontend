@@ -9,6 +9,7 @@ export function middleware(request: NextRequest) {
 
   requestHeaders.set('x-url', request.url);
 
+  console.log('middleware.ts');
   return NextResponse.next({
     request: {
       headers: requestHeaders,

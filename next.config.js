@@ -5,7 +5,13 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
-    domains: ['localhost', 'hbdy-s3.s3.amazonaws.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'hbdy-s3.s3.ap-southeast-2.amazonaws.com',
+        pathname: '/cert-images/**',
+      },
+    ],
   },
   async rewrites() {
     return [

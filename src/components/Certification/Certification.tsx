@@ -1,13 +1,15 @@
+import saveAs from 'file-saver';
+import { toPng } from 'html-to-image';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { Suspense, useState } from 'react';
+import { Suspense, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { useDonationBox } from '@/api/box/hooks/useDonationBox';
+import { useCertification } from '@/api/box/hooks/useCertifications';
 import logoSrc from '@/public/logo.png';
 import ribbonSrc from '@/public/ribbonOutline.png';
-import { useUser } from '@/store/user/userStore';
 import { getTypographyStyles } from '@/styles/fonts';
+import Button from '../Button';
 
 const Wrapper = styled.div<{ $isFlipped: boolean }>`
   position: relative;
@@ -19,7 +21,26 @@ const Wrapper = styled.div<{ $isFlipped: boolean }>`
   align-items: center;
 `;
 
+// const ForSavedCard = styled.div`
+//   width: 329px;
+//   height: 616px;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   position: absolute;
+//   left: -100%;
+//   top: -100%;
+//   p {
+//     ${getTypographyStyles('Caption_M')};
+//     font-size: 14px;
+//     padding: 0 20px;
+//   }
+// `;
+
 const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
@@ -41,21 +62,22 @@ const Card = styled.div`
 
 const FrontCard = styled(Card)<{ $isFlipped: boolean }>`
   z-index: 1;
-  transform: ${({ $isFlipped }) => ($isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)')};
-`;
-
-const BackCard = styled(Card)<{ $isFlipped: boolean }>`
   transform: ${({ $isFlipped }) => ($isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)')};
 `;
 
+const BackCard = styled(Card)<{ $isFlipped: boolean }>`
+  transform: ${({ $isFlipped }) => ($isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)')};
+`;
+
 const Title = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 25px;
   gap: 2px;
   strong {
-    font-size: 23px;
+    font-size: 22px;
     font-weight: bold;
   }
 `;
@@ -72,17 +94,47 @@ const Container = styled.div`
   margin-bottom: 30px;
 `;
 
-const mock = ['박민주', '봉민주', '만쥬', '큐티은빈', '맹주', '선경이는양말두개', '오구리', '트리케라톱스'];
+const LogoContainer = styled.div`
+  width: 100px;
+  height: 100px;
+  aspect-ratio: 1/1;
+`;
+
+const LogoImage = styled(Image)`
+  width: 100%;
+`;
+
 function Certification() {
   const { boxId } = useParams();
 
-  const { box } = useDonationBox(boxId as string);
-  const user = useUser();
+  const divRef = useRef<HTMLDivElement>(null);
+
+  const { certification } = useCertification(boxId as string);
 
   //certification의 앞면과 뒷면을 보여주는 state
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
 
-  const { name, certCreatedAt, certImgUrl } = box;
+  const handleDownload = async () => {
+    if (!divRef.current) return;
+
+    try {
+      const div = divRef.current;
+
+      // const canvas = await html2canvas(div);
+      // canvas.toBlob((blob) => {
+      //   if (blob !== null) {
+      //     saveAs(blob, 'result.png');
+      //   }
+      // });
+      const png = await toPng(div, { cacheBust: true });
+      console.log('pnt', png);
+      saveAs(png);
+    } catch (error) {
+      console.error('Error converting div to image:', error);
+    }
+  };
+
+  if (!certification) return null;
   return (
     <Suspense fallback={null}>
       <Wrapper
@@ -93,43 +145,53 @@ function Certification() {
           setIsFlipped((prev) => !prev);
         }}
       >
-        <FrontCard $isFlipped={isFlipped}>
-          <Image alt="logo" width={100} src={logoSrc} />
+        <FrontCard $isFlipped={isFlipped} ref={divRef}>
+          <LogoContainer>
+            <LogoImage alt="logo" width={100} height={100} src={logoSrc} />
+          </LogoContainer>
           <Title>
+            {/* <div style={{ width: '25px', height: '25px' }}> */}
             <Image alt="ribbon" src={ribbonSrc} width={25} height={25} />
+            {/* </div> */}
             <strong> 기부 증서</strong>
           </Title>
           <CertificationContainer>
-            <img width={167} height={259} alt="certification img" src={certImgUrl} />
+            <Image width={167} height={259} alt="certification img" src={certification.certImgUrl} />
           </CertificationContainer>
           <Container>
             <p style={{ textDecoration: 'underline' }}>{`Donor's name`}</p>
-            <p>{mock.join(', ')}</p>
+            <p>{certification.donorsNameList.join(', ')}</p>
           </Container>
-          <strong>{user.name}</strong>
-          <strong>{certCreatedAt}</strong>
+          <strong>{certification.boxCreatedBy}</strong>
+          <strong>{certification.certCreatedAt}</strong>
         </FrontCard>
 
         <BackCard $isFlipped={isFlipped}>
-          <Image alt="logo" width={100} src={logoSrc} />
+          <LogoContainer>
+            <LogoImage alt="logo" width={100} height={100} src={logoSrc} />
+          </LogoContainer>
           <Title>
             <Image alt="ribbon" src={ribbonSrc} width={25} height={25} />
             <strong> 기부 증서</strong>
           </Title>
           <CertificationContainer>
-            <img width={167} height={259} alt="certification img" src={certImgUrl} />
+            <Image width={167} height={259} alt="certification img" src={certification.certImgUrl} />
           </CertificationContainer>
           <Container>
             <p>소중한 나눔에 동참해 주셔서 고맙습니다.</p>
             <p>
-              남은 마음은 {name} 위해 사용 됩니다.
-              <br /> 앞으로 받은 만큼 베푸는 {user.name}이 되겠습니다.
+              남은 마음은 <strong>{certification.name}</strong> 위해 사용 됩니다.
+              <br /> 앞으로 받은 만큼 베푸는 <strong>{certification.boxCreatedBy}</strong>이 되겠습니다.
             </p>
           </Container>
-          <strong>{user.name}</strong>
-          <strong>{certCreatedAt}</strong>
+          <strong>{certification.boxCreatedBy}</strong>
+          <strong>{certification.certCreatedAt}</strong>
         </BackCard>
       </Wrapper>
+
+      <Button disabled={isFlipped} onClick={handleDownload}>
+        저장
+      </Button>
     </Suspense>
   );
 }

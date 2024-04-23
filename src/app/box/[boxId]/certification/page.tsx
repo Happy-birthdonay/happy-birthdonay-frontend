@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { uploadImageToS3 } from '@/actions/uploadS3';
 import { patchCertificationImageUrl } from '@/api/box/client';
-import { useDonationBox } from '@/api/box/hooks/useDonationBox';
+import { useCertification } from '@/api/box/hooks/useCertifications';
 import Button from '@/components/Button';
 import Certification from '@/components/Certification/Certification';
 import ImageUpload from '@/components/ImageUpload';
@@ -49,9 +49,8 @@ const ButtonContainer = styled.div`
 
 function Page() {
   const { boxId } = useParams();
-  const { box } = useDonationBox(boxId as string);
-
-  const [step, setStep] = useState<'upload' | 'complete'>(box.certImgUrl ? 'complete' : 'upload');
+  const { certification } = useCertification(boxId as string);
+  const [step, setStep] = useState<'upload' | 'complete'>(certification?.certImgUrl ? 'complete' : 'upload');
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
