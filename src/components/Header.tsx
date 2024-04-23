@@ -11,8 +11,6 @@ const Wrapper = styled.header`
   transform: translateX(-50%);
   width: 100%;
   height: 60px;
-  /* background-color: #333; */
-  border: 1px solid red;
   max-width: 392px;
 `;
 
