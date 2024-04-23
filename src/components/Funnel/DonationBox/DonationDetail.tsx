@@ -39,6 +39,7 @@ function DonationDetail(props: DonationDetailProps) {
   const { onNext } = props;
   const { register, handleSubmit, formState } = useForm();
   const { actions } = useStateMachine({ updateAction });
+
   const onSubmit = (data: FieldValues) => {
     actions.updateAction(data);
     onNext();

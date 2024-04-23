@@ -3,14 +3,15 @@ import styled from 'styled-components';
 
 import { getTypographyStyles } from '@/styles/fonts';
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ $backgroundColor?: string; $maxLength: number }>`
   textarea {
     width: 100%;
     height: 100%;
-    min-height: 150px;
+    min-height${({ $maxLength }) => ($maxLength ? `:${$maxLength}px` : '100px')};
     padding: 15px 20px;
-    background-color: ${({ theme }) => theme.colors.main.white};
-    border: 1px solid red;
+    background-color: ${({ theme, $backgroundColor }) => $backgroundColor ?? theme.colors.main.white};
+    border: ${({ $backgroundColor }) => ($backgroundColor ? 'none' : `1px solid red`)};
+    color: ${({ theme, $backgroundColor }) => ($backgroundColor ? theme.colors.main.black : theme.colors.main.white)};
     border-radius: 10px;
     resize: none;
     //scroll bar delete
@@ -37,20 +38,22 @@ const LengthText = styled.p<{ $isError?: boolean }>`
 `;
 
 type TextFieldProps = {
+  $backgroundColor?: string;
   $isError?: boolean;
   bottomText?: string;
   length?: number;
-  maxLength?: number;
+  $maxLength?: number;
 } & React.InputHTMLAttributes<HTMLTextAreaElement>;
+
 function TextField(props: TextFieldProps, ref: React.Ref<HTMLTextAreaElement>) {
-  const { $isError, bottomText, length, maxLength, ...rest } = props;
+  const { $backgroundColor, $isError, bottomText, length, $maxLength, ...rest } = props;
 
   return (
-    <Wrapper>
+    <Wrapper $backgroundColor={$backgroundColor} $maxLength={$maxLength}>
       <textarea ref={ref} type="text" {...rest} />
       <TextContainer>
         <BottomText $isError={$isError}>{bottomText ? bottomText : null}</BottomText>
-        <LengthText $isError={$isError}>{maxLength ? `${length}/${props.maxLength}` : null}</LengthText>
+        <LengthText $isError={$isError}>{$maxLength ? `${length}/${props.$maxLength}` : null}</LengthText>
       </TextContainer>
     </Wrapper>
   );

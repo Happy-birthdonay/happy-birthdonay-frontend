@@ -1,7 +1,7 @@
 'use server';
 
 import GuestEnter from '@/components/Guest/GuestEnter';
-import { getBoxDetailGuest } from '@/features/api/box/api/server';
+import { getBoxDetailGuest } from '@/features/box/api/server';
 
 type GuestPageProps = {
   params: { boxId: string };

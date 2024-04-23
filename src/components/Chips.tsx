@@ -11,7 +11,7 @@ const ChipContainer = styled.div`
   grid-auto-flow: row dense;
   justify-content: flex-start; */
 `;
-type Chip = {
+export type Chip = {
   key: string;
   color: string;
   children: React.ReactNode;
