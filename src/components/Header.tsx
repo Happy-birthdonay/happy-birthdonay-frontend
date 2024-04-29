@@ -6,7 +6,7 @@ import ChevronLeft from '@/public/chevron-left.svg';
 
 const Wrapper = styled.header`
   position: fixed;
-  top: 0;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import Button from '@/components/Button';
 import Chips from '@/components/Chips';
+import { ErrorMessage } from '@/components/ErrorMessage';
 import Gift from '@/components/GiftBox';
 import Input from '@/components/Input';
 import { getTypographyStyles } from '@/styles/fonts';
@@ -57,10 +58,17 @@ function BoxDetail(props: BoxDetailProps) {
   const { register, handleSubmit, setValue, formState, watch } = useForm();
   const { actions } = useStateMachine({ updateAction });
 
+  const { errors, isValid } = formState;
+  const color = watch('color');
+
+  console.log('color', color);
+
   const onSubmit = (data: FieldValues) => {
     actions.updateAction(data);
     onNext();
   };
+
+  console.log('formState', formState.errors);
   return (
     <Wrapper>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -68,27 +76,31 @@ function BoxDetail(props: BoxDetailProps) {
           <Input
             label="기부 상자 이름을 적어주세요."
             placeholder="상자 이름"
-            bottomText={formState.errors.boxTitle?.message as string}
-            $isError={!!formState.errors.boxTitle}
+            bottomText={errors.boxTitle?.message as string}
+            $isError={!!errors.boxTitle}
             {...register('boxTitle', {
               required: { value: true, message: '상자 이름을 입력해주세요.' },
             })}
           />
           <ColorContainer>
-            <Text>원하는 색을 골라주세요.</Text>
+            <div>
+              <Text>원하는 색을 골라주세요.</Text>
+              <ErrorMessage> {errors.color?.message as string}</ErrorMessage>
+            </div>
             <Chips
               chips={ColorChips}
               onSelect={(chip) => {
-                setValue('color', chip.key);
+                setValue('color', chip.key, { shouldValidate: true });
               }}
+              registerProps={register('color', { required: { value: true, message: '원하는 색상을 골라 주세요' } })}
             />
           </ColorContainer>
           <Gift $width="243px">
-            <Gift.Box color={watch('color', { required: { value: true, message: '원하는 색상을 골라 주세요' } })} />
+            <Gift.Box color={color} />
           </Gift>
         </Container>
 
-        <Button type="submit" $buttonType="primary">
+        <Button disabled={!isValid} type="submit" $buttonType="primary">
           다음
         </Button>
       </form>

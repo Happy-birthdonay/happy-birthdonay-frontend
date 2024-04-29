@@ -4,6 +4,7 @@ import React, { forwardRef, MouseEventHandler, Ref, useId } from 'react';
 import styled from 'styled-components';
 
 import { getTypographyStyles } from '@/styles/fonts';
+import { LoadingSpinner } from './LoadingSpinner';
 
 const Wrapper = styled.button<{ $buttonType: ButtonProps['$buttonType'] }>`
   width: 100%;
@@ -29,7 +30,7 @@ const Wrapper = styled.button<{ $buttonType: ButtonProps['$buttonType'] }>`
   }
 `;
 
-const Container = styled.span`
+const Container = styled.div`
   text-align: center;
   display: flex;
   align-items: center;
@@ -38,18 +39,27 @@ const Container = styled.span`
 `;
 
 type ButtonProps = {
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-  $buttonType?: 'primary' | 'secondary';
   children: React.ReactNode;
+  isLoading?: boolean;
+  $buttonType?: 'primary' | 'secondary';
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 function Button(props: ButtonProps, forwardedRef: Ref<HTMLButtonElement>) {
-  const { $buttonType = 'primary', onClick, children, ...rest } = props;
+  const { isLoading = false, $buttonType = 'primary', onClick, children, disabled, ...rest } = props;
   const buttonId = useId();
 
   return (
-    <Wrapper ref={forwardedRef} id={buttonId} as="button" onClick={onClick} $buttonType={$buttonType} {...rest}>
-      <Container> {children}</Container>
+    <Wrapper
+      ref={forwardedRef}
+      id={buttonId}
+      as="button"
+      onClick={onClick}
+      $buttonType={$buttonType}
+      disabled={isLoading || disabled}
+      {...rest}
+    >
+      <Container>{isLoading ? <LoadingSpinner /> : children}</Container>
     </Wrapper>
   );
 }

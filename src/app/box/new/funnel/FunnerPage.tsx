@@ -1,6 +1,6 @@
 'use client';
 
-import { createStore, StateMachineProvider } from 'little-state-machine';
+import { StateMachineProvider } from 'little-state-machine';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FieldValues } from 'react-hook-form';
@@ -11,8 +11,6 @@ import DonationDetail from '@/components/Funnel/DonationBox/DonationDetail';
 import { postNewBox } from '@/features/box/api/client';
 import { DonationBox } from '@/shared/types/donationBox';
 
-createStore({});
-
 export default function FunnerPage() {
   const pathname = usePathname();
   const router = useRouter();
@@ -21,13 +19,15 @@ export default function FunnerPage() {
   const createNewBox = async (data: FieldValues) => {
     try {
       const response = await postNewBox(data as DonationBox);
-
+      console.log('response', response);
       if (response.result === 'succeed') {
         router.push(`${pathname}/complete/${response.data.boxId}`);
       } else {
-        window.alert(response);
+        console.log('response', response);
       }
     } catch (e) {
+      console.log('e');
+
       console.error(e);
     }
   };

@@ -1,6 +1,7 @@
 'use client';
 
 import { useStateMachine } from 'little-state-machine';
+import { useState } from 'react';
 import { Controller, FieldValues, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -24,17 +25,23 @@ const Container = styled.div`
 `;
 
 type BoxDescriptionProps = {
-  onSubmit: (data: FieldValues) => void;
+  onSubmit: (data: FieldValues) => Promise<void>;
 };
 
 function BoxDescription(props: BoxDescriptionProps) {
   const { onSubmit } = props;
+
+  const [isLoading, setIsLoading] = useState(false);
   const { register, handleSubmit, formState, control } = useForm();
   const { actions, state } = useStateMachine({ updateAction });
 
-  const onCreateBox = (data: FieldValues) => {
+  const { errors, isValid } = formState;
+
+  const onCreateBox = async (data: FieldValues) => {
     actions.updateAction(data);
-    onSubmit({ ...state, ...data });
+    setIsLoading(true);
+    await onSubmit({ ...state, ...data });
+    setIsLoading(false);
   };
 
   return (
@@ -52,15 +59,15 @@ function BoxDescription(props: BoxDescriptionProps) {
                   maxLength: { value: 150, message: '150자 이내로 작성해주세요.' },
                 })}
                 onChange={(e) => onChange(e.target.value)}
-                bottomText={formState.errors.boxDescription?.message as string}
-                $isError={!!formState.errors.boxDescription}
+                bottomText={errors.boxDescription?.message as string}
+                $isError={!!errors.boxDescription}
                 $maxLength={150}
                 length={value?.length ?? 0}
               />
             )}
           />
         </Container>
-        <Button type="submit" $buttonType="primary">
+        <Button isLoading={isLoading} disabled={!isValid} type="submit" $buttonType="primary">
           저장하기
         </Button>
       </form>

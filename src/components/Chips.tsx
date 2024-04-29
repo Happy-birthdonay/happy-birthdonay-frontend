@@ -20,9 +20,11 @@ export type Chip = {
 type ChipsProps = {
   onSelect?: (chip: Chip) => void;
   chips: Chip[];
+  registerProps?: any;
 };
 function Chips(props: ChipsProps) {
-  const { chips, onSelect } = props;
+  const { chips, onSelect, registerProps } = props;
+
   const [selectedChip, setSelectedChip] = useState<Chip | null>(null);
 
   const onSelectChip = (chip: Chip) => {
@@ -33,7 +35,7 @@ function Chips(props: ChipsProps) {
   };
 
   return (
-    <ChipContainer>
+    <ChipContainer {...registerProps}>
       {chips.map((chip) => (
         <ColorButton
           type="button"

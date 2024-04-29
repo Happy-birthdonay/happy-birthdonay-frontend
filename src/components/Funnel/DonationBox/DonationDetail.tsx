@@ -37,9 +37,11 @@ type DonationDetailProps = {
 
 function DonationDetail(props: DonationDetailProps) {
   const { onNext } = props;
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState } = useForm({ mode: 'onChange' });
+  const { isValid, errors } = formState;
   const { actions } = useStateMachine({ updateAction });
 
+  const regexUrl = /^(http|https):\/\/[^ "]+$/;
   const onSubmit = (data: FieldValues) => {
     actions.updateAction(data);
     onNext();
@@ -52,16 +54,22 @@ function DonationDetail(props: DonationDetailProps) {
           <Input
             label="어디에 기부할까요?"
             placeholder="기부처 이름"
-            bottomText={formState.errors.name?.message as string}
-            $isError={!!formState.errors.name}
+            bottomText={errors.name?.message as string}
+            $isError={!!errors.name}
             {...register('name', { required: { value: true, message: '기부처를 입력해 주세요.' } })}
           />
           <Input
             label="링크를 넣어주세요"
-            placeholder="기부처 링크"
-            bottomText={formState.errors.url?.message as string}
-            $isError={!!formState.errors.url}
-            {...register('url', { required: { value: true, message: '기부처 링크를 입력해 주세요.' } })}
+            placeholder="https://example.com"
+            bottomText={errors.url?.message as string}
+            $isError={!!errors.url}
+            {...register('url', {
+              required: { value: true, message: '기부처 링크를 입력해 주세요.' },
+              pattern: {
+                value: regexUrl,
+                message: '유효한 URL을 입력해주세요.',
+              },
+            })}
           />
           <Input
             label="기부할 금액을 알려주세요"
@@ -70,13 +78,14 @@ function DonationDetail(props: DonationDetailProps) {
             unit="원"
             {...register('amount', {
               valueAsNumber: true,
-              validate: (value) => value > 0,
               required: { value: true, message: '필수값 입니다.' },
+              min: { value: 0, message: '0원 이상 입력해주세요.' },
+              max: { value: 100000000, message: '1억 이하로 입력해주세요.' },
             })}
           />
         </Container>
 
-        <Button type="submit" $buttonType="primary">
+        <Button disabled={!isValid} type="submit" $buttonType="primary">
           다음
         </Button>
       </form>
