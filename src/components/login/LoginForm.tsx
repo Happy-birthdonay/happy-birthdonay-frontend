@@ -41,7 +41,8 @@ const birthdayPattern = /^(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/;
 export default function LoginForm() {
   const router = useRouter();
 
-  const [loading, setLoading] = useState(true);
+  const [getTokenIsLoading, setGetTokenIsLoading] = useState(true);
+  const [signUpIsLoading, setSignUpIsLoading] = useState(false);
 
   const { setUser } = useUserActions();
   const user = useUser();
@@ -53,24 +54,32 @@ export default function LoginForm() {
         const url = new URL(window.location.href);
         const code = url.searchParams.get('code');
 
-        const { result, message, data } = await postOauthToken(code);
+        const response = await postOauthToken(code);
+        const { result, message, data } = response;
         if (message === 'Succeeded Kakao Login: User already exists') {
           router.replace('/box');
         }
-        if (result === 'succeed') {
+
+        if (result === 'succeed' && data) {
           setUser(data);
           reset({ name: data.name, birthday: data.birthday });
+        } else {
+          window.alert(message);
+          router.push('/');
         }
-        setLoading(false);
-      } catch (e) {}
+      } catch (e) {
+      } finally {
+        setGetTokenIsLoading(false);
+      }
     };
     getToken();
   }, []);
 
   const onSignUp = async (data: User) => {
-    console.log('formState', formState);
     try {
+      setSignUpIsLoading(true);
       const response = await signUp(data);
+      setSignUpIsLoading(false);
       if (response.result === 'succeed') {
         router.push(`/box/new/funnel`);
       } else {
@@ -79,10 +88,9 @@ export default function LoginForm() {
     } catch (e) {}
   };
 
-  if (loading) {
-    return <div>loading....</div>;
+  if (getTokenIsLoading) {
+    return <div>Loading....</div>;
   }
-  console.log('error', formState.errors);
   return (
     <Wrapper>
       <form onSubmit={handleSubmit(onSignUp)}>
@@ -137,7 +145,7 @@ export default function LoginForm() {
           />
         </Container>
 
-        <Button $buttonType="primary" onSubmit={handleSubmit(onSignUp)}>
+        <Button isLoading={signUpIsLoading} $buttonType="primary" onSubmit={handleSubmit(onSignUp)}>
           다음
         </Button>
       </form>

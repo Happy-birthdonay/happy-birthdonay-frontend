@@ -43,22 +43,21 @@ function Layout(props: PropsWithChildren<LayoutProps>) {
 
   const renderHeaderByPath = useCallback(() => {
     const regexPaths = [
-      /^\/$/, // ㅡ Matches '/'
       /^\/box$/, // ㅡ Matches '/box'
+      /^\/box\/\d+$/, // ㅡ Matches '/box/[number]'
       /^\/box\/new$/, // ㅡ Matches '/box/new'
       /^\/login\/profile$/, // ㅡ Matches '/login/profile'
       /^\/box\/new\/funnel$/, // ㅡ Matches '/box/new/funnel'
       /^\/box\/\d+\/open$/, // ㅡ Matches '/box/[number]/open'
-      /^\/box\/new\/funnel\/complete\/\d+$/, // ㅡ Matches '/box/new/funnel/complete/[number]'
       /^\/box\/\d+\/message\/\d+$/, // ㅡ Matches '/box/[number]/message/[number]'
       /^\/box\/\d+\/certification$/, // ㅡ Matches '/box/[number]/certification'
+      /^\/guest\/\d+\/message$/, // ㅡ Matches '/guest/[number]/message'
     ];
 
     if (regexPaths.some((regexPath) => regexPath.test(pathname))) {
-      // pathname matches one of the regex paths
-      return null;
-    } else {
       return <Header />;
+    } else {
+      return null;
     }
   }, [pathname]);
 

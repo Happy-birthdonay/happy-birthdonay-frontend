@@ -34,8 +34,9 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
 
   return (
     <Wrapper>
-      <p>{error.message}</p>
-      <h2>죄송합니다. 에러가 발생 하였습니다.</h2>
+      <p>404</p>
+
+      <h2>죄송합니다. 페이지를 찾을 수 없습니다.</h2>
       <Container>
         <Button
           $buttonType="secondary"

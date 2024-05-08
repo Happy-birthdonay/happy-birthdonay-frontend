@@ -8,10 +8,12 @@ declare namespace ApiResponse {
   interface ResponseResult {
     message: string;
     result: string;
+    msg?: string;
+    statusCode?: number;
   }
 
   interface ResponseAuthTokenData extends ResponseResult {
-    data: User;
+    data?: User;
   }
 
   interface ResponsePostNewBox extends ResponseResult {
@@ -24,6 +26,14 @@ declare namespace ApiResponse {
 
   interface ResponseBoxList extends ResponseResult {
     data: Pick<DonationBox, 'boxId' | 'color'>[];
+  }
+
+  interface ResponseUser extends ResponseResult {
+    data?: {
+      userId: number;
+      name: string;
+      birthday: string;
+    };
   }
 }
 
