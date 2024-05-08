@@ -20,6 +20,7 @@ const Container = styled.div`
   height: auto;
   overflow: auto;
   margin-bottom: 20px;
+  max-height: 560px;
   p {
     ${getTypographyStyles('Body2_M')}
   }

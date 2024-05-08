@@ -45,16 +45,19 @@ const Container = styled.div`
 function Page() {
   const { boxId } = useParams();
   const { certification } = useCertification(boxId as string);
-  const [step, setStep] = useState<'upload' | 'complete'>(certification?.certImgUrl ? 'complete' : 'upload');
+  const [step, setStep] = useState<'upload' | 'complete'>(!!certification?.certImgUrl ? 'complete' : 'upload');
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
-
-  const fileName = `cert-images/${boxId}-certifiaction`;
+  const [isLoading, setIsLoading] = useState(false);
 
   const onUploadS3 = async (file: File) => {
     try {
-      const response = await uploadImageToS3({ fileName, file });
+      setIsLoading(true);
+      const 확장자 = file.name.split('.').pop();
+      const fileName = `cert-images/${boxId}-certification.${확장자}`;
+
+      const response = await uploadImageToS3({ file, fileName });
       console.log('response', response);
       if (response.Location) {
         await patchCertificationImageUrl(Number(boxId), response.Location);
@@ -62,6 +65,8 @@ function Page() {
       }
     } catch (e) {
       console.error(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -89,6 +94,7 @@ function Page() {
           <p>(중요한 개인정보를 반드시 가려주세요)</p>
           <FixedBottomCTA>
             <Button
+              isLoading={isLoading}
               disabled={!previewImage}
               onClick={async () => {
                 try {

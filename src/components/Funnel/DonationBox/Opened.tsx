@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import birthdayCakeOutline from 'public/birthdayCakeOutline.png';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
@@ -59,6 +60,8 @@ function Opened(props: OpenedProps) {
   const { box, messageList } = props;
   const pathName = usePathname();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const people = messageList.length;
   const total = box.amount * people;
   const donationName = box.name;
@@ -66,9 +69,11 @@ function Opened(props: OpenedProps) {
 
   const onDonateWithRouter = async () => {
     try {
+      setIsLoading(true);
       await patchDonatedByBox(box.boxId, true);
       clearCache(pathName);
       window.open(url, '_blank');
+      setIsLoading(false);
     } catch (e) {
       console.error(e);
     }
@@ -94,7 +99,9 @@ function Opened(props: OpenedProps) {
       </Container>
 
       <FixedBottomCTA>
-        <Button onClick={onDonateWithRouter}>기부하러 가기</Button>
+        <Button isLoading={isLoading} onClick={onDonateWithRouter}>
+          기부하러 가기
+        </Button>
       </FixedBottomCTA>
     </Wrapper>
   );

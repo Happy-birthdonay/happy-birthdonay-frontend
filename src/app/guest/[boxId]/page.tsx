@@ -12,6 +12,7 @@ async function GuestPage(props: GuestPageProps) {
   const response = await getBoxDetailGuest(Number(params.boxId));
   const { data: box } = response;
 
+  console.log('response', response);
   return <GuestEnter box={box} />;
 }
 

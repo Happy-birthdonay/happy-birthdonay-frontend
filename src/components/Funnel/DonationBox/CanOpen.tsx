@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
@@ -49,6 +50,8 @@ function CanOpen(props: CanOpenProps) {
   const pathName = usePathname();
   const router = useRouter();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <Wrapper>
       <Container>
@@ -68,8 +71,11 @@ function CanOpen(props: CanOpenProps) {
       </Container>
       <FixedBottomCTA>
         <Button
+          isLoading={isLoading}
           onClick={() => {
+            setIsLoading(true);
             router.push(`${pathName}/open`);
+            setIsLoading(false);
           }}
         >
           상자 열어보기

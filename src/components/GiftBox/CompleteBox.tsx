@@ -1,15 +1,12 @@
 'use client';
 
-import Image from 'next/image';
 import styled from 'styled-components';
 
-import Button from '@/components/Button';
 import FixedBottomCTA from '@/components/FixedBottomCTA';
 import Gift from '@/components/GiftBox';
-import ShardIconUrl from '@/public/icon/share-16.svg';
 import { DonationBox } from '@/shared/types/donationBox';
-import { copyClipBoard } from '@/shared/utils/copyClipBoard';
 import { getTypographyStyles } from '@/styles/fonts';
+import SharedButton from '../SharedButton';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -49,12 +46,8 @@ type CompleteBoxProps = {
 function CompleteBox(props: CompleteBoxProps) {
   const { donationBox } = props;
 
-  const handleCopyClipBoard = () => {
-    //host url get
-    const host = window.location.host;
-    const url = `${host}/box/${donationBox.boxId}/guest`;
-    copyClipBoard(url);
-  };
+  const host = window.location.host;
+  const url = `${host}/guest/${donationBox.boxId}`;
 
   return (
     <Wrapper>
@@ -73,10 +66,7 @@ function CompleteBox(props: CompleteBoxProps) {
         </TextContainer>
       </Container>
       <FixedBottomCTA>
-        <Button onClick={handleCopyClipBoard} $buttonType="primary">
-          <Image alt="share icon" src={ShardIconUrl} />
-          공유하기
-        </Button>
+        <SharedButton url={url} />
       </FixedBottomCTA>
     </Wrapper>
   );

@@ -1,8 +1,11 @@
 'use sever';
 
+import { headers } from 'next/headers';
+
 import Opened from '@/components/Funnel/DonationBox/Opened';
 import MessageButton from '@/components/GiftBox/MessageButton';
 import MessageList from '@/components/Message/MessageList';
+import SharedButton from '@/components/SharedButton';
 import { getBoxDetail } from '@/features/box/api/server';
 import { getMessageList } from '@/features/message/api/server';
 
@@ -17,22 +20,34 @@ async function Page(props: PageProps) {
   const { data: box } = await getBoxDetail(boxId);
   const { data: messageList } = await getMessageList(boxId);
 
+  const host = headers().get('host');
+  const url = `${host}/guest/${boxId}`;
+
   return (
     <>
+      {/* Before Open */}
       {box.isDonated ? (
         <MessageList boxId={boxId}>
-          {messageList.map((message) => (
-            <MessageButton
-              key={message.messageId}
-              boxId={message.boxId!}
-              messageId={message.messageId!}
-              tag={message.tag!}
-              contents={message.contents!.trim()}
-              createdBy={message.createdBy!.trim()}
-            />
-          ))}
+          {messageList.length === 0 ? (
+            <>
+              <p>공유하고 메시지 받기 !</p>
+              <SharedButton url={url} />
+            </>
+          ) : (
+            messageList.map((message) => (
+              <MessageButton
+                key={message.messageId}
+                boxId={message.boxId!}
+                messageId={message.messageId!}
+                tag={message.tag!}
+                contents={message.contents!.trim()}
+                createdBy={message.createdBy!.trim()}
+              />
+            ))
+          )}
         </MessageList>
       ) : (
+        // After Open
         <Opened box={box} messageList={messageList} />
       )}
     </>

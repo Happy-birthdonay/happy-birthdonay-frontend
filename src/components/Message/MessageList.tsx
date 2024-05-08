@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
@@ -42,6 +42,8 @@ function MessageList(props: MessageListProps) {
   const router = useRouter();
 
   const { box } = useDonationBox(boxId as string);
+
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <Wrapper>
       <h3>[그린피스]</h3>
@@ -54,7 +56,9 @@ function MessageList(props: MessageListProps) {
         <FixedBottomCTA>
           {box.certImgUrl ? (
             <Button
+              isLoading={isLoading}
               onClick={() => {
+                setIsLoading(true);
                 router.push(`certification`);
               }}
             >
@@ -62,7 +66,9 @@ function MessageList(props: MessageListProps) {
             </Button>
           ) : (
             <Button
+              isLoading={isLoading}
               onClick={() => {
+                setIsLoading(true);
                 router.push(`certification`);
               }}
             >
