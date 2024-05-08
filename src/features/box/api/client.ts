@@ -15,7 +15,7 @@ export const postNewBox = async (box: DonationBox): Promise<ApiResponse.Response
     },
   });
 
-  return response.json();
+  return await response.json();
 };
 
 export const postNewMessage = async (requestData: Pick<Message, 'tag' | 'boxId'>) => {
@@ -29,7 +29,7 @@ export const postNewMessage = async (requestData: Pick<Message, 'tag' | 'boxId'>
     },
   });
 
-  return response.json();
+  return await response.json();
 };
 
 export const patchDonatedByBox = async (boxId: number, isDonated: boolean) => {
@@ -42,7 +42,7 @@ export const patchDonatedByBox = async (boxId: number, isDonated: boolean) => {
     },
   });
 
-  return response.json();
+  return await response.json();
 };
 
 export const patchCertificationImageUrl = async (boxId: number, imageUrl: string) => {
@@ -55,5 +55,5 @@ export const patchCertificationImageUrl = async (boxId: number, imageUrl: string
     },
   });
 
-  return response.json();
+  return await response.json();
 };

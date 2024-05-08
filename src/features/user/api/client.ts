@@ -10,5 +10,5 @@ export const signUp = async (data: User) => {
     },
     body: JSON.stringify({ name: data.name, birthday: data.birthday }),
   });
-  return response.json();
+  return await response.json();
 };

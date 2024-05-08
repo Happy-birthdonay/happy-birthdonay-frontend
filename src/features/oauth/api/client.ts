@@ -1,9 +1,8 @@
 import ApiResponse from '@/shared/types/api-response';
 
-export const postOauthToken = async (code: string | null): Promise<ApiResponse.ResponseAuthTokenData> => {
-  // const baseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_BASE_URL : '/api';
-  const baseUrl = '/api';
+const baseUrl = '/api';
 
+export const postOauthToken = async (code: string | null): Promise<ApiResponse.ResponseAuthTokenData> => {
   const response = await fetch(`${baseUrl}/oauth/token`, {
     method: 'POST',
     body: JSON.stringify({ code }),
@@ -12,11 +11,13 @@ export const postOauthToken = async (code: string | null): Promise<ApiResponse.R
     },
   });
 
-  return response.json();
+  if (!response.ok) {
+    return { result: 'failed', message: response.statusText, statusCode: response.status };
+  }
+  return await response.json();
 };
 
 export const refreshOauthToken = async (): Promise<ApiResponse.ResponseAuthTokenData> => {
-  const baseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_BASE_URL : '/api';
   const response = await fetch(`${baseUrl}/oauth/refresh`, {
     method: 'GET',
 
@@ -25,5 +26,5 @@ export const refreshOauthToken = async (): Promise<ApiResponse.ResponseAuthToken
     },
   });
 
-  return response.json();
+  return await response.json();
 };

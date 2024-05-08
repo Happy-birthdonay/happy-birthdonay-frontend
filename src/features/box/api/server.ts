@@ -1,5 +1,6 @@
-import ApiResponse from '@/shared/types/api-response';
 import client from '../../client';
+
+import type ApiResponse from '@/shared/types/api-response';
 
 export const getBoxList = async (): Promise<ApiResponse.ResponseBoxList> => {
   const baseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_BASE_URL : '/api';
@@ -8,7 +9,7 @@ export const getBoxList = async (): Promise<ApiResponse.ResponseBoxList> => {
     method: 'GET',
   });
 
-  return response.json();
+  return await response.json();
 };
 
 export const getBoxDetailGuest = async (boxId: number) => {
@@ -19,7 +20,7 @@ export const getBoxDetailGuest = async (boxId: number) => {
     cache: 'force-cache',
   });
 
-  return response.json();
+  return await response.json();
 };
 
 export const getBoxDetail = async (boxId: number) => {
@@ -30,5 +31,5 @@ export const getBoxDetail = async (boxId: number) => {
     cache: 'force-cache',
   });
 
-  return response.json();
+  return await response.json();
 };
