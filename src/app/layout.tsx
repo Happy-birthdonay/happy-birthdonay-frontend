@@ -3,6 +3,8 @@ import { Metadata } from 'next';
 import '@/styles/globals.css';
 import '@/styles/minireset.css';
 
+import { GoogleAnalytics } from '@next/third-parties/google';
+
 import Layout from '@/components/Layout';
 import StyledJsxRegistry from './registry';
 
@@ -28,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <StyledJsxRegistry>
           <Layout>{children}</Layout>
+          <GoogleAnalytics gaId="G-0ZXJN94TRJ" />
         </StyledJsxRegistry>
       </body>
     </html>
