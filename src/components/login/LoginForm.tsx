@@ -88,7 +88,7 @@ export default function LoginForm() {
     } catch (e) {}
   };
 
-  if (getTokenIsLoading) {
+  if (getTokenIsLoading || !user) {
     return <div>Loading....</div>;
   }
   return (

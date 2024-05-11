@@ -4,7 +4,7 @@ import ApiResponse from '@/shared/types/api-response';
 export const getUser = async (): Promise<ApiResponse.ResponseUser> => {
   const baseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_BASE_URL : '/api';
 
-  const response = await client(`${baseUrl}/donation-boxes`, {
+  const response = await client(`${baseUrl}/users`, {
     method: 'GET',
   });
 

@@ -66,7 +66,6 @@ function Layout(props: PropsWithChildren<LayoutProps>) {
       <Wrapper>
         <Container>
           {renderHeaderByPath()}
-
           <GlobalPortal.Provider>{children} </GlobalPortal.Provider>
         </Container>
       </Wrapper>

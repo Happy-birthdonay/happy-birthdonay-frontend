@@ -89,7 +89,7 @@ export default function LoginHome() {
             <ButtonLogoContainer>
               <Image src={kakaoSrc} alt="kakao" />
             </ButtonLogoContainer>
-            카카오로 1초 로그인
+            카카오로 1초 로그인 / 회원가입
           </ButtonContainer>
         </LoginButton>
       </FixedBottomCTA>
