@@ -12,9 +12,10 @@ import { signUp } from '@/features/user/api/client';
 import { useUser, useUserActions } from '@/shared/store/user/userStore';
 import { User } from '@/shared/types/user';
 import { getTypographyStyles } from '@/styles/fonts';
+import { LoadingSpinner } from '../LoadingSpinner';
 
 const Wrapper = styled.div`
-  height: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -34,6 +35,18 @@ const Container = styled.div`
   h3 {
     ${getTypographyStyles('Headline3_B')}
   }
+`;
+
+const SpinnerContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 const birthdayPattern = /^(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/;
@@ -89,7 +102,11 @@ export default function LoginForm() {
   };
 
   if (getTokenIsLoading || !user) {
-    return <div>Loading....</div>;
+    return (
+      <SpinnerContainer>
+        <LoadingSpinner />
+      </SpinnerContainer>
+    );
   }
   return (
     <Wrapper>
