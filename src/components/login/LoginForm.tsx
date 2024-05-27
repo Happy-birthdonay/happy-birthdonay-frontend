@@ -128,7 +128,7 @@ export default function LoginForm() {
                 defaultValue={user.name}
                 length={value?.length ?? 0}
                 $isError={!!formState.errors.name}
-                maxLength={10}
+                maxLength={20}
                 value={value}
                 onChange={(e) => {
                   onChange(e.target.value);
