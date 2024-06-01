@@ -45,7 +45,6 @@ function Layout(props: PropsWithChildren<LayoutProps>) {
 
   const renderHeaderByPath = useCallback(() => {
     const regexPaths = [
-      /^\/box$/, // ㅡ Matches '/box'
       /^\/box\/\d+$/, // ㅡ Matches '/box/[number]'
       /^\/box\/new$/, // ㅡ Matches '/box/new'
       /^\/login\/profile$/, // ㅡ Matches '/login/profile'

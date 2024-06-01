@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -61,30 +61,31 @@ export default function LoginForm() {
   const user = useUser();
   const { control, register, handleSubmit, reset, formState } = useForm<User>();
 
-  useEffect(() => {
-    const getToken = async () => {
-      try {
-        const url = new URL(window.location.href);
-        const code = url.searchParams.get('code');
+  const getToken = useCallback(async () => {
+    try {
+      const url = new URL(window.location.href);
+      const code = url.searchParams.get('code');
 
-        const response = await postOauthToken(code);
-        const { result, message, data } = response;
-        if (message === 'Succeeded Kakao Login: User already exists') {
-          router.replace('/box');
-        }
-
-        if (result === 'succeed' && data) {
-          setUser(data);
-          reset({ name: data.name, birthday: data.birthday });
-        } else {
-          window.alert(message);
-          router.push('/');
-        }
-      } catch (e) {
-      } finally {
-        setGetTokenIsLoading(false);
+      const response = await postOauthToken(code);
+      const { result, message, data } = response;
+      if (message === 'Succeeded Kakao Login: User already exists') {
+        router.replace('/box');
       }
-    };
+
+      if (result === 'succeed' && data) {
+        setUser(data);
+        reset({ name: data.name, birthday: data.birthday });
+      } else {
+        window.alert(message);
+        router.push('/');
+      }
+    } catch (e) {
+    } finally {
+      setGetTokenIsLoading(false);
+    }
+  }, [reset, router, setUser]);
+
+  useEffect(() => {
     getToken();
   }, []);
 

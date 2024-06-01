@@ -12,3 +12,15 @@ export const signUp = async (data: User) => {
   });
   return await response.json();
 };
+
+export const getUser = async () => {
+  const baseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_BASE_URL : '/api';
+
+  const response = await fetch(`${baseUrl}/users`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return await response.json();
+};
