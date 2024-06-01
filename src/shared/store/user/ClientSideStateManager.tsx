@@ -3,14 +3,15 @@
 
 import { useEffect } from 'react';
 
-import { useUserActions } from './userStore';
+import { useUser, useUserActions } from './userStore';
 
-export function ClientSideStateManager({ state }: any) {
+import type { User } from '@/shared/types/user';
+
+export function ClientSideStateManager({ state }: { state: Partial<User> }) {
   const { setUser } = useUserActions();
-
+  const prevState = useUser();
   useEffect(() => {
-    setUser(state);
-    console.log('setUser', state);
+    setUser({ ...prevState, ...state });
   }, [setUser, state]);
 
   return <></>;

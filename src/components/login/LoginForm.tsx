@@ -1,18 +1,17 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
 import Input from '@/components/Input';
-import { postOauthToken } from '@/features/oauth/api/client';
 import { signUp } from '@/features/user/api/client';
-import { useUser, useUserActions } from '@/shared/store/user/userStore';
+import { useUser } from '@/features/user/api/hooks/useUser';
+// import { useUser } from '@/shared/store/user/userStore';
 import { User } from '@/shared/types/user';
 import { getTypographyStyles } from '@/styles/fonts';
-import { LoadingSpinner } from '../LoadingSpinner';
 
 const Wrapper = styled.div`
   position: relative;
@@ -37,57 +36,17 @@ const Container = styled.div`
   }
 `;
 
-const SpinnerContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-
 const birthdayPattern = /^(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/;
 
 export default function LoginForm() {
   const router = useRouter();
 
-  const [getTokenIsLoading, setGetTokenIsLoading] = useState(true);
   const [signUpIsLoading, setSignUpIsLoading] = useState(false);
 
-  const { setUser } = useUserActions();
-  const user = useUser();
+  const {
+    data: { data },
+  } = useUser();
   const { control, register, handleSubmit, reset, formState } = useForm<User>();
-
-  const getToken = useCallback(async () => {
-    try {
-      const url = new URL(window.location.href);
-      const code = url.searchParams.get('code');
-
-      const response = await postOauthToken(code);
-      const { result, message, data } = response;
-      if (message === 'Succeeded Kakao Login: User already exists') {
-        router.replace('/box');
-      }
-
-      if (result === 'succeed' && data) {
-        setUser(data);
-        reset({ name: data.name, birthday: data.birthday });
-      } else {
-        window.alert(message);
-        router.push('/');
-      }
-    } catch (e) {
-    } finally {
-      setGetTokenIsLoading(false);
-    }
-  }, [reset, router, setUser]);
-
-  useEffect(() => {
-    getToken();
-  }, []);
 
   const onSignUp = async (data: User) => {
     try {
@@ -102,13 +61,11 @@ export default function LoginForm() {
     } catch (e) {}
   };
 
-  if (getTokenIsLoading || !user) {
-    return (
-      <SpinnerContainer>
-        <LoadingSpinner />
-      </SpinnerContainer>
-    );
-  }
+  useEffect(() => {
+    if (data) reset({ name: data.name, birthday: data.birthday });
+  }, []);
+
+  if (!formState) return null;
   return (
     <Wrapper>
       <form onSubmit={handleSubmit(onSignUp)}>
@@ -122,11 +79,10 @@ export default function LoginForm() {
               <Input
                 {...register('name', {
                   required: true,
-                  maxLength: 10,
+                  maxLength: 20,
                 })}
                 label="닉네임을 만들어주세요"
                 placeholder="닉네임"
-                defaultValue={user.name}
                 length={value?.length ?? 0}
                 $isError={!!formState.errors.name}
                 maxLength={20}
@@ -155,7 +111,6 @@ export default function LoginForm() {
                 }}
                 label="생일을 입력하세요"
                 placeholder="MMDD"
-                defaultValue={user.birthday}
                 bottomText={formState.errors.birthday?.message}
                 $isError={!!formState.errors.birthday}
               />
