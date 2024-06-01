@@ -7,6 +7,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { GlobalPortal } from '@/GlobalPortal';
 import myTheme from '@/styles/theme';
 import Header from './Header';
+import MenuHeader from './MenuHeader';
 
 const Wrapper = styled.div`
   max-width: 100%;
@@ -47,7 +48,6 @@ function Layout(props: PropsWithChildren<LayoutProps>) {
     const regexPaths = [
       /^\/box\/\d+$/, // ㅡ Matches '/box/[number]'
       /^\/box\/new$/, // ㅡ Matches '/box/new'
-      /^\/login\/profile$/, // ㅡ Matches '/login/profile'
       /^\/box\/new\/funnel$/, // ㅡ Matches '/box/new/funnel'
       /^\/box\/\d+\/open$/, // ㅡ Matches '/box/[number]/open'
       /^\/box\/\d+\/message\/\d+$/, // ㅡ Matches '/box/[number]/message/[number]'
@@ -55,7 +55,9 @@ function Layout(props: PropsWithChildren<LayoutProps>) {
       /^\/guest\/\d+\/message$/, // ㅡ Matches '/guest/[number]/message'
     ];
 
-    if (regexPaths.some((regexPath) => regexPath.test(pathname))) {
+    if (pathname === '/box') {
+      return <MenuHeader />;
+    } else if (regexPaths.some((regexPath) => regexPath.test(pathname))) {
       return <Header />;
     } else {
       return null;
