@@ -12,7 +12,8 @@ type PageProps = {
 async function Page(props: PageProps) {
   const { params } = props;
 
-  const { data: box } = await getBoxDetail(Number(params.boxId));
+  const response = await getBoxDetail(Number(params.boxId));
+  const { data: box } = response;
 
   const isOpenAfter = () => {
     const today = dayjs();

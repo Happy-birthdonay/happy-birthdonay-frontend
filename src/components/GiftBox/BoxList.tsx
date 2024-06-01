@@ -39,7 +39,7 @@ function BoxList(props: BoxListProps) {
   return (
     <Wrapper>
       <Container>
-        {boxList.length <= 0 ? (
+        {boxList?.length <= 0 ? (
           <button
             onClick={() => {
               router.push(`${pathName}/new`);
@@ -51,7 +51,7 @@ function BoxList(props: BoxListProps) {
             </Gift>
           </button>
         ) : (
-          boxList.map((box) => (
+          boxList?.map((box) => (
             <button
               key={box.boxId}
               onClick={() => {

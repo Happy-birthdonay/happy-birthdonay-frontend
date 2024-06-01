@@ -58,7 +58,6 @@ function Page() {
       const fileName = `cert-images/${boxId}-certification.${확장자}`;
 
       const response = await uploadImageToS3({ file, fileName });
-      console.log('response', response);
       if (response.Location) {
         await patchCertificationImageUrl(Number(boxId), response.Location);
         setStep('complete');

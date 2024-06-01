@@ -10,7 +10,6 @@ async function MessageDetailPage(props: MessageDetailPageProps) {
   const { params } = props;
 
   const { data: messageList } = await getMessageList(Number(params.boxId));
-  console.log('messageList', messageList);
   const message = messageList.find((message) => message.messageId === Number(params.id));
 
   if (!message) return null;
