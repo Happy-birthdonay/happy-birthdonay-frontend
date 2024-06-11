@@ -9,6 +9,7 @@ import Complete from '@/components/Funnel/GuestMessage/Complete';
 import GuestDetail from '@/components/Funnel/GuestMessage/GuestDetail';
 import Message from '@/components/Funnel/GuestMessage/Message';
 import { postNewMessage } from '@/features/box/api/client';
+import { getCookie, setCookie } from './_utils/cookie';
 
 type MessagePageProps = {
   params: { boxId: string };
@@ -29,9 +30,21 @@ function MessagePage(props: MessagePageProps) {
       const response = await postNewMessage(requestData);
       if (response.result === 'success') {
         setStep('complete');
+        setCookie('canComplete', 'true', { 'max-age': 3600 }); // Cookie expires in 1 hour
       }
     } catch (e) {
       console.error(e);
+    }
+  };
+
+  const handleCreateMessage = (data: FieldValues) => {
+    const canComplete = getCookie('canComplete');
+    if (canComplete) {
+      window.alert('이미 메시지를 작성 하였습니다.');
+      return; // Do nothing if the cookie exists
+    } else {
+      console.log('canComplete cookie does not exist. Executing function.');
+      createNewMessage(data);
     }
   };
 
@@ -44,7 +57,7 @@ function MessagePage(props: MessagePageProps) {
           }}
         />
       )}
-      {step === 'message' && <Message onSubmit={createNewMessage} />}
+      {step === 'message' && <Message onSubmit={handleCreateMessage} />}
       {step === 'complete' && <Complete onNext={() => router.push('/')} />}
     </StateMachineProvider>
   );
