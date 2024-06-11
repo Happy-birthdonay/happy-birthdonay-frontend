@@ -86,8 +86,8 @@ function BeforeOpened(props: BeforeOpenedProps) {
         </p>
       </Container>
       <FixedBottomCTA>
-        <SharedButton url={url} />
         <Button
+          className="mb-[2px]"
           disabled={canOpen}
           onClick={() => {
             router.push(`${pathName}/open`);
@@ -95,6 +95,7 @@ function BeforeOpened(props: BeforeOpenedProps) {
         >
           상자 열어보기
         </Button>
+        <SharedButton url={url} />
       </FixedBottomCTA>
     </Wrapper>
   );
