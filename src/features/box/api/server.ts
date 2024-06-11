@@ -17,7 +17,6 @@ export const getBoxDetailGuest = async (boxId: number) => {
 
   const response = await client(`${baseUrl}/donation-boxes/${boxId}/guest`, {
     method: 'GET',
-    cache: 'force-cache',
   });
 
   return await response.json();
@@ -28,7 +27,6 @@ export const getBoxDetail = async (boxId: number) => {
 
   const response = await client(`${baseUrl}/donation-boxes/${boxId}`, {
     method: 'GET',
-    cache: 'force-cache',
   });
 
   return await response.json();
