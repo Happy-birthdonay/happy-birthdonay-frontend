@@ -47,7 +47,7 @@ function CompleteBox(props: CompleteBoxProps) {
   const { donationBox } = props;
 
   const host = window.location.host;
-  const url = `${host}/guest/${donationBox.boxId}`;
+  const url = `https://${host}/guest/${donationBox.boxId}`;
 
   return (
     <Wrapper>

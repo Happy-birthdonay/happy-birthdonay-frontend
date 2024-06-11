@@ -9,8 +9,14 @@ import Layout from '@/components/Layout';
 import StyledJsxRegistry from './registry';
 
 export const metadata: Metadata = {
-  title: `Happy birthDonay`,
-  description: `생일선물 대신 가치를 선물하기!`,
+  title: 'HappyBirthDonay',
+  description: `생일선물 대신 가치를 선물하기! 생일을 기념해서 선물 상자를 만들고, 축하 메시지를 받은 마음을 함께 기부하세요!`,
+  openGraph: {
+    type: 'website',
+    title: 'HappyBirthDonay',
+    description: `생일선물 대신 가치를 선물하기! 생일을 기념해서 선물 상자를 만들고, 축하 메시지를 받은 마음을 함께 기부하세요!`,
+    images: '/logo.png,',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
