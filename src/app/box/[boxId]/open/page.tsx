@@ -21,7 +21,7 @@ async function Page(props: PageProps) {
   const { data: messageList } = await getMessageList(boxId);
 
   const host = headers().get('host');
-  const url = `${host}/guest/${boxId}`;
+  const url = `https://${host}/guest/${boxId}`;
 
   return (
     <>

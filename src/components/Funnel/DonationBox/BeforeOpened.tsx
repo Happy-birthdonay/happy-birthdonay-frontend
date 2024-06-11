@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import Button from '@/components/Button';
 import FixedBottomCTA from '@/components/FixedBottomCTA';
 import Gift from '@/components/GiftBox';
+import SharedButton from '@/components/SharedButton';
 import { DonationBox } from '@/shared/types/donationBox';
 import { getTypographyStyles } from '@/styles/fonts';
 
@@ -64,6 +65,9 @@ function BeforeOpened(props: BeforeOpenedProps) {
     return `${restDay}일 ${restHour}시간`;
   }, [box.openDate]);
 
+  const host = window.location.host;
+  const url = `https://${host}/guest/${box.boxId}`;
+
   return (
     <Wrapper>
       <Container>
@@ -82,6 +86,7 @@ function BeforeOpened(props: BeforeOpenedProps) {
         </p>
       </Container>
       <FixedBottomCTA>
+        <SharedButton url={url} />
         <Button
           disabled={canOpen}
           onClick={() => {
