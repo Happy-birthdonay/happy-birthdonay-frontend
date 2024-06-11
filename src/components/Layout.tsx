@@ -12,13 +12,11 @@ import MenuHeader from './MenuHeader';
 const Wrapper = styled.div`
   max-width: 100%;
   width: 100%;
-  padding: 0;
-  margin: 0 auto;
-  height: 100vh;
+  height: 100dvh;
+  margin: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: calc(env(safe-area-inset-bottom));
 `;
 
 const Container = styled.div`
@@ -26,11 +24,11 @@ const Container = styled.div`
   flex: 1;
   width: 100vw;
   max-width: 392px;
-  max-height: 844px;
   height: 100%;
-  padding: 60px 20px 40px;
+  /* padding: 60px 20px 40px; */
   background-color: ${({ theme }) => theme.colors.background};
   border: 1px solid ${({ theme }) => theme.colors.main.grey};
+  /* padding-bottom: env(safe-area-inset-bottom); */
 
   & > main {
     height: 100%;
