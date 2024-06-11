@@ -25,10 +25,9 @@ const Container = styled.div`
   width: 100vw;
   max-width: 392px;
   height: 100%;
-  /* padding: 60px 20px 40px; */
+  padding: 60px 20px calc(env(safe-area-inset-bottom) + 40px);
   background-color: ${({ theme }) => theme.colors.background};
   border: 1px solid ${({ theme }) => theme.colors.main.grey};
-  /* padding-bottom: env(safe-area-inset-bottom); */
 
   & > main {
     height: 100%;
