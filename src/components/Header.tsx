@@ -13,7 +13,7 @@ const Wrapper = styled.header`
   transform: translateX(-50%);
   width: 100%;
   height: 60px;
-  max-width: 392px;
+  max-width: 414px;
 `;
 
 function Header() {

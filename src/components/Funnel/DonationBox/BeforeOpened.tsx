@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 50px;
+  gap: 40px;
 `;
 
 const Container = styled.div`
@@ -71,7 +71,7 @@ function BeforeOpened(props: BeforeOpenedProps) {
           선물 상자가 <br />
           만들어지는 중이에요!
         </h3>
-        <Gift $width="80%">
+        <Gift $width="75%">
           <Gift.Box color={box.color} />
           <Gift.Title text={box.boxTitle} />
         </Gift>

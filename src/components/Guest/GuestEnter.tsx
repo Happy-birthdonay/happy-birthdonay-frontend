@@ -56,7 +56,7 @@ function GuestEnter(props: GuestEnterProps) {
     <Wrapper>
       <Container>
         <h3>함께 기부해요 !</h3>
-        <Gift $width="100%">
+        <Gift $width="75%">
           <Gift.Box color={box.color} />
           <Gift.Title text={box.boxTitle} />
           <Gift.Description text={box.boxDescription} />

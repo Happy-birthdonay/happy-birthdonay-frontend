@@ -59,7 +59,7 @@ function CanOpen(props: CanOpenProps) {
           선물 상자가 <br />
           도착했어요!
         </h3>
-        <Gift $width="80%">
+        <Gift $width="75%">
           <Gift.Box color={box.color} />
           <Gift.Title text={box.boxTitle} />
         </Gift>
