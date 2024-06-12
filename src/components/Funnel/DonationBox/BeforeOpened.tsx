@@ -29,9 +29,19 @@ const Container = styled.div`
   text-align: center;
 
   & > div {
+    //media query
+    @media screen and (max-height: 850px) {
+      margin-bottom: 14px;
+    }
+
     margin-bottom: 33px;
   }
+
   h3 {
+    @media screen and (max-height: 850px) {
+      margin-bottom: 30px;
+    }
+
     margin-bottom: 60px;
     ${getTypographyStyles('Headline3_B')}
   }
@@ -39,6 +49,12 @@ const Container = styled.div`
   p {
     ${getTypographyStyles('Body2_M')}
   }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 `;
 
 type BeforeOpenedProps = {
@@ -86,16 +102,17 @@ function BeforeOpened(props: BeforeOpenedProps) {
         </p>
       </Container>
       <FixedBottomCTA>
-        <Button
-          className="mb-[2px]"
-          disabled={canOpen}
-          onClick={() => {
-            router.push(`${pathName}/open`);
-          }}
-        >
-          상자 열어보기
-        </Button>
-        <SharedButton url={url} />
+        <ButtonContainer>
+          <Button
+            disabled={canOpen}
+            onClick={() => {
+              router.push(`${pathName}/open`);
+            }}
+          >
+            상자 열어보기
+          </Button>
+          <SharedButton url={url} />
+        </ButtonContainer>
       </FixedBottomCTA>
     </Wrapper>
   );

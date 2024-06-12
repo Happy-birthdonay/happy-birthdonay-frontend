@@ -27,10 +27,21 @@ const Container = styled.div`
   text-align: center;
 
   & > div {
-    margin-bottom: 33px;
+    h3 {
+      @media screen and (max-height: 850px) {
+        margin-bottom: 14px;
+      }
+
+      margin-bottom: 33px;
+    }
   }
 
   h3 {
+    h3 {
+      @media screen and (max-height: 850px) {
+        margin-bottom: 30px;
+      }
+    }
     margin-bottom: 60px;
     ${getTypographyStyles('Headline3_B')}
   }
