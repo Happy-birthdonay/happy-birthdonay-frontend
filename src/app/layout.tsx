@@ -4,6 +4,7 @@ import '@/styles/globals.css';
 import '@/styles/minireset.css';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { Analytics } from '@vercel/analytics/react';
 
 import Layout from '@/components/Layout';
 import StyledJsxRegistry from './registry';
@@ -35,7 +36,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.2/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css"
         />
         <StyledJsxRegistry>
-          <Layout>{children}</Layout>
+          <Layout>
+            {children}
+            <Analytics />
+          </Layout>
           <GoogleAnalytics gaId="G-0ZXJN94TRJ" />
         </StyledJsxRegistry>
       </body>
