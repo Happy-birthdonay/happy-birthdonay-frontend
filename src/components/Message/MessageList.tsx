@@ -16,6 +16,8 @@ const Wrapper = styled.div`
   align-items: center;
   text-align: center;
   gap: 15px;
+  height: 60vh;
+  overflow: auto;
   h3 {
     ${getTypographyStyles('Headline3_B')}
   }
