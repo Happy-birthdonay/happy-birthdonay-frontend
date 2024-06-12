@@ -76,10 +76,7 @@ function Page() {
     <Wrapper>
       {step === 'upload' && (
         <>
-          <h3>
-            Make your <br />
-            Donation Certification
-          </h3>
+          <h3>Donation Certification</h3>
           <Container>
             <ImageUpload
               onLoadendAction={(img, file) => {
