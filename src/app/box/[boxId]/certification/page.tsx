@@ -20,7 +20,10 @@ const Wrapper = styled.div`
   justify-content: space-evenly;
   align-items: center;
   text-align: center;
-
+  @media screen and (max-height: 850px) {
+    justify-content: space-between;
+    padding-bottom: 60px;
+  }
   h3 {
     ${getTypographyStyles('Headline3_B')}
   }
