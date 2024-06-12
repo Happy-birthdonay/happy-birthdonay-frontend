@@ -40,10 +40,17 @@ const Container = styled.div`
   align-items: center;
 
   & > :first-child {
+    @media screen and (max-height: 850px) {
+      margin-bottom: 36px;
+    }
     margin-bottom: 56px;
   }
 
   & > :nth-child(3) {
+    @media screen and (max-height: 850px) {
+      margin-bottom: 62px;
+    }
+
     margin-bottom: 82px;
   }
   & > :last-child {
