@@ -48,7 +48,7 @@ function MessageList(props: MessageListProps) {
   const [isLoading, setIsLoading] = useState(false);
   return (
     <Wrapper>
-      <h3>[그린피스]</h3>
+      <h3>[{box.name}]</h3>
       <Container>{children}</Container>
       <p>
         메시지를 남겨준 사람들이 담긴 <br /> 나만의 기부 증서를 만들어 공유해 보세요!
