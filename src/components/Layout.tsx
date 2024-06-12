@@ -23,9 +23,9 @@ const Container = styled.div`
   position: relative;
   flex: 1;
   width: 100vw;
-  max-width: 414px;
+  max-width: 430px;
   height: 100%;
-  padding: 60px 20px 40px;
+  padding: 45px 20px 40px;
 
   background-color: ${({ theme }) => theme.colors.background};
   border: 1px solid ${({ theme }) => theme.colors.main.grey};
