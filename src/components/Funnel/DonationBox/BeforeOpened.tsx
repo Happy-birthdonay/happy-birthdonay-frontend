@@ -29,12 +29,22 @@ const Container = styled.div`
   text-align: center;
 
   & > div {
+    //media query
+    @media screen and (max-height: 850px) {
+      margin-bottom: 14px;
+    }
+
     margin-bottom: 33px;
     @media (max-height: 850px) {
       margin-bottom: 14px;
     }
   }
+
   h3 {
+    @media screen and (max-height: 850px) {
+      margin-bottom: 30px;
+    }
+
     margin-bottom: 60px;
     @media (max-height: 850px) {
       margin-bottom: 30px;
@@ -49,6 +59,7 @@ const Container = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 4px;
 `;
 
