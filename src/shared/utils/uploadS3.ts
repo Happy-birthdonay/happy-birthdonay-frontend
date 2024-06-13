@@ -11,6 +11,7 @@ type uploadImageToS3Props = {
 const REGION = 'ap-southeast-2';
 const accessKeyId = process.env.NEXT_PUBLIC_S3_ACCESS_KEY_ID as string;
 const secretAccessKey = process.env.NEXT_PUBLIC_S3_SECRET_ACCESS_KEY as string;
+const bucketName = process.env.NEXT_PUBLIC_S3_BUCKET_NAME as string;
 
 export const uploadImageToS3 = async (props: uploadImageToS3Props) => {
   const { file, fileName } = props;
@@ -24,7 +25,7 @@ export const uploadImageToS3 = async (props: uploadImageToS3Props) => {
   });
 
   const params = {
-    Bucket: 'hbdy-s3',
+    Bucket: bucketName,
     Key: fileName ?? file.name,
     Body: file,
     ContentType: file.type,
