@@ -24,7 +24,7 @@ export const uploadImageToS3 = async (props: uploadImageToS3Props) => {
   });
 
   const params = {
-    Bucket: 'hbdy-s3',
+    Bucket: 'hbdy-bucket',
     Key: fileName ?? file.name,
     Body: file,
     ContentType: file.type,
