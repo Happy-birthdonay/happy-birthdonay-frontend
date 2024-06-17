@@ -8,13 +8,13 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'hbdy-s3.s3.ap-southeast-2.amazonaws.com',
+        hostname: 'hbdy-bucket.s3.ap-southeast-2.amazonaws.com',
         port: '',
         pathname: '/cert-images/**',
       },
       {
         protocol: 'https',
-        hostname: 'hbdy-s3.s3.ap-southeast-2.amazonaws.com',
+        hostname: 'hbdy-bucket.s3.ap-southeast-2.amazonaws.com',
         port: '',
         pathname: '**',
       },
