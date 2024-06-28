@@ -8,9 +8,7 @@ import Button from '@/components/Button';
 import Certification from '@/components/Certification/Certification';
 import FixedBottomCTA from '@/components/FixedBottomCTA';
 import ImageUpload from '@/components/ImageUpload';
-import { patchCertificationImageUrl } from '@/features/box/api/client';
-import { useCertification } from '@/features/box/api/hooks/useCertifications';
-import { uploadImageToS3 } from '@/shared/utils/uploadS3';
+import { postCertificationByBoxId } from '@/features/box/api/client';
 import { getTypographyStyles } from '@/styles/fonts';
 
 const Wrapper = styled.div`
@@ -47,8 +45,9 @@ const Container = styled.div`
 
 function Page() {
   const { boxId } = useParams();
-  const { certification } = useCertification(boxId as string);
-  const [step, setStep] = useState<'upload' | 'complete'>(!!certification?.certImgUrl ? 'complete' : 'upload');
+  // const { certification } = useCertification(boxId as string);
+  // const [step, setStep] = useState<'upload' | 'complete'>(!!certification?.certImgUrl ? 'complete' : 'upload');
+  const [step, setStep] = useState<'upload' | 'complete'>('upload');
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -57,14 +56,13 @@ function Page() {
   const onUploadS3 = async (file: File) => {
     try {
       setIsLoading(true);
-      const 확장자 = file.name.split('.').pop();
-      const fileName = `cert-images/${boxId}-certification.${확장자}`;
 
-      const response = await uploadImageToS3({ file, fileName });
-      if (response.Location) {
-        await patchCertificationImageUrl(Number(boxId), response.Location);
-        setStep('complete');
-      }
+      const imageData = new FormData();
+      imageData.append('imageData', file);
+
+      await postCertificationByBoxId(Number(boxId), imageData);
+      setStep('complete');
+      // }
     } catch (e) {
       console.error(e);
     } finally {

@@ -57,3 +57,19 @@ export const patchCertificationImageUrl = async (boxId: number, imageUrl: string
 
   return await response.json();
 };
+
+export const postCertificationByBoxId = async (boxId: number, formData: FormData) => {
+  const baseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_BASE_URL : '/api';
+
+  console.log('postCertificationByBoxId', formData);
+
+  const response = await fetch(`${baseUrl}/certifications/${boxId}`, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
+  return await response.json();
+};

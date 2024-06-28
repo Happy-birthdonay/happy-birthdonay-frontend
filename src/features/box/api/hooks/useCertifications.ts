@@ -7,7 +7,7 @@ export const useCertification = (boxId: string) => {
     suspense: true,
     revalidateOnFocus: false,
   });
-
+  console.log('data', data);
   return {
     certification: data?.data ?? null,
     isLoading,
