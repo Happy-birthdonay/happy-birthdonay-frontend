@@ -66,9 +66,9 @@ export const postCertificationByBoxId = async (boxId: number, formData: FormData
   const response = await fetch(`${baseUrl}/certifications/${boxId}`, {
     method: 'POST',
     body: formData,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
+    // headers: {
+    //   'Content-Type': 'multipart/form-data',
+    // },
   });
 
   return await response.json();

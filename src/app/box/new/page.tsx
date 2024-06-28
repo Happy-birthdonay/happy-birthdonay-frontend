@@ -17,9 +17,10 @@ const Wrapper = styled.div`
   h3 {
     ${getTypographyStyles('Headline3_B')}
   }
-  p {
-    ${getTypographyStyles('Body2_M')}
-  }
+`;
+
+const Body2M = styled.p`
+  ${getTypographyStyles('Body2_M')}
 `;
 
 export default function MakeNewBox() {
@@ -40,10 +41,10 @@ export default function MakeNewBox() {
       <button onClick={makeNewBox}>
         <Image alt="add box button" src={newBoxButton} />
       </button>
-      <p>
+      <Body2M>
         선물 상자를 만들어 <br />
         기부를 시작해 보세요
-      </p>
+      </Body2M>
     </Wrapper>
   );
 }

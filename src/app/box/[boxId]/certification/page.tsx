@@ -9,6 +9,7 @@ import Certification from '@/components/Certification/Certification';
 import FixedBottomCTA from '@/components/FixedBottomCTA';
 import ImageUpload from '@/components/ImageUpload';
 import { postCertificationByBoxId } from '@/features/box/api/client';
+import { useCertification } from '@/features/box/api/hooks/useCertifications';
 import { getTypographyStyles } from '@/styles/fonts';
 
 const Wrapper = styled.div`
@@ -25,11 +26,12 @@ const Wrapper = styled.div`
   h3 {
     ${getTypographyStyles('Headline3_B')}
   }
-
-  p {
-    ${getTypographyStyles('Body2_M')}
-  }
 `;
+
+const Body2_M = styled.p`
+  ${getTypographyStyles('Body2_M')}
+`;
+
 const Container = styled.div`
   position: relative;
   background-color: #fff;
@@ -45,9 +47,9 @@ const Container = styled.div`
 
 function Page() {
   const { boxId } = useParams();
-  // const { certification } = useCertification(boxId as string);
-  // const [step, setStep] = useState<'upload' | 'complete'>(!!certification?.certImgUrl ? 'complete' : 'upload');
-  const [step, setStep] = useState<'upload' | 'complete'>('upload');
+  const { certification } = useCertification(boxId as string);
+  const [step, setStep] = useState<'upload' | 'complete'>(!!certification?.certImgUrl ? 'complete' : 'upload');
+  // const [step, setStep] = useState<'upload' | 'complete'>('complete');
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -84,11 +86,11 @@ function Page() {
             />
             {previewImage && <img src={previewImage} alt="Preview" style={{ maxWidth: '300px', maxHeight: '300px' }} />}
           </Container>
-          <p>
+          <Body2_M>
             기부를 인증할 수 있는 <br />
             이미지를 첨부해주세요
-          </p>
-          <p>(중요한 개인정보를 반드시 가려주세요)</p>
+          </Body2_M>
+          <Body2_M>(중요한 개인정보를 반드시 가려주세요)</Body2_M>
           <FixedBottomCTA>
             <Button
               isLoading={isLoading}

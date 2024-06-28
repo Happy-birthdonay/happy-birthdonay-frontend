@@ -16,7 +16,6 @@ const Wrapper = styled.div<{ $isFlipped: boolean }>`
   position: relative;
   width: 329px;
   height: 616px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,8 +38,7 @@ const Card = styled.div`
   transition: 0.8s;
   transform-style: preserve-3d;
   p {
-    ${getTypographyStyles('Caption_M')};
-    font-size: 14px;
+    ${getTypographyStyles('Caption2_M')};
     padding: 0 20px;
   }
 `;
@@ -59,7 +57,7 @@ const Title = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 25px;
+  margin-bottom: 18px;
   gap: 2px;
   padding: 0 10px;
 `;
@@ -71,7 +69,11 @@ const TitleStrong = styled.strong`
 `;
 
 const CertificationContainer = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 12px;
+`;
+
+const Caption2M = styled.p`
+  ${getTypographyStyles('Caption2_M')};
 `;
 
 const Container = styled.div`
@@ -79,13 +81,13 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  margin-bottom: 30px;
+  gap: px;
+  margin-bottom: 12px;
 `;
 
 const LogoContainer = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
 `;
 
 const ButtonContainer = styled.div`
@@ -103,6 +105,9 @@ function Certification() {
   const backRef = useRef<HTMLDivElement>(null);
 
   const { certification } = useCertification(boxId as string);
+
+  //중복 닉네임 제거
+  const uniqueDonorsName = Array.from(new Set(certification?.donorsNameList));
 
   //certification의 앞면과 뒷면을 보여주는 state
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
@@ -132,42 +137,41 @@ function Certification() {
       >
         <FrontCard $isFlipped={isFlipped} ref={frontRef}>
           <LogoContainer>
-            <LogoImage alt="logo" width={100} height={100} src={logoSrc} />
+            <LogoImage alt="logo" width={50} height={50} src={logoSrc} />
           </LogoContainer>
           <Title>
             <Image alt="ribbon" src={ribbonSrc} width={25} height={25} />
             <TitleStrong> 기부 증서</TitleStrong>
           </Title>
           <CertificationContainer>
-            <Image width={167} height={259} alt="certification img" src={certification.certImgUrl} />
+            <Image width={111} height={172} alt="certification img" src={certification.certImgUrl} />
           </CertificationContainer>
           <Container>
             <p style={{ textDecoration: 'underline' }}>{`Donor's name`}</p>
-            <p>{certification.donorsNameList.join(', ')}</p>
+            <Caption2M>{certification.boxCreatedBy}</Caption2M>
+            <Caption2M>{`${uniqueDonorsName.join(', ')}`}</Caption2M>
           </Container>
-          <strong>{certification.boxCreatedBy}</strong>
           <strong>{certification.certCreatedAt}</strong>
         </FrontCard>
 
         <BackCard $isFlipped={isFlipped} ref={backRef}>
           <LogoContainer>
-            <LogoImage alt="logo" width={100} height={100} src={logoSrc} />
+            <LogoImage alt="logo" width={50} height={50} src={logoSrc} />
           </LogoContainer>
           <Title>
             <Image alt="ribbon" src={ribbonSrc} width={25} height={25} />
             <TitleStrong> 기부 증서</TitleStrong>
           </Title>
           <CertificationContainer>
-            <Image width={167} height={259} alt="certification img" src={certification.certImgUrl} />
+            <Image width={111} height={172} alt="certification img" src={certification.certImgUrl} />
           </CertificationContainer>
           <Container>
             <p>소중한 나눔에 동참해 주셔서 고맙습니다.</p>
             <p>
-              남은 마음은 <strong>{certification.name}</strong> 위해 사용 됩니다.
-              <br /> 앞으로 받은 만큼 베푸는 <strong>{certification.boxCreatedBy}</strong>이 되겠습니다.
+              함께한 마음은 <strong>{certification.name}</strong> 에 전달 됩니다.
+              <br /> <strong>{certification.boxCreatedBy}</strong>님의 소중한 날을 진심으로 축하 드립니다.
             </p>
           </Container>
-          <strong>{certification.boxCreatedBy}</strong>
           <strong>{certification.certCreatedAt}</strong>
         </BackCard>
       </Wrapper>
