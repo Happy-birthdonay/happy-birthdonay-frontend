@@ -8,9 +8,8 @@ import Button from '@/components/Button';
 import Certification from '@/components/Certification/Certification';
 import FixedBottomCTA from '@/components/FixedBottomCTA';
 import ImageUpload from '@/components/ImageUpload';
-import { patchCertificationImageUrl } from '@/features/box/api/client';
+import { postCertificationByBoxId } from '@/features/box/api/client';
 import { useCertification } from '@/features/box/api/hooks/useCertifications';
-import { uploadImageToS3 } from '@/shared/utils/uploadS3';
 import { getTypographyStyles } from '@/styles/fonts';
 
 const Wrapper = styled.div`
@@ -27,11 +26,12 @@ const Wrapper = styled.div`
   h3 {
     ${getTypographyStyles('Headline3_B')}
   }
-
-  p {
-    ${getTypographyStyles('Body2_M')}
-  }
 `;
+
+const Body2_M = styled.p`
+  ${getTypographyStyles('Body2_M')}
+`;
+
 const Container = styled.div`
   position: relative;
   background-color: #fff;
@@ -49,6 +49,7 @@ function Page() {
   const { boxId } = useParams();
   const { certification } = useCertification(boxId as string);
   const [step, setStep] = useState<'upload' | 'complete'>(!!certification?.certImgUrl ? 'complete' : 'upload');
+  // const [step, setStep] = useState<'upload' | 'complete'>('complete');
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -57,14 +58,13 @@ function Page() {
   const onUploadS3 = async (file: File) => {
     try {
       setIsLoading(true);
-      const 확장자 = file.name.split('.').pop();
-      const fileName = `cert-images/${boxId}-certification.${확장자}`;
 
-      const response = await uploadImageToS3({ file, fileName });
-      if (response.Location) {
-        await patchCertificationImageUrl(Number(boxId), response.Location);
-        setStep('complete');
-      }
+      const imageData = new FormData();
+      imageData.append('imageData', file);
+
+      await postCertificationByBoxId(Number(boxId), imageData);
+      setStep('complete');
+      // }
     } catch (e) {
       console.error(e);
     } finally {
@@ -86,11 +86,11 @@ function Page() {
             />
             {previewImage && <img src={previewImage} alt="Preview" style={{ maxWidth: '300px', maxHeight: '300px' }} />}
           </Container>
-          <p>
+          <Body2_M>
             기부를 인증할 수 있는 <br />
             이미지를 첨부해주세요
-          </p>
-          <p>(중요한 개인정보를 반드시 가려주세요)</p>
+          </Body2_M>
+          <Body2_M>(중요한 개인정보를 반드시 가려주세요)</Body2_M>
           <FixedBottomCTA>
             <Button
               isLoading={isLoading}

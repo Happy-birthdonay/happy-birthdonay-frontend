@@ -69,7 +69,12 @@ function Opened(props: OpenedProps) {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const people = messageList.length;
+  const uniqueMessageList = messageList.filter(
+    (message, index, self) =>
+      self.findIndex((t) => t.contents === message.contents && t.createdBy === message.createdBy) === index
+  );
+
+  const people = uniqueMessageList.length;
   const total = box.amount * people;
   const donationName = box.name;
   const url = box.url;

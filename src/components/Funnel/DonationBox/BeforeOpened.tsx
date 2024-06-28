@@ -35,6 +35,9 @@ const Container = styled.div`
     }
 
     margin-bottom: 33px;
+    @media (max-height: 850px) {
+      margin-bottom: 14px;
+    }
   }
 
   h3 {
@@ -43,6 +46,9 @@ const Container = styled.div`
     }
 
     margin-bottom: 60px;
+    @media (max-height: 850px) {
+      margin-bottom: 30px;
+    }
     ${getTypographyStyles('Headline3_B')}
   }
 

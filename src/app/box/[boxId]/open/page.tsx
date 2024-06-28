@@ -19,6 +19,11 @@ async function Page(props: PageProps) {
   const boxId = Number(params.boxId);
   const { data: box } = await getBoxDetail(boxId);
   const { data: messageList } = await getMessageList(boxId);
+  //messageList 중복 contents 제거
+  const uniqueMessageList = messageList.filter(
+    (message, index, self) =>
+      self.findIndex((t) => t.contents === message.contents && t.createdBy === message.createdBy) === index
+  );
 
   const host = headers().get('host');
   const url = `https://${host}/guest/${boxId}`;
@@ -28,13 +33,13 @@ async function Page(props: PageProps) {
       {/* Before Open */}
       {box.isDonated ? (
         <MessageList boxId={boxId}>
-          {messageList.length === 0 ? (
+          {uniqueMessageList.length === 0 ? (
             <>
               <p>공유하고 메시지 받기 !</p>
               <SharedButton url={url} />
             </>
           ) : (
-            messageList.map((message) => (
+            uniqueMessageList.map((message) => (
               <MessageButton
                 key={message.messageId}
                 boxId={message.boxId!}
